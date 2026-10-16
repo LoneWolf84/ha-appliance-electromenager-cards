@@ -8,7 +8,7 @@ They follow your Home Assistant theme (light/dark) and switch between **French**
 
 **▶ [Try it online / Essayer en ligne](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html)** · [Automated tests](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html)
 
-*🇫🇷 Version française plus bas.*
+*🇮🇹 [Documentazione in italiano](README.it.md).* · *🇫🇷 Version française plus bas.*
 
 <p align="center"><img src="docs/hero.gif" width="560" alt="Animated appliance cards for Home Assistant"></p>
 
