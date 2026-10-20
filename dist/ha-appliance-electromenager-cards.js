@@ -72,10 +72,40 @@ const STRINGS = {
     f_max_temperature: "Alerte frigo au-dessus de (°C)", f_freezer_max_temperature: "Alerte congélateur au-dessus de (°C)",
     f_color: "Couleur d'accent (CSS)", f_animations: "Animations", f_confirm_off: "Confirmer avant de couper pendant un cycle",
   },
+  it: {
+    washer: "Lavatrice", dryer: "Asciugatrice", dishwasher: "Lavastoviglie",
+    water_heater: "Scaldacqua", oven: "Forno", microwave: "Microonde", air_fryer: "Friggitrice ad aria", coffee_maker: "Macchina del caffè", tv: "TV", range_hood: "Cappa aspirante", towel_dryer: "Scaldasalviette", server_rack: "Armadio server (homelab)", desktop_pc: "PC desktop", laptop: "Portatile", online: "Online", f_max_power_rack: "Carico massimo (W)", f_power_solar: "Sensore potenza surplus solare (W)", f_energy_solar: "Sensore energia surplus solare (kWh)", solar_surplus: "Surplus solare", mode_off: "Spento", wine_cooler: "Cantinetta vino", f_max_temperature_wine: "Avviso sopra (°C)", f_show_modes: "Mostra pulsanti modalità", grid: "Rete elettrica", energy_grid: "Energia dalla rete", energy_solar: "Energia solare", ac_split: "Climatizzatore (unità interna)", heat_pump: "Pompa di calore (unità esterna)", ac_dry: "Deumidificazione", ac_fan: "Solo ventilazione", at_target: "Temperatura raggiunta", defrost: "Sbrinamento", f_hvac: "Modalità senza entità climate", screen_on: "Acceso", lights: "Solo luci", f_light: "Entità luce (opzionale)", brewing: "Preparazione caffè", keep_warm: "Mantenimento in caldo", f_style: "Tipo di macchina del caffè", f_warm_threshold: "Mantenimento in caldo / pronta sopra (W)", fridge: "Frigorifero", pellet_stove: "Stufa a pellet", pool_pump: "Pompa piscina", printer_3d: "Stampante 3D", chest_freezer: "Congelatore a pozzetto", drawer_freezer: "Congelatore verticale", solar: "Pannelli solari", vmc: "Ventola di estrazione", hob: "Piano cottura", radiator: "Radiatore elettrico",
+    comfort: "Comfort", eco: "Eco", frost: "Antigelo", window_open: "Finestra aperta", f_mode: "Entità modalità (filo pilota, select…)", f_window: "Sensore finestra", f_max_power_rad: "Potenza radiatore (W)",
+    cooking: "Cottura", residual: "Calore residuo", zones: "Zone attive", f_zone_power: "Potenza di una zona (W)", f_zone_1: "Zona anteriore sinistra (livello o W)", f_zone_2: "Zona anteriore destra", f_zone_3: "Zona posteriore sinistra", f_zone_4: "Zona posteriore destra", f_residual_minutes: "Visualizza calore residuo (min)",
+    speed1: "Velocità bassa", speed2: "Velocità alta", humid: "Umidità elevata", humidity: "Umidità", f_humidity: "Sensore umidità (%)", f_high_threshold: "Velocità alta sopra (W)", f_humidity_max: "Avviso umidità sopra (%)",
+    producing: "In produzione", low: "Produzione bassa", night: "Notte", production: "Produzione", savings: "Risparmio", f_sun_entity: "Entità sole", f_max_power_solar: "Potenza di picco (Wp)",
+    printing: "Stampa in corso", paused: "In pausa", failed: "Non riuscita", progress: "Avanzamento", nozzle: "Ugello", bed: "Piano",
+    f_bed_temperature: "Sensore temperatura piano", f_filament_color: "Colore filamento (CSS)",
+    filtering: "Filtrazione", water: "Acqua", today: "Oggi", speed: "Velocità",
+    f_runtime: "Sensore durata filtrazione odierna", f_speed: "Sensore velocità (giri/min o %)", f_max_power: "Potenza massima alla massima velocità (W)",
+    ignition: "Accensione", extinguishing: "Spegnimento", alarm: "Allarme", pellets: "Pellet", pellets_low: "Pellet in esaurimento", level: "Livello",
+    f_power_level: "Sensore livello di calore (1-5)", f_pellet_level: "Sensore livello pellet (%)", f_ignition_threshold: "Accensione sopra (W)", f_pellet_alert: "Avviso pellet sotto (%)",
+    off: "Spento", idle: "Inattivo", standby: "Stand-by", running: "In funzione", finished: "Terminato",
+    heating: "Riscaldamento", ready: "Pronto", preheating: "Preriscaldamento", cooling: "Raffreddamento",
+    door_open: "Sportello aperto", unavailable: "Non disponibile", too_warm: "Temperatura troppo alta",
+    ph_wash: "Lavaggio", ph_rinse: "Risciacquo", ph_spin: "Centrifuga", ph_dry: "Asciugatura", ph_cool: "Raffreddamento",
+    power: "Potenza", energy: "Energia", cost: "Costo", remaining: "Rimanente", program: "Programma",
+    temperature: "Temperatura", target: "Obiettivo", fridge_temp: "Frigorifero", freezer_temp: "Congelatore",
+    ends_at: "Fine alle", toggle: "Accendi/spegni", confirm_off: "Ciclo in corso: premi di nuovo per interrompere l'alimentazione",
+    f_name: "Nome", f_entity: "Entità stato (switch, sensor, input_select…)",
+    f_power: "Sensore potenza (W)", f_energy: "Sensore energia (kWh)", f_cost: "Sensore costo",
+    f_remaining: "Sensore tempo rimanente", f_progress: "Sensore avanzamento (%)", f_program: "Sensore programma / fase",
+    f_door: "Sensore sportello", f_switch: "Interruttore da comandare (opzionale)", f_threshold: "Soglia di funzionamento (W)",
+    f_temperature: "Sensore temperatura", f_target_temperature: "Sensore temperatura obiettivo",
+    f_freezer_temperature: "Sensore temperatura congelatore", f_freezer_door: "Sensore sportello congelatore",
+    f_max_temperature: "Avviso frigorifero sopra (°C)", f_freezer_max_temperature: "Avviso congelatore sopra (°C)",
+    f_color: "Colore accento (CSS)", f_animations: "Animazioni", f_confirm_off: "Conferma prima di interrompere l'alimentazione durante un ciclo",
+  },
 };
 const lang = (hass) => {
   const l = (hass && (hass.locale?.language || hass.language)) || document.documentElement.lang || "en";
-  return l.toLowerCase().startsWith("fr") ? "fr" : "en";
+  const x = l.toLowerCase();
+  return x.startsWith("fr") ? "fr" : (x.startsWith("it") ? "it" : "en");
 };
 const tr = (hass, key) => STRINGS[lang(hass)][key] ?? STRINGS.en[key] ?? key;
 
@@ -2911,6 +2941,7 @@ window.customCards = window.customCards || [];
 const I18N_AQUARIUM = {
   fr: { power: 'Puissance', energy: 'Énergie', temp: 'Eau', cost: 'Coût', name: 'Aquarium', alert: 'Température hors plage', unavailable: 'Indisponible' },
   en: { power: 'Power', energy: 'Energy', temp: 'Water', cost: 'Cost', name: 'Aquarium', alert: 'Temperature out of range', unavailable: 'Unavailable' },
+  it: { power: 'Potenza', energy: 'Energia', temp: 'Acqua', cost: 'Costo', name: 'Acquario', alert: 'Temperatura fuori intervallo', unavailable: 'Non disponibile' }
 };
 
 class ApplianceAquariumCard extends HTMLElement {
@@ -2961,7 +2992,7 @@ class ApplianceAquariumCard extends HTMLElement {
 
   getCardSize() { return 5; }
 
-  _t(k) { return (I18N_AQUARIUM[this._config.language] || I18N_AQUARIUM.fr)[k]; }
+  _t(k) { return (I18N_AQUARIUM[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_AQUARIUM.fr)[k]; }
 
   _build() {
     const c = this._config;
@@ -3129,6 +3160,7 @@ window.customCards = window.customCards || [];
 const I18N_LINKY = {
   fr: { power: 'PUISSANCE', hp: 'INDEX HP', hc: 'INDEX HC', tariff: 'TARIF EN COURS', cost: 'COÛT JOUR', subscribed: 'Souscrite', name: 'Linky', conso: 'conso', alert: 'Dépassement' },
   en: { power: 'POWER', hp: 'PEAK INDEX', hc: 'OFF-PEAK INDEX', tariff: 'CURRENT TARIFF', cost: 'COST TODAY', subscribed: 'Subscribed', name: 'Linky', conso: 'usage', alert: 'Overload' },
+  it: { power: 'POTENZA', hp: 'INDICE F1', hc: 'INDICE F2', tariff: 'TARIFFA ATTUALE', cost: 'COSTO OGGI', subscribed: 'Impegnata', name: 'Contatore Linky', conso: 'consumo', alert: 'Sovraccarico' }
 };
 
 class ApplianceLinkyCard extends HTMLElement {
@@ -3169,7 +3201,7 @@ class ApplianceLinkyCard extends HTMLElement {
 
   set hass(hass) { this._hass = hass; this._update(); }
   getCardSize() { return 5; }
-  _t(k) { return (I18N_LINKY[this._config.language] || I18N_LINKY.fr)[k]; }
+  _t(k) { return (I18N_LINKY[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_LINKY.fr)[k]; }
 
   connectedCallback() {
     // Défilement des pages de l'écran LCD toutes les 3 s
@@ -3349,6 +3381,7 @@ window.customCards = window.customCards || [];
 const I18N_BAT = {
   fr: { name: 'Batterie solaire', soc: 'Charge', power: 'Puissance', energy: 'Énergie', temp: 'Température', charging: 'En charge', discharging: 'En décharge', idle: 'Repos', full: 'Plein dans', empty: 'Vide dans', low: 'Batterie faible' },
   en: { name: 'Solar battery', soc: 'Charge', power: 'Power', energy: 'Energy', temp: 'Temperature', charging: 'Charging', discharging: 'Discharging', idle: 'Idle', full: 'Full in', empty: 'Empty in', low: 'Low battery' },
+  it: { name: 'Batteria domestica', soc: 'Carica', power: 'Potenza', energy: 'Energia', temp: 'Temperatura', charging: 'In carica', discharging: 'In scarica', idle: 'Inattiva', full: 'Carica completa tra', empty: 'Scarica completa tra', low: 'Batteria scarica' }
 };
 
 class ApplianceBatteryCard extends HTMLElement {
@@ -3387,7 +3420,7 @@ class ApplianceBatteryCard extends HTMLElement {
   }
   set hass(h) { this._hass = h; this._update(); }
   getCardSize() { return 5; }
-  _t(k) { return (I18N_BAT[this._config.language] || I18N_BAT.fr)[k]; }
+  _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_BAT.fr)[k]; }
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
@@ -3528,6 +3561,7 @@ const I18N_EV = {
     charging: 'En charge', plugged: 'Branchée', done: 'Terminée', disconnected: 'Débranchée' },
   en: { name: 'EV charger', power: 'Power', energy: 'Session', soc: 'Battery', status: 'Status', duration: 'Duration', cost: 'Cost',
     charging: 'Charging', plugged: 'Plugged in', done: 'Complete', disconnected: 'Unplugged' },
+  it: { name: 'Colonnina di ricarica', power: 'Potenza', energy: 'Sessione', soc: 'Batteria', status: 'Stato', duration: 'Durata', cost: 'Costo', charging: 'In carica', plugged: 'Collegata', done: 'Completata', disconnected: 'Scollegata' }
 };
 
 class ApplianceEvChargerCard extends HTMLElement {
@@ -3569,7 +3603,7 @@ class ApplianceEvChargerCard extends HTMLElement {
   getCardSize() { return 5; }
   connectedCallback() { this._timer = setInterval(() => this._update(), 30000); } // rafraîchit la durée
   disconnectedCallback() { clearInterval(this._timer); }
-  _t(k) { return (I18N_EV[this._config.language] || I18N_EV.fr)[k]; }
+  _t(k) { return (I18N_EV[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_EV.fr)[k]; }
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
@@ -3743,6 +3777,7 @@ const I18N_VAC = {
   en: { name: 'Robot vacuum', battery: 'Battery', area: 'Area', time: 'Time', fan: 'Suction', status: 'Status', filter: 'Filter', brush: 'Brush',
     start: 'Start', pause: 'Pause', dock: 'Dock',
     cleaning: 'Cleaning', docked: 'Docked', charging: 'Charging', returning: 'Returning', paused: 'Paused', idle: 'Idle', error: 'Error', emptying: 'Emptying' },
+  it: { name: 'Robot aspirapolvere', battery: 'Batteria', area: 'Superficie', time: 'Durata', fan: 'Aspirazione', status: 'Stato', filter: 'Filtro', brush: 'Spazzola', start: 'Avvia', pause: 'Pausa', dock: 'Base', cleaning: 'Pulizia', docked: 'Alla base', charging: 'In carica', returning: 'Ritorno alla base', paused: 'In pausa', idle: 'Inattivo', error: 'Errore', emptying: 'Svuotamento' }
 };
 const ICONS_VAC = {
   start: '<path d="M8 5v14l11-7z"/>',
@@ -3787,7 +3822,7 @@ class ApplianceRobotVacuumCard extends HTMLElement {
   }
   set hass(h) { this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  _t(k) { return (I18N_VAC[this._config.language] || I18N_VAC.fr)[k] || k; }
+  _t(k) { return (I18N_VAC[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_VAC.fr)[k] || k; }
 
   _call(action) {
     if (!this._hass) return;
@@ -3966,6 +4001,7 @@ const I18N_MOW = {
   en: { name: 'Robot mower', battery: 'Battery', area: 'Area', time: 'Mowing', next: 'Next start', status: 'Status', blade: 'Blade', rain: 'Rain',
     start: 'Mow', pause: 'Pause', dock: 'Dock',
     mowing: 'Mowing', docked: 'Docked', charging: 'Charging', returning: 'Returning', paused: 'Paused', idle: 'Idle', error: 'Error' },
+  it: { name: 'Robot tagliaerba', battery: 'Batteria', area: 'Superficie', time: 'Taglio', next: 'Prossimo avvio', status: 'Stato', blade: 'Lama', rain: 'Pioggia', start: 'Taglia', pause: 'Pausa', dock: 'Base', mowing: 'Taglio in corso', docked: 'Alla base', charging: 'In carica', returning: 'Ritorno alla base', paused: 'In pausa', idle: 'Inattivo', error: 'Errore' }
 };
 const ICONS_MOW = {
   start: '<path d="M8 5v14l11-7z"/>',
@@ -4011,7 +4047,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
   }
   set hass(h) { this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  _t(k) { return (I18N_MOW[this._config.language] || I18N_MOW.fr)[k] || k; }
+  _t(k) { return (I18N_MOW[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_MOW.fr)[k] || k; }
 
   _call(action) {
     if (!this._hass) return;
@@ -4180,6 +4216,7 @@ const I18N_PB = {
     off: 'Arrêt', ignition: 'Allumage', heating: 'Chauffe', extinguishing: 'Extinction', alarm: 'Alarme', low: 'Granulés bas' },
   en: { name: 'Pellet boiler', power: 'Power', energy: 'Energy', cost: 'Cost', flow: 'Flow', ret: 'Return', pellets: 'Pellets', status: 'Status',
     off: 'Off', ignition: 'Igniting', heating: 'Heating', extinguishing: 'Shutting down', alarm: 'Alarm', low: 'Low pellets' },
+  it: { name: 'Caldaia a pellet', power: 'Potenza', energy: 'Energia', cost: 'Costo', flow: 'Mandata', ret: 'Ritorno', pellets: 'Pellet', status: 'Stato', off: 'Spenta', ignition: 'Accensione', heating: 'Riscaldamento', extinguishing: 'Spegnimento', alarm: 'Allarme', low: 'Pellet in esaurimento' }
 };
 
 class AppliancePelletBoilerCard extends HTMLElement {
@@ -4223,7 +4260,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
   }
   set hass(h) { this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  _t(k) { return (I18N_PB[this._config.language] || I18N_PB.fr)[k] || k; }
+  _t(k) { return (I18N_PB[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_PB.fr)[k] || k; }
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
