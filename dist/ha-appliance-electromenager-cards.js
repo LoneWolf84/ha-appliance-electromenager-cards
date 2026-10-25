@@ -8,71 +8,401 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.17.0";
+const VERSION = "1.21.2";
 
 /* ------------------------------------------------------------------ */
-/* i18n                                                                */
+/* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
 /* ------------------------------------------------------------------ */
 const STRINGS = {
-  en: {
-    washer: "Washing machine", dryer: "Dryer", dishwasher: "Dishwasher",
-    water_heater: "Water heater", oven: "Oven", microwave: "Microwave", air_fryer: "Air fryer", coffee_maker: "Coffee maker", tv: "TV", range_hood: "Range hood", towel_dryer: "Heated towel rail", server_rack: "Server rack (homelab)", desktop_pc: "Desktop PC", laptop: "Laptop", online: "Online", f_max_power_rack: "Max load (W)", f_power_solar: "Solar surplus power sensor (W)", f_energy_solar: "Solar surplus energy sensor (kWh)", solar_surplus: "Solar surplus", mode_off: "Off", wine_cooler: "Wine cooler", f_max_temperature_wine: "Alert above (°C)", f_show_modes: "Show mode buttons", grid: "Grid", energy_grid: "Grid energy", energy_solar: "Solar energy", ac_split: "Air conditioner (indoor)", heat_pump: "Heat pump (outdoor unit)", ac_dry: "Drying", ac_fan: "Fan only", at_target: "At target", defrost: "Defrosting", f_hvac: "Mode without climate entity", screen_on: "On", lights: "Lights only", f_light: "Light entity (optional)", brewing: "Brewing", keep_warm: "Keeping warm", f_style: "Coffee maker type", f_warm_threshold: "Keep-warm / ready above (W)", fridge: "Refrigerator", pellet_stove: "Pellet stove", pool_pump: "Pool pump", printer_3d: "3D printer", chest_freezer: "Chest freezer", drawer_freezer: "Upright freezer", solar: "Solar panels", vmc: "Extractor fan", hob: "Cooktop", radiator: "Electric radiator",
-    comfort: "Comfort", eco: "Eco", frost: "Frost protection", window_open: "Window open", f_mode: "Mode entity (pilot wire, select…)", f_window: "Window sensor", f_max_power_rad: "Radiator power (W)",
-    cooking: "Cooking", residual: "Residual heat", zones: "Active zones", f_zone_power: "Power of one zone (W)", f_zone_1: "Front-left zone (level or W)", f_zone_2: "Front-right zone", f_zone_3: "Back-left zone", f_zone_4: "Back-right zone", f_residual_minutes: "Residual heat display (min)",
-    speed1: "Low speed", speed2: "High speed", humid: "High humidity", humidity: "Humidity", f_humidity: "Humidity sensor (%)", f_high_threshold: "High speed above (W)", f_humidity_max: "Humidity alert above (%)",
-    producing: "Producing", low: "Low production", night: "Night", production: "Production", savings: "Savings", f_sun_entity: "Sun entity", f_max_power_solar: "Peak power (Wp)",
-    printing: "Printing", paused: "Paused", failed: "Failed", progress: "Progress", nozzle: "Nozzle", bed: "Bed",
-    f_bed_temperature: "Bed temperature sensor", f_filament_color: "Filament color (CSS)",
-    filtering: "Filtering", water: "Water", today: "Today", speed: "Speed",
-    f_runtime: "Filtration time today sensor", f_speed: "Speed sensor (rpm or %)", f_max_power: "Max power at full speed (W)",
-    ignition: "Igniting", extinguishing: "Shutting down", alarm: "Alarm", pellets: "Pellets", pellets_low: "Low pellets", level: "Level",
-    f_power_level: "Heat level sensor (1-5)", f_pellet_level: "Pellet level sensor (%)", f_ignition_threshold: "Ignition above (W)", f_pellet_alert: "Low pellet alert below (%)",
-    off: "Off", idle: "Idle", standby: "Standby", running: "Running", finished: "Finished",
-    heating: "Heating", ready: "Ready", preheating: "Preheating", cooling: "Cooling",
-    door_open: "Door open", unavailable: "Unavailable", too_warm: "Too warm",
-    ph_wash: "Washing", ph_rinse: "Rinsing", ph_spin: "Spinning", ph_dry: "Drying", ph_cool: "Cooling down",
-    power: "Power", energy: "Energy", cost: "Cost", remaining: "Remaining", program: "Program",
-    temperature: "Temperature", target: "Target", fridge_temp: "Fridge", freezer_temp: "Freezer",
-    ends_at: "Ends at", toggle: "Turn on/off", confirm_off: "Cycle running – click again to cut power",
-    f_name: "Name", f_entity: "Status entity (switch, sensor, input_select…)",
-    f_power: "Power sensor (W)", f_energy: "Energy sensor (kWh)", f_cost: "Cost sensor",
-    f_remaining: "Remaining time sensor", f_progress: "Progress sensor (%)", f_program: "Program / phase sensor",
-    f_door: "Door sensor", f_switch: "Switch to toggle (optional)", f_threshold: "Running threshold (W)",
-    f_temperature: "Temperature sensor", f_target_temperature: "Target temperature sensor",
-    f_freezer_temperature: "Freezer temperature sensor", f_freezer_door: "Freezer door sensor",
-    f_max_temperature: "Fridge alert above (°C)", f_freezer_max_temperature: "Freezer alert above (°C)",
-    f_color: "Accent color (CSS)", f_animations: "Animations", f_confirm_off: "Confirm before cutting power during a cycle",
+  "en": {
+    "washer": "Washing machine",
+    "dryer": "Dryer",
+    "dishwasher": "Dishwasher",
+    "water_heater": "Water heater",
+    "oven": "Oven",
+    "microwave": "Microwave",
+    "air_fryer": "Air fryer",
+    "coffee_maker": "Coffee maker",
+    "tv": "TV",
+    "range_hood": "Range hood",
+    "beer_tap": "Beer tap",
+    "av_receiver": "Home cinema amplifier",
+    "fan": "Fan",
+    "ceiling_fan": "Ceiling fan",
+    "generic": "Generic appliance (custom image)",
+    "towel_dryer": "Heated towel rail",
+    "server_rack": "Server rack (homelab)",
+    "desktop_pc": "Desktop PC",
+    "laptop": "Laptop",
+    "tool_charger": "Tool battery charger",
+    "charging": "Charging",
+    "charged": "Charged",
+    "battery": "Battery",
+    "f_battery_level": "Battery level sensor (%)",
+    "f_standby_threshold": "Charged (maintenance) above (W)",
+    "online": "Online",
+    "f_max_power_rack": "Max load (W)",
+    "f_power_solar": "Solar surplus power sensor (W)",
+    "f_energy_solar": "Solar surplus energy sensor (kWh)",
+    "solar_surplus": "Solar surplus",
+    "mode_off": "Off",
+    "wine_cooler": "Wine cooler",
+    "f_max_temperature_wine": "Alert above (°C)",
+    "f_fridge_style": "Refrigerator layout",
+    "zone_top": "Upper zone",
+    "zone_bottom": "Lower zone",
+    "f_zone2_temperature": "Lower zone temperature sensor (dual-zone)",
+    "f_max_temperature_2": "Lower zone alert above (°C)",
+    "f_show_modes": "Show mode buttons",
+    "f_show_power": "Show power",
+    "grid": "Grid",
+    "energy_grid": "Grid energy",
+    "energy_solar": "Solar energy",
+    "ac_split": "Air conditioner (indoor)",
+    "heat_pump": "Heat pump (outdoor unit)",
+    "ac_dry": "Drying",
+    "ac_fan": "Fan only",
+    "at_target": "At target",
+    "defrost": "Defrosting",
+    "f_hvac": "Mode without climate entity",
+    "screen_on": "On",
+    "lights": "Lights only",
+    "f_light": "Light entity (optional)",
+    "brewing": "Brewing",
+    "keep_warm": "Keeping warm",
+    "f_style": "Coffee maker type",
+    "f_warm_threshold": "Keep-warm / ready above (W)",
+    "fridge": "Refrigerator",
+    "pellet_stove": "Pellet stove",
+    "pool_pump": "Pool pump",
+    "printer_3d": "3D printer",
+    "chest_freezer": "Chest freezer",
+    "drawer_freezer": "Upright freezer",
+    "solar": "Solar panels",
+    "vmc": "Extractor fan",
+    "hob": "Cooktop",
+    "radiator": "Electric radiator",
+    "comfort": "Comfort",
+    "eco": "Eco",
+    "frost": "Frost protection",
+    "window_open": "Window open",
+    "f_mode": "Mode entity (pilot wire, select…)",
+    "f_window": "Window sensor",
+    "f_max_power_rad": "Radiator power (W)",
+    "cooking": "Cooking",
+    "residual": "Residual heat",
+    "zones": "Active zones",
+    "f_zone_power": "Power of one zone (W)",
+    "f_zone_1": "Front-left zone (level or W)",
+    "f_zone_2": "Front-right zone",
+    "f_zone_3": "Back-left zone",
+    "f_zone_4": "Back-right zone",
+    "f_residual_minutes": "Residual heat display (min)",
+    "speed1": "Low speed",
+    "speed2": "High speed",
+    "humid": "High humidity",
+    "humidity": "Humidity",
+    "f_humidity": "Humidity sensor (%)",
+    "f_high_threshold": "High speed above (W)",
+    "f_humidity_max": "Humidity alert above (%)",
+    "producing": "Producing",
+    "low": "Low production",
+    "night": "Night",
+    "production": "Production",
+    "savings": "Savings",
+    "f_sun_entity": "Sun entity",
+    "f_max_power_solar": "Peak power (Wp)",
+    "printing": "Printing",
+    "paused": "Paused",
+    "failed": "Failed",
+    "progress": "Progress",
+    "nozzle": "Nozzle",
+    "bed": "Bed",
+    "f_bed_temperature": "Bed temperature sensor",
+    "f_filament_color": "Filament color (CSS)",
+    "f_image": "Image URL (e.g. /local/my-device.png)",
+    "f_nozzle_temperatures": "Nozzle temperature sensors (T0, T1…)",
+    "filtering": "Filtering",
+    "water": "Water",
+    "today": "Today",
+    "speed": "Speed",
+    "f_runtime": "Filtration time today sensor",
+    "f_speed": "Speed sensor (rpm or %)",
+    "f_max_power": "Max power at full speed (W)",
+    "ignition": "Igniting",
+    "extinguishing": "Shutting down",
+    "alarm": "Alarm",
+    "pellets": "Pellets",
+    "pellets_low": "Low pellets",
+    "level": "Level",
+    "f_power_level": "Heat level sensor (1-5)",
+    "f_pellet_level": "Pellet level sensor (%)",
+    "f_ignition_threshold": "Ignition above (W)",
+    "f_pellet_alert": "Low pellet alert below (%)",
+    "off": "Off",
+    "idle": "Idle",
+    "standby": "Standby",
+    "running": "Running",
+    "finished": "Finished",
+    "heating": "Heating",
+    "ready": "Ready",
+    "preheating": "Preheating",
+    "cooling": "Cooling",
+    "door_open": "Door open",
+    "unavailable": "Unavailable",
+    "too_warm": "Too warm",
+    "ph_wash": "Washing",
+    "ph_rinse": "Rinsing",
+    "ph_spin": "Spinning",
+    "ph_dry": "Drying",
+    "ph_cool": "Cooling down",
+    "power": "Power",
+    "energy": "Energy",
+    "cost": "Cost",
+    "remaining": "Remaining",
+    "program": "Program",
+    "temperature": "Temperature",
+    "target": "Target",
+    "fridge_temp": "Fridge",
+    "freezer_temp": "Freezer",
+    "ends_at": "Ends at",
+    "toggle": "Turn on/off",
+    "confirm_off": "Cycle running – click again to cut power",
+    "f_name": "Name",
+    "f_entity": "Status entity (switch, sensor, input_select…)",
+    "f_power": "Power sensor (W)",
+    "f_energy": "Energy sensor (kWh)",
+    "f_cost": "Cost sensor",
+    "f_remaining": "Remaining time sensor",
+    "f_progress": "Progress sensor (%)",
+    "f_program": "Program / phase sensor",
+    "f_door": "Door sensor",
+    "f_switch": "Switch to toggle (optional)",
+    "f_threshold": "Running threshold (W)",
+    "f_temperature": "Temperature sensor",
+    "f_target_temperature": "Target temperature sensor",
+    "f_freezer_temperature": "Freezer temperature sensor",
+    "f_freezer_door": "Freezer door sensor",
+    "f_max_temperature": "Fridge alert above (°C)",
+    "f_freezer_max_temperature": "Freezer alert above (°C)",
+    "f_color": "Accent color (CSS)",
+    "f_animations": "Animations",
+    "f_confirm_off": "Confirm before cutting power during a cycle",
+    "err_need_entity": "Set at least one of `entity`, `power`, `switch` or `temperature`.",
+    "of_peak": "of peak",
+    "lcd_night": "NIGHT",
+    "lcd_ignition": "IGNIT",
+    "lcd_extinguishing": "COOL",
+    "lcd_brewing": "BREW",
+    "lcd_ready": "READY",
+    "pouring": "Pouring",
+    "playing": "Playing",
+    "muted": "Muted",
+    "keg": "Keg",
+    "keg_low": "Keg almost empty",
+    "f_keg_level": "Keg level sensor (%)",
+    "f_pouring": "Pouring sensor (optional)",
+    "fan_1": "Speed 1",
+    "fan_2": "Speed 2",
+    "fan_3": "Speed 3",
+    "f_oscillating": "Oscillation",
+    "f_mid_threshold": "Speed 2 above (W)"
   },
-  fr: {
-    washer: "Lave-linge", dryer: "Sèche-linge", dishwasher: "Lave-vaisselle",
-    water_heater: "Ballon d'eau chaude", oven: "Four", microwave: "Micro-ondes", air_fryer: "Airfryer", coffee_maker: "Cafetière", tv: "Téléviseur", range_hood: "Hotte aspirante", towel_dryer: "Sèche-serviettes", server_rack: "Baie informatique (homelab)", desktop_pc: "PC fixe", laptop: "PC portable", online: "En ligne", f_max_power_rack: "Charge max (W)", f_power_solar: "Capteur de puissance surplus solaire (W)", f_energy_solar: "Capteur d'énergie surplus solaire (kWh)", solar_surplus: "Surplus solaire", mode_off: "Arrêt", wine_cooler: "Cave à vin", f_max_temperature_wine: "Alerte au-dessus de (°C)", f_show_modes: "Afficher les boutons de mode", grid: "Réseau", energy_grid: "Énergie réseau", energy_solar: "Énergie solaire", ac_split: "Climatiseur (split)", heat_pump: "Pompe à chaleur (ext.)", ac_dry: "Déshumidification", ac_fan: "Ventilation", at_target: "Consigne atteinte", defrost: "Dégivrage", f_hvac: "Mode sans entité climate", screen_on: "Allumée", lights: "Éclairage", f_light: "Entité d'éclairage (optionnel)", brewing: "Préparation du café", keep_warm: "Maintien au chaud", f_style: "Type de cafetière", f_warm_threshold: "Maintien au chaud / prête au-dessus de (W)", fridge: "Réfrigérateur", pellet_stove: "Poêle à granulés", pool_pump: "Pompe de piscine", printer_3d: "Imprimante 3D", chest_freezer: "Congélateur coffre", drawer_freezer: "Congélateur à tiroirs", solar: "Panneaux solaires", vmc: "VMC", hob: "Plaques de cuisson", radiator: "Radiateur",
-    comfort: "Confort", eco: "Éco", frost: "Hors-gel", window_open: "Fenêtre ouverte", f_mode: "Entité de mode (fil pilote, liste…)", f_window: "Capteur de fenêtre", f_max_power_rad: "Puissance du radiateur (W)",
-    cooking: "Cuisson", residual: "Chaleur résiduelle", zones: "Foyers actifs", f_zone_power: "Puissance d'un foyer (W)", f_zone_1: "Foyer avant gauche (niveau ou W)", f_zone_2: "Foyer avant droit", f_zone_3: "Foyer arrière gauche", f_zone_4: "Foyer arrière droit", f_residual_minutes: "Affichage chaleur résiduelle (min)",
-    speed1: "Petite vitesse", speed2: "Grande vitesse", humid: "Humidité élevée", humidity: "Humidité", f_humidity: "Capteur d'humidité (%)", f_high_threshold: "Grande vitesse au-dessus de (W)", f_humidity_max: "Alerte humidité au-dessus de (%)",
-    producing: "Production", low: "Production faible", night: "Nuit", production: "Production", savings: "Économies", f_sun_entity: "Entité soleil", f_max_power_solar: "Puissance crête (Wc)",
-    printing: "Impression", paused: "En pause", failed: "Échec", progress: "Progression", nozzle: "Buse", bed: "Plateau",
-    f_bed_temperature: "Capteur de température du plateau", f_filament_color: "Couleur du filament (CSS)",
-    filtering: "Filtration", water: "Eau", today: "Aujourd'hui", speed: "Vitesse",
-    f_runtime: "Capteur de durée de filtration du jour", f_speed: "Capteur de vitesse (tr/min ou %)", f_max_power: "Puissance max à pleine vitesse (W)",
-    ignition: "Allumage", extinguishing: "Extinction", alarm: "Alarme", pellets: "Granulés", pellets_low: "Granulés bas", level: "Niveau",
-    f_power_level: "Capteur de puissance de chauffe (1-5)", f_pellet_level: "Capteur de niveau de granulés (%)", f_ignition_threshold: "Allumage au-dessus de (W)", f_pellet_alert: "Alerte granulés sous (%)",
-    off: "Éteint", idle: "Inactif", standby: "Veille", running: "En cours", finished: "Terminé",
-    heating: "En chauffe", ready: "Prêt", preheating: "Préchauffage", cooling: "Refroidit",
-    door_open: "Porte ouverte", unavailable: "Indisponible", too_warm: "Trop chaud",
-    ph_wash: "Lavage", ph_rinse: "Rinçage", ph_spin: "Essorage", ph_dry: "Séchage", ph_cool: "Refroidissement",
-    power: "Puissance", energy: "Énergie", cost: "Coût", remaining: "Restant", program: "Programme",
-    temperature: "Température", target: "Consigne", fridge_temp: "Frigo", freezer_temp: "Congélateur",
-    ends_at: "Fin à", toggle: "Allumer/éteindre", confirm_off: "Cycle en cours – cliquer encore pour couper",
-    f_name: "Nom", f_entity: "Entité d'état (switch, sensor, input_select…)",
-    f_power: "Capteur de puissance (W)", f_energy: "Capteur d'énergie (kWh)", f_cost: "Capteur de coût",
-    f_remaining: "Capteur de temps restant", f_progress: "Capteur de progression (%)", f_program: "Capteur de programme / phase",
-    f_door: "Capteur de porte", f_switch: "Interrupteur à piloter (optionnel)", f_threshold: "Seuil de fonctionnement (W)",
-    f_temperature: "Capteur de température", f_target_temperature: "Capteur de consigne",
-    f_freezer_temperature: "Capteur température congélateur", f_freezer_door: "Capteur porte congélateur",
-    f_max_temperature: "Alerte frigo au-dessus de (°C)", f_freezer_max_temperature: "Alerte congélateur au-dessus de (°C)",
-    f_color: "Couleur d'accent (CSS)", f_animations: "Animations", f_confirm_off: "Confirmer avant de couper pendant un cycle",
+  "de": {
+    "washer": "Waschmaschine",
+    "dryer": "Wäschetrockner",
+    "dishwasher": "Geschirrspüler",
+    "water_heater": "Warmwasserspeicher",
+    "oven": "Backofen",
+    "microwave": "Mikrowelle",
+    "air_fryer": "Heißluftfritteuse",
+    "coffee_maker": "Kaffeemaschine",
+    "tv": "Fernseher",
+    "range_hood": "Dunstabzugshaube",
+    "beer_tap": "Zapfanlage",
+    "av_receiver": "Heimkino-Verstärker",
+    "fan": "Ventilator",
+    "ceiling_fan": "Deckenventilator",
+    "generic": "Generisches Gerät (eigenes Bild)",
+    "towel_dryer": "Handtuchheizkörper",
+    "server_rack": "Serverschrank (Homelab)",
+    "desktop_pc": "Desktop-PC",
+    "laptop": "Laptop",
+    "tool_charger": "Werkzeug-Akkuladegerät",
+    "charging": "Lädt",
+    "charged": "Geladen",
+    "battery": "Akku",
+    "f_battery_level": "Akkustand-Sensor (%)",
+    "f_standby_threshold": "Geladen (Erhaltung) über (W)",
+    "online": "Online",
+    "f_max_power_rack": "Maximale Last (W)",
+    "f_power_solar": "Sensor Solarüberschuss-Leistung (W)",
+    "f_energy_solar": "Sensor Solarüberschuss-Energie (kWh)",
+    "solar_surplus": "Solarüberschuss",
+    "mode_off": "Aus",
+    "wine_cooler": "Weinkühlschrank",
+    "f_max_temperature_wine": "Alarm über (°C)",
+    "f_fridge_style": "Kühlschrank-Bauform",
+    "zone_top": "Obere Zone",
+    "zone_bottom": "Untere Zone",
+    "f_zone2_temperature": "Temperatursensor untere Zone (Zwei-Zonen)",
+    "f_max_temperature_2": "Alarm untere Zone über (°C)",
+    "f_show_modes": "Modus-Tasten anzeigen",
+    "f_show_power": "Leistung anzeigen",
+    "grid": "Netz",
+    "energy_grid": "Netzenergie",
+    "energy_solar": "Solarenergie",
+    "ac_split": "Klimagerät (Innengerät)",
+    "heat_pump": "Wärmepumpe (Außengerät)",
+    "ac_dry": "Entfeuchten",
+    "ac_fan": "Nur Lüfter",
+    "at_target": "Sollwert erreicht",
+    "defrost": "Abtauen",
+    "f_hvac": "Modus ohne Klima-Entität",
+    "screen_on": "Ein",
+    "lights": "Nur Beleuchtung",
+    "f_light": "Licht-Entität (optional)",
+    "brewing": "Brüht",
+    "keep_warm": "Warmhalten",
+    "f_style": "Kaffeemaschinentyp",
+    "f_warm_threshold": "Warmhalten / bereit über (W)",
+    "fridge": "Kühlschrank",
+    "pellet_stove": "Pelletofen",
+    "pool_pump": "Poolpumpe",
+    "printer_3d": "3D-Drucker",
+    "chest_freezer": "Gefriertruhe",
+    "drawer_freezer": "Gefrierschrank",
+    "solar": "Solarmodule",
+    "vmc": "Badlüfter",
+    "hob": "Kochfeld",
+    "radiator": "Elektroheizkörper",
+    "comfort": "Komfort",
+    "eco": "Eco",
+    "frost": "Frostschutz",
+    "window_open": "Fenster offen",
+    "f_mode": "Modus-Entität (Steuerleitung, Auswahl…)",
+    "f_window": "Fenstersensor",
+    "f_max_power_rad": "Heizkörperleistung (W)",
+    "cooking": "Kochen",
+    "residual": "Restwärme",
+    "zones": "Aktive Kochzonen",
+    "f_zone_power": "Leistung einer Kochzone (W)",
+    "f_zone_1": "Kochzone vorne links (Stufe oder W)",
+    "f_zone_2": "Kochzone vorne rechts",
+    "f_zone_3": "Kochzone hinten links",
+    "f_zone_4": "Kochzone hinten rechts",
+    "f_residual_minutes": "Restwärmeanzeige (min)",
+    "speed1": "Niedrige Stufe",
+    "speed2": "Hohe Stufe",
+    "humid": "Hohe Luftfeuchtigkeit",
+    "humidity": "Luftfeuchtigkeit",
+    "f_humidity": "Feuchtigkeitssensor (%)",
+    "f_high_threshold": "Hohe Stufe über (W)",
+    "f_humidity_max": "Feuchtigkeitsalarm über (%)",
+    "producing": "Erzeugt",
+    "low": "Geringe Erzeugung",
+    "night": "Nacht",
+    "production": "Erzeugung",
+    "savings": "Ersparnis",
+    "f_sun_entity": "Sonnen-Entität",
+    "f_max_power_solar": "Spitzenleistung (Wp)",
+    "printing": "Druckt",
+    "paused": "Pausiert",
+    "failed": "Fehlgeschlagen",
+    "progress": "Fortschritt",
+    "nozzle": "Düse",
+    "bed": "Druckbett",
+    "f_bed_temperature": "Sensor Druckbetttemperatur",
+    "f_filament_color": "Filamentfarbe (CSS)",
+    "f_image": "Bild-URL (z. B. /local/mein-geraet.png)",
+    "f_nozzle_temperatures": "Düsentemperatursensoren (T0, T1…)",
+    "filtering": "Filtert",
+    "water": "Wasser",
+    "today": "Heute",
+    "speed": "Drehzahl",
+    "f_runtime": "Sensor Filterlaufzeit heute",
+    "f_speed": "Drehzahlsensor (U/min oder %)",
+    "f_max_power": "Maximale Leistung bei voller Drehzahl (W)",
+    "ignition": "Zündung",
+    "extinguishing": "Abschaltung",
+    "alarm": "Alarm",
+    "pellets": "Pellets",
+    "pellets_low": "Pellets niedrig",
+    "level": "Stufe",
+    "f_power_level": "Sensor Heizstufe (1-5)",
+    "f_pellet_level": "Sensor Pelletfüllstand (%)",
+    "f_ignition_threshold": "Zündung über (W)",
+    "f_pellet_alert": "Pelletalarm unter (%)",
+    "off": "Aus",
+    "idle": "Inaktiv",
+    "standby": "Standby",
+    "running": "Läuft",
+    "finished": "Fertig",
+    "heating": "Heizt",
+    "ready": "Bereit",
+    "preheating": "Vorheizen",
+    "cooling": "Kühlt",
+    "door_open": "Tür offen",
+    "unavailable": "Nicht verfügbar",
+    "too_warm": "Zu warm",
+    "ph_wash": "Waschen",
+    "ph_rinse": "Spülen",
+    "ph_spin": "Schleudern",
+    "ph_dry": "Trocknen",
+    "ph_cool": "Abkühlen",
+    "power": "Leistung",
+    "energy": "Energie",
+    "cost": "Kosten",
+    "remaining": "Restzeit",
+    "program": "Programm",
+    "temperature": "Temperatur",
+    "target": "Sollwert",
+    "fridge_temp": "Kühlschrank",
+    "freezer_temp": "Gefrierfach",
+    "ends_at": "Endet um",
+    "toggle": "Ein/Aus",
+    "confirm_off": "Zyklus läuft – erneut klicken zum Abschalten",
+    "f_name": "Name",
+    "f_entity": "Status-Entität (switch, sensor, input_select…)",
+    "f_power": "Leistungssensor (W)",
+    "f_energy": "Energiesensor (kWh)",
+    "f_cost": "Kostensensor",
+    "f_remaining": "Restzeitsensor",
+    "f_progress": "Fortschrittssensor (%)",
+    "f_program": "Programm-/Phasensensor",
+    "f_door": "Türsensor",
+    "f_switch": "Zu schaltender Schalter (optional)",
+    "f_threshold": "Betriebsschwelle (W)",
+    "f_temperature": "Temperatursensor",
+    "f_target_temperature": "Sollwertsensor",
+    "f_freezer_temperature": "Gefrierfach-Temperatursensor",
+    "f_freezer_door": "Gefrierfach-Türsensor",
+    "f_max_temperature": "Kühlschrankalarm über (°C)",
+    "f_freezer_max_temperature": "Gefrierfachalarm über (°C)",
+    "f_color": "Akzentfarbe (CSS)",
+    "f_animations": "Animationen",
+    "f_confirm_off": "Abschalten während eines Zyklus bestätigen",
+    "err_need_entity": "Mindestens eines von `entity`, `power`, `switch` oder `temperature` angeben.",
+    "of_peak": "der Spitzenleistung",
+    "lcd_night": "NACHT",
+    "lcd_ignition": "ZÜND",
+    "lcd_extinguishing": "STOP",
+    "lcd_brewing": "BRÜHT",
+    "lcd_ready": "BEREIT",
+    "pouring": "Zapft",
+    "playing": "Wiedergabe",
+    "muted": "Stumm",
+    "keg": "Fass",
+    "keg_low": "Fass fast leer",
+    "f_keg_level": "Fassfüllstand-Sensor (%)",
+    "f_pouring": "Zapf-Sensor (optional)",
+    "fan_1": "Stufe 1",
+    "fan_2": "Stufe 2",
+    "fan_3": "Stufe 3",
+    "f_oscillating": "Oszillation",
+    "f_mid_threshold": "Stufe 2 ab (W)"
   },
-  it: {
+it: {
     washer: "Lavatrice", dryer: "Asciugatrice", dishwasher: "Lavastoviglie",
     water_heater: "Scaldacqua", oven: "Forno", microwave: "Microonde", air_fryer: "Friggitrice ad aria", coffee_maker: "Macchina del caffè", tv: "TV", range_hood: "Cappa aspirante", towel_dryer: "Scaldasalviette", server_rack: "Armadio server (homelab)", desktop_pc: "PC desktop", laptop: "Portatile", online: "Online", f_max_power_rack: "Carico massimo (W)", f_power_solar: "Sensore potenza surplus solare (W)", f_energy_solar: "Sensore energia surplus solare (kWh)", solar_surplus: "Surplus solare", mode_off: "Spento", wine_cooler: "Cantinetta vino", f_max_temperature_wine: "Avviso sopra (°C)", f_show_modes: "Mostra pulsanti modalità", grid: "Rete elettrica", energy_grid: "Energia dalla rete", energy_solar: "Energia solare", ac_split: "Climatizzatore (unità interna)", heat_pump: "Pompa di calore (unità esterna)", ac_dry: "Deumidificazione", ac_fan: "Solo ventilazione", at_target: "Temperatura raggiunta", defrost: "Sbrinamento", f_hvac: "Modalità senza entità climate", screen_on: "Acceso", lights: "Solo luci", f_light: "Entità luce (opzionale)", brewing: "Preparazione caffè", keep_warm: "Mantenimento in caldo", f_style: "Tipo di macchina del caffè", f_warm_threshold: "Mantenimento in caldo / pronta sopra (W)", fridge: "Frigorifero", pellet_stove: "Stufa a pellet", pool_pump: "Pompa piscina", printer_3d: "Stampante 3D", chest_freezer: "Congelatore a pozzetto", drawer_freezer: "Congelatore verticale", solar: "Pannelli solari", vmc: "Ventola di estrazione", hob: "Piano cottura", radiator: "Radiatore elettrico",
     comfort: "Comfort", eco: "Eco", frost: "Antigelo", window_open: "Finestra aperta", f_mode: "Entità modalità (filo pilota, select…)", f_window: "Sensore finestra", f_max_power_rad: "Potenza radiatore (W)",
@@ -106,6 +436,7 @@ const lang = (hass) => {
   const l = (hass && (hass.locale?.language || hass.language)) || document.documentElement.lang || "en";
   const x = l.toLowerCase();
   return x.startsWith("fr") ? "fr" : (x.startsWith("it") ? "it" : "en");
+
 };
 const tr = (hass, key) => STRINGS[lang(hass)][key] ?? STRINGS.en[key] ?? key;
 
@@ -160,203 +491,34 @@ const drumInside = (cx, cy, r) => `
 const feet = (xs, y) => xs.map((x) => `<rect x="${x}" y="${y}" width="10" height="7" rx="1.5" fill="#3a3f45"/>`).join("");
 
 const cfStyle = (c) => ({ filtre: "filtre", filter: "filtre", drip: "filtre", dosette: "dosette", dosettes: "dosette", pod: "dosette", capsule: "dosette", capsules: "dosette", senseo: "dosette", nespresso: "dosette", expresso: "expresso", espresso: "expresso", grains: "expresso", bean: "expresso", beans: "expresso" }[String(c?.style || "filtre").toLowerCase()] || "filtre");
-const SVG = {
-  washer: () => `
-<defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="28"/></clipPath></defs>
-<ellipse cx="60" cy="133" rx="50" ry="5" fill="url(#ID-shadow)"/>
-<g class="shake">
-  ${feet([20, 90], 124)}
-  <rect x="14" y="8" width="92" height="120" rx="8" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".8"/>
-  <path d="M14 16a8 8 0 0 1 8-8h76a8 8 0 0 1 8 8v17H14z" fill="url(#ID-panel)"/>
-  <line x1="14" y1="33" x2="106" y2="33" stroke="#bfc6ce" stroke-width=".8"/>
-  <rect x="19" y="13" width="25" height="15" rx="2" fill="#f8f9fb" stroke="#b9c0c8" stroke-width=".7"/>
-  <rect x="24" y="22.5" width="15" height="2.2" rx="1.1" fill="#a6aeb7"/>
-  ${lcd(49, 13, 30, 11)}
-  <circle class="led l1" cx="55" cy="29" r="1.4"/><circle class="led l2" cx="61" cy="29" r="1.4"/>
-  <circle class="led l3" cx="67" cy="29" r="1.4"/><circle class="led l4" cx="73" cy="29" r="1.4"/>
-  <circle cx="93" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
-  <circle cx="93" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
-  <g class="knob"><line x1="93" y1="21" x2="93" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>
-  ${porthole(60, 80, 28, `
-    ${drumInside(60, 80, 28)}
-    <g class="water"><path class="wave" d="M10 88q10-4 20 0t20 0t20 0t20 0t20 0t20 0v30H10z"/></g>
-    <g class="foam">
-      <circle cx="44" cy="90" r="2.2"/><circle cx="52" cy="92" r="1.6"/><circle cx="61" cy="89" r="2.6"/>
-      <circle cx="70" cy="91" r="1.8"/><circle cx="77" cy="88" r="1.4"/><circle cx="56" cy="95" r="1.2"/>
-    </g>`)}
-  <rect x="20" y="72" width="5" height="16" rx="2" fill="url(#ID-chrome)" stroke="#8d959f" stroke-width=".4"/>
-  <rect x="95.5" y="74" width="4" height="12" rx="1.5" fill="#9aa3ad"/>
-  <rect x="22" y="117" width="76" height="6" rx="2" fill="#000" opacity=".05"/>
-</g>`,
+const SVG = {};
 
-  dryer: () => `
-<defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="29"/></clipPath>
-<radialGradient id="ID-heat" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ff7b2e" stop-opacity="0"/></radialGradient></defs>
-<ellipse cx="60" cy="133" rx="50" ry="5" fill="url(#ID-shadow)"/>
-<g class="shake-soft">
-  ${feet([20, 90], 124)}
-  <rect x="14" y="8" width="92" height="120" rx="8" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".8"/>
-  <path d="M14 16a8 8 0 0 1 8-8h76a8 8 0 0 1 8 8v17H14z" fill="url(#ID-panel)"/>
-  <line x1="14" y1="33" x2="106" y2="33" stroke="#bfc6ce" stroke-width=".8"/>
-  <circle cx="27" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
-  <circle cx="27" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
-  <g class="knob"><line x1="27" y1="21" x2="27" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>
-  ${lcd(43, 13, 30, 11)}
-  <circle class="led l1" cx="49" cy="29" r="1.4"/><circle class="led l2" cx="55" cy="29" r="1.4"/>
-  <circle class="led l3" cx="61" cy="29" r="1.4"/><circle class="led l4" cx="67" cy="29" r="1.4"/>
-  <rect x="80" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
-  <rect x="91" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
-  <rect x="80" y="23" width="19" height="5" rx="1.5" fill="#dfe3e8" stroke="#aeb5bd" stroke-width=".6"/>
-  ${porthole(60, 80, 29, `
-    <rect x="20" y="40" width="80" height="80" fill="#3a4148" opacity=".25"/>
-    ${drumInside(60, 80, 29)}
-    <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`)}
-  <rect x="20" y="72" width="5" height="16" rx="2" fill="url(#ID-chrome)" stroke="#8d959f" stroke-width=".4"/>
-  <rect x="95.5" y="74" width="4" height="12" rx="1.5" fill="#9aa3ad"/>
-  <rect x="22" y="114" width="76" height="9" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
-  <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>
-</g>`,
-
-  dishwasher: () => `
-<defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="38" width="76" height="76" rx="4"/></clipPath>
-<linearGradient id="ID-tub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b646d"/><stop offset="1" stop-color="#2c3238"/></linearGradient></defs>
-<ellipse class="floorlight" cx="60" cy="135" rx="9" ry="2.2"/>
-<ellipse cx="60" cy="133" rx="50" ry="5" fill="url(#ID-shadow)"/>
-<g>
-  <rect x="14" y="8" width="92" height="120" rx="6" fill="url(#ID-inox)" stroke="#9aa2ab" stroke-width=".8"/>
-  <rect x="14" y="8" width="92" height="15" rx="6" fill="url(#ID-dark)"/>
-  <rect x="14" y="17" width="92" height="6" fill="url(#ID-dark)"/>
-  ${lcd(45, 11, 30, 9)}
-  <circle class="led l1" cx="22" cy="15.5" r="1.4"/><circle class="led l2" cx="28" cy="15.5" r="1.4"/>
-  <circle class="led l4" cx="34" cy="15.5" r="1.4"/>
-  <rect x="82" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
-  <rect x="92" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
-  <rect x="40" y="26" width="40" height="5" rx="2.5" fill="#7c848d"/>
-  <rect x="41" y="26" width="38" height="2.4" rx="1.2" fill="#2f353b" opacity=".6"/>
-  <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-tub)"/>
-  <g clip-path="url(#ID-win)">
-    <g class="wash-light"><rect x="22" y="38" width="76" height="76" fill="#8fd3ff" opacity=".18"/></g>
-    <path d="M26 62h68M26 66h68" stroke="#aab2ba" stroke-width="1.1"/>
-    <path d="M30 62v-8M42 62v-8M54 62v-8M66 62v-8M78 62v-8M90 62v-8" stroke="#aab2ba" stroke-width=".7"/>
-    <path d="M32 61l2-12h7l2 12z M47 61l2-12h7l2 12z M65 61l2-12h7l2 12z M80 61l2-12h7l2 12z" fill="#dff3ff" opacity=".7" stroke="#fff" stroke-width=".5"/>
-    <path d="M26 100h68M26 104h68" stroke="#aab2ba" stroke-width="1.1"/>
-    <ellipse cx="33" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="43" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="53" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="63" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="72" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
-    <path d="M80 99l3-14h9l3 14z" fill="#c4473a"/>
-    <g class="arm arm-top"><rect x="36" y="68" width="48" height="2.6" rx="1.3" fill="#9aa3ad"/></g>
-    <g class="arm arm-bot"><rect x="30" y="107" width="60" height="3" rx="1.5" fill="#9aa3ad"/></g>
-    <circle cx="60" cy="69.3" r="2" fill="#7d868f"/><circle cx="60" cy="108.5" r="2.4" fill="#7d868f"/>
-    <g class="jets">
-      <path d="M40 106l-6-38M50 106l-2-40M70 106l2-40M80 106l6-38M45 67l-4-22M75 67l4-22"/>
-    </g>
-    <g class="drops">
-      <circle cx="35" cy="44" r="1"/><circle cx="52" cy="46" r="1.2"/><circle cx="68" cy="43" r="1"/><circle cx="86" cy="47" r="1.1"/>
-    </g>
-    <g class="steam-in"><path d="M40 112q-4-10 2-18t0-16M60 112q-4-10 2-18t0-16M80 112q-4-10 2-18t0-16"/></g>
-  </g>
-  <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-gloss)"/>
-  <rect x="22" y="38" width="76" height="76" rx="4" fill="none" stroke="#7e8790" stroke-width="1.2"/>
-  <rect x="14" y="118" width="92" height="10" rx="2" fill="#2b3036"/>
-</g>`,
-
-  water_heater: () => `
+SVG.ac_split = () => `
 <defs>${DEFS}
-<linearGradient id="ID-cyl" x1="0" x2="1"><stop offset="0" stop-color="#c3c9cf"/><stop offset=".3" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef0f2"/><stop offset="1" stop-color="#aeb5bc"/></linearGradient>
-<linearGradient id="ID-copper" x1="0" x2="1"><stop offset="0" stop-color="#a0603a"/><stop offset=".45" stop-color="#e2a477"/><stop offset="1" stop-color="#8a4f2e"/></linearGradient>
-<linearGradient id="ID-arc" x1="0" x2="1"><stop offset="0" stop-color="#3e8ed0"/><stop offset=".5" stop-color="#f2c94c"/><stop offset="1" stop-color="#e5484d"/></linearGradient></defs>
-<g class="hw-waves">
-  <path d="M46 12q-3-4 0-8t0-8"/><path d="M60 10q-3-4 0-8t0-8"/><path d="M74 12q-3-4 0-8t0-8"/>
+<radialGradient id="ID-acheat" cx=".5" cy=".3" r=".6"><stop offset="0" stop-color="#ff9a4a" stop-opacity=".45"/><stop offset=".6" stop-color="#ff7a2e" stop-opacity=".15"/><stop offset="1" stop-color="#ff7a2e" stop-opacity="0"/></radialGradient>
+<linearGradient id="ID-split" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#eef1f4"/><stop offset="1" stop-color="#cfd5db"/></linearGradient></defs>
+<ellipse class="ac-warm" cx="60" cy="98" rx="54" ry="30" fill="url(#ID-acheat)"/>
+<g class="ac-waves"><path d="M30 122q4-4 0-8t0-8"/><path d="M60 126q4-4 0-8t0-8"/><path d="M90 122q4-4 0-8t0-8"/></g>
+<g class="ac-air">
+  <path d="M22 84q-6 14 0 26t-2 22"/><path d="M40 84q-4 14 2 26t0 22"/><path d="M60 84q-3 14 3 26t-1 22"/>
+  <path d="M80 84q-2 14 4 26t0 22"/><path d="M98 84q0 14 6 26t2 22"/>
 </g>
-<ellipse cx="60" cy="133" rx="34" ry="4" fill="url(#ID-shadow)"/>
-<rect x="49" y="114" width="6" height="18" fill="url(#ID-copper)"/>
-<rect x="65" y="114" width="6" height="18" fill="url(#ID-copper)"/>
-<rect x="48" y="122" width="8" height="3" rx="1" fill="#3e8ed0"/>
-<rect x="64" y="122" width="8" height="3" rx="1" fill="#e5484d"/>
-<rect x="40" y="117" width="9" height="5" rx="1.2" fill="#c9a43a" stroke="#8a6d1f" stroke-width=".4"/>
-<path d="M30 26q0-14 30-14t30 14v80q0 12-30 12t-30-12z" fill="url(#ID-cyl)" stroke="#a7aeb5" stroke-width=".8"/>
-<path d="M30 26q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
-<path d="M30 104q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
-<rect x="38" y="58" width="44" height="40" rx="5" fill="#f4f6f8" stroke="#b5bcc3" stroke-width=".7"/>
-<circle cx="60" cy="76" r="13" fill="url(#ID-chrome)"/>
-<circle cx="60" cy="76" r="11" fill="#fcfcfd"/>
-<path d="M51.5 84.5a12 12 0 1 1 17 0" fill="none" stroke="url(#ID-arc)" stroke-width="2.2" stroke-linecap="round" transform="rotate(0 60 76)"/>
-<path d="M60 67.4v2M52.6 70.6l1.4 1.4M67.4 70.6l-1.4 1.4M50 76h2M68 76h2" stroke="#7d868f" stroke-width=".7"/>
-<g class="needle"><path d="M60 76l-1.1 0l1.1-8.5l1.1 8.5z" fill="#c62828"/></g>
-<circle cx="60" cy="76" r="1.6" fill="#3a4148"/>
-<text class="gauge-txt" x="60" y="85" text-anchor="middle">--°</text>
-<circle class="hw-led" cx="76" cy="92" r="1.8"/>
-<rect x="43" y="90.5" width="16" height="3" rx="1.2" fill="#d5dade"/>
-<path d="M36 40q4-6 6-1" stroke="#fff" stroke-opacity=".9" stroke-width="2" fill="none" stroke-linecap="round"/>
-<rect x="34" y="34" width="5" height="70" rx="2.5" fill="#fff" opacity=".35"/>`,
+<g class="ac-drops"><circle cx="34" cy="90" r="1.3"/><circle cx="56" cy="92" r="1.3"/><circle cx="76" cy="90" r="1.3"/><circle cx="92" cy="93" r="1.3"/></g>
+<path d="M6 54q0-10 10-10h88q10 0 10 10v18q0 6-6 8h-96q-6-2-6-8z" fill="url(#ID-split)" stroke="#aab2ba" stroke-width=".7"/>
+<path d="M14 48h92" stroke="#c4cbd2" stroke-width=".6"/>
+<path d="M16 51h88M16 53.5h88" stroke="#d7dce1" stroke-width=".5"/>
+<path d="M10 70h100" stroke="#fff" stroke-opacity=".9" stroke-width="1"/>
+<rect class="ac-slot" x="12" y="73.5" width="96" height="5" rx="2.5" fill="#2a2f35"/>
+<g class="ac-flap"><path d="M12 74.5h96q0 4.5-4 5h-88q-4-.5-4-5z" fill="#f2f4f6" stroke="#aab2ba" stroke-width=".5"/></g>
+<rect x="84" y="58" width="22" height="9" rx="2" fill="#0c1720" opacity=".9"/>
+<text class="lcd" x="95" y="64.6" text-anchor="middle">OFF</text>
+<g class="ac-ico ico-cool" stroke="#4fc3f7" stroke-width=".9" stroke-linecap="round"><path d="M78 59v8M74.5 61l7 4M74.5 65l7-4"/></g>
+<g class="ac-ico ico-heat"><circle cx="78" cy="63" r="2" fill="#ff8a3d"/><path d="M78 58.6v1.2M78 66.2v1.2M73.6 63h1.2M81.2 63h1.2M74.9 59.9l.8.8M80.3 65.3l.8.8M74.9 66.1l.8-.8M80.3 60.7l.8-.8" stroke="#ff8a3d" stroke-width=".8" stroke-linecap="round"/></g>
+<g class="ac-ico ico-dry"><path d="M78 59q-3 4-3 5.6a3 3 0 0 0 6 0q0-1.6-3-5.6z" fill="#7fd6c0"/></g>
+<g class="ac-ico ico-fan" stroke="#cfd6dd" stroke-width="1" stroke-linecap="round" fill="none"><path d="M78 63q-3-4 0-4.5M78 63q4-1 3.5 2.4M78 63q-1 4-4 2"/></g>
+<circle class="led l1" cx="18" cy="64" r="1.1"/>`;
 
-  oven: () => `
-<defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="56" width="76" height="56" rx="4"/></clipPath>
-<linearGradient id="ID-cavity" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3330"/><stop offset="1" stop-color="#181412"/></linearGradient></defs>
-<ellipse cx="60" cy="133" rx="52" ry="5" fill="url(#ID-shadow)"/>
-<rect x="10" y="10" width="100" height="120" rx="5" fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"/>
-<rect x="10" y="10" width="100" height="22" rx="5" fill="url(#ID-dark)"/>
-<rect x="10" y="26" width="100" height="6" fill="url(#ID-dark)"/>
-<circle cx="24" cy="21" r="7" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/>
-<circle cx="24" cy="21" r="4.6" fill="#2a3036"/><g class="knob"><line x1="24" y1="21" x2="24" y2="17.2" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/></g>
-<circle cx="96" cy="21" r="7" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/>
-<circle cx="96" cy="21" r="4.6" fill="#2a3036"/><line x1="96" y1="21" x2="99" y2="18.5" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/>
-${lcd(43, 15, 34, 12)}
-<circle class="led l1" cx="38" cy="21" r="1.3"/>
-<rect x="14" y="36" width="92" height="90" rx="3" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"/>
-<rect x="20" y="40.5" width="80" height="4.5" rx="2.25" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
-<rect x="24" y="44.5" width="3" height="4" fill="#8f979f"/><rect x="93" y="44.5" width="3" height="4" fill="#8f979f"/>
-<rect x="22" y="56" width="76" height="56" rx="4" fill="url(#ID-cavity)"/>
-<g clip-path="url(#ID-win)">
-  <rect class="ilight" x="22" y="56" width="76" height="56" fill="url(#ID-warm)"/>
-  <path class="element" d="M26 61h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>
-  <path d="M24 97h72M24 99.5h72" stroke="#8d8680" stroke-width=".9"/>
-  <path d="M36 97l3-10h42l3 10z" fill="#b5442f"/>
-  <path d="M39 87q21-8 42 0z" fill="#d06a3c"/>
-  <ellipse cx="60" cy="86.5" rx="5" ry="1.4" fill="#5b2a1a"/>
-  <path d="M42 90h36" stroke="#e48a5c" stroke-width=".8"/>
-  <g class="haze"><path d="M44 82q-3-5 0-10t0-10M60 80q-3-5 0-10t0-10M76 82q-3-5 0-10t0-10"/></g>
-</g>
-<path d="M22 70L44 56h16L22 82z" fill="#fff" opacity=".08"/>
-<rect x="22" y="56" width="76" height="56" rx="4" fill="none" stroke="#5d656d" stroke-width="1.2"/>
-<rect x="14" y="118" width="92" height="8" rx="1.5" fill="#000" opacity=".12"/>`,
-
-  microwave: () => `
-<defs>${DEFS}<clipPath id="ID-win"><rect x="13" y="42" width="66" height="62" rx="4"/></clipPath>
-<linearGradient id="ID-cav" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4f55"/><stop offset="1" stop-color="#22262a"/></linearGradient></defs>
-<ellipse cx="60" cy="117" rx="56" ry="5" fill="url(#ID-shadow)"/>
-<rect x="8" y="111" width="10" height="4" rx="1" fill="#2c3136"/><rect x="102" y="111" width="10" height="4" rx="1" fill="#2c3136"/>
-<rect x="5" y="34" width="110" height="78" rx="6" fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"/>
-<rect x="9" y="38" width="74" height="70" rx="5" fill="#1a1d21"/>
-<rect x="13" y="42" width="66" height="62" rx="4" fill="url(#ID-cav)"/>
-<g clip-path="url(#ID-win)">
-  <rect class="ilight" x="13" y="42" width="66" height="62" fill="url(#ID-warm)"/>
-  <ellipse cx="46" cy="94" rx="24" ry="5" fill="#c8d4dc" opacity=".85"/>
-  <ellipse cx="46" cy="93.4" rx="21" ry="3.8" fill="#e7eef3" opacity=".9"/>
-  <g class="bowl">
-    <path d="M35 80h22q-1 11-11 12q-10-1-11-12z" fill="#f4f1ea" stroke="#c9c2b4" stroke-width=".6"/>
-    <ellipse cx="46" cy="80" rx="11" ry="2.4" fill="#d9822b"/>
-    <path d="M38 85h16" stroke="#3e8ed0" stroke-width="1.2"/>
-  </g>
-  <g class="steam-in"><path d="M42 76q-3-5 0-10t0-10M50 76q-3-5 0-10t0-10"/></g>
-  <rect x="13" y="42" width="66" height="62" fill="url(#ID-mesh)"/>
-</g>
-<path d="M13 60L33 42h14L13 74z" fill="#fff" opacity=".1"/>
-<rect x="84" y="38" width="3" height="70" rx="1.5" fill="url(#ID-chrome)"/>
-${lcd(90, 42, 21, 10)}
-<g fill="#d7dce1" stroke="#9aa2ab" stroke-width=".4">
-  <rect x="90" y="57" width="6" height="5" rx="1.2"/><rect x="97.5" y="57" width="6" height="5" rx="1.2"/><rect x="105" y="57" width="6" height="5" rx="1.2"/>
-  <rect x="90" y="64" width="6" height="5" rx="1.2"/><rect x="97.5" y="64" width="6" height="5" rx="1.2"/><rect x="105" y="64" width="6" height="5" rx="1.2"/>
-  <rect x="90" y="71" width="6" height="5" rx="1.2"/><rect x="97.5" y="71" width="6" height="5" rx="1.2"/><rect x="105" y="71" width="6" height="5" rx="1.2"/>
-</g>
-<circle cx="100.5" cy="88" r="7" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
-<circle cx="100.5" cy="88" r="4.6" fill="#e9ecef"/>
-<g class="knob"><line x1="100.5" y1="88" x2="100.5" y2="84.2" stroke="#4f5964" stroke-width="1.3" stroke-linecap="round"/></g>
-<rect class="start" x="90" y="98" width="21" height="6" rx="2"/>`,
-
-  air_fryer: () => `
+SVG.air_fryer = () => `
 <defs>${DEFS}<clipPath id="ID-w1"><rect x="14" y="58" width="39" height="31" rx="3"/></clipPath><clipPath id="ID-w2"><rect x="67" y="58" width="39" height="31" rx="3"/></clipPath>
 <linearGradient id="ID-cav" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f45"/><stop offset="1" stop-color="#15181b"/></linearGradient>
 <linearGradient id="ID-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#272c32"/><stop offset="1" stop-color="#0b0d10"/></linearGradient>
@@ -422,9 +584,146 @@ ${lcd(46, 33, 28, 11)}
 <rect x="70" y="96" width="33" height="19" rx="4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".5"/>
 <path d="M20 98.5h27M73 98.5h27" stroke="#fff" stroke-opacity=".14" stroke-width="1" stroke-linecap="round"/>
 <rect x="29" y="105" width="9" height="2.2" rx="1.1" fill="#59616b"/><rect x="82" y="105" width="9" height="2.2" rx="1.1" fill="#59616b"/>
-<path d="M11 55l14-1M64 55l14-1" stroke="#fff" stroke-opacity=".5" stroke-width=".8" stroke-linecap="round"/>`,
+<path d="M11 55l14-1M64 55l14-1" stroke="#fff" stroke-opacity=".5" stroke-width=".8" stroke-linecap="round"/>`;
 
-  coffee_maker: (c) => {
+SVG.av_receiver = () => `
+<defs>${DEFS}
+<linearGradient id="ID-avb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4048"/><stop offset=".15" stop-color="#1d2126"/><stop offset="1" stop-color="#0d0f12"/></linearGradient>
+<radialGradient id="ID-ring" cx=".5" cy=".5" r=".5"><stop offset=".7" stop-color="#38d9ff" stop-opacity="0"/><stop offset=".85" stop-color="#38d9ff" stop-opacity=".9"/><stop offset="1" stop-color="#38d9ff" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="60" cy="104" rx="58" ry="4" fill="url(#ID-shadow)"/>
+<g class="av-notes" fill="#9fd3f0"><path d="M30 44v-9l6-2v9"/><circle cx="29" cy="44" r="1.8"/><circle cx="35" cy="42" r="1.8"/><path d="M60 40v-8"/><circle cx="59" cy="40" r="1.8"/><path d="M60 32l4 1.5" stroke="#9fd3f0" stroke-width="1"/><path d="M88 44v-9l6-2v9"/><circle cx="87" cy="44" r="1.8"/><circle cx="93" cy="42" r="1.8"/></g>
+<g class="av-waves" fill="none" stroke-linecap="round"><path d="M2 64q-4 8 0 16"/><path d="M-3 60q-6 12 0 24"/><path d="M118 64q4 8 0 16"/><path d="M123 60q6 12 0 24"/></g>
+<rect x="10" y="96" width="12" height="5" rx="1.5" fill="#15181b"/><rect x="98" y="96" width="12" height="5" rx="1.5" fill="#15181b"/>
+<rect x="4" y="52" width="112" height="45" rx="3.5" fill="url(#ID-avb)" stroke="#000" stroke-width=".6"/>
+<path d="M6 54.5h108" stroke="#fff" stroke-opacity=".18" stroke-width="1"/>
+<path d="M6 92h108" stroke="#2c3138" stroke-width=".8"/>
+<circle class="av-pwr" cx="14" cy="62" r="1.4"/>
+<circle cx="16" cy="78" r="6.5" fill="url(#ID-chrome)" stroke="#2a2f35" stroke-width=".6"/>
+<circle cx="16" cy="78" r="4.4" fill="#2a2f35"/><path d="M16 78l0-3.6" stroke="#cfd6dd" stroke-width="1" stroke-linecap="round"/>
+<rect x="30" y="58" width="52" height="14" rx="2" fill="#071016" stroke="#2c3138" stroke-width=".6"/>
+<text class="lcd av-lcd" x="56" y="67.4" text-anchor="middle">OFF</text>
+<g class="av-eq">
+  <rect x="33" y="76" width="3.2" height="12" rx=".6"/><rect x="38" y="76" width="3.2" height="12" rx=".6"/><rect x="43" y="76" width="3.2" height="12" rx=".6"/>
+  <rect x="48" y="76" width="3.2" height="12" rx=".6"/><rect x="53" y="76" width="3.2" height="12" rx=".6"/><rect x="58" y="76" width="3.2" height="12" rx=".6"/>
+  <rect x="63" y="76" width="3.2" height="12" rx=".6"/><rect x="68" y="76" width="3.2" height="12" rx=".6"/><rect x="73" y="76" width="3.2" height="12" rx=".6"/>
+  <rect x="78" y="76" width="3.2" height="12" rx=".6"/>
+</g>
+<circle class="av-ring" cx="99" cy="74" r="16" fill="url(#ID-ring)"/>
+<circle cx="99" cy="74" r="12.5" fill="url(#ID-chrome)" stroke="#2a2f35" stroke-width=".7"/>
+<circle cx="99" cy="74" r="10" fill="url(#ID-steel)"/>
+<g class="av-knob"><circle cx="99" cy="66.5" r="1.1" fill="#2a2f35"/></g>
+<path d="M92 68a10 10 0 0 1 8-4" stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none" stroke-linecap="round"/>`;
+
+SVG.beer_tap = () => `
+<defs>${DEFS}<clipPath id="ID-gl"><path d="M85 80h26l-2.4 36q-.2 2-2.2 2h-17.2q-2 0-2.2-2z"/></clipPath><clipPath id="ID-kw"><rect x="26" y="70" width="40" height="34" rx="4"/></clipPath>
+<linearGradient id="ID-beer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7c948"/><stop offset="1" stop-color="#d8891c"/></linearGradient>
+<linearGradient id="ID-glassb" x1="0" x2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".35"/><stop offset=".3" stop-color="#ffffff" stop-opacity=".08"/><stop offset="1" stop-color="#dfe9f2" stop-opacity=".3"/></linearGradient></defs>
+<ellipse cx="60" cy="128" rx="54" ry="4.5" fill="url(#ID-shadow)"/>
+<g class="bt-mist"><circle cx="16" cy="70" r="3"/><circle cx="14" cy="88" r="2.6"/><circle cx="18" cy="104" r="3.2"/></g>
+<rect x="12" y="44" width="68" height="78" rx="10" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+<path d="M16 48h60" stroke="#fff" stroke-opacity=".15" stroke-width="1.2" stroke-linecap="round"/>
+${lcd(28, 52, 36, 11)}
+<g class="bt-flake" stroke="#6fd8ff" stroke-width=".8" stroke-linecap="round"><path d="M22 54.5v6M19.4 56l5.2 3M19.4 59l5.2-3"/></g>
+<rect x="24" y="68" width="44" height="38" rx="5" fill="#15181b" stroke="#3a424b" stroke-width=".6"/>
+<g clip-path="url(#ID-kw)">
+  <rect x="30" y="70" width="32" height="40" rx="3" fill="url(#ID-inox)"/>
+  <path d="M30 78h32M30 98h32" stroke="#8f979f" stroke-width="1.2"/>
+  <rect x="58" y="72" width="3" height="32" rx="1.5" fill="#2a2f35"/>
+  <g class="bt-keg"><rect x="58" y="72" width="3" height="32" rx="1.5" fill="url(#ID-beer)"/></g>
+</g>
+<path d="M26 70L40 70L26 86z" fill="#fff" opacity=".08"/>
+<rect x="76" y="114" width="40" height="7" rx="2" fill="url(#ID-chrome)" stroke="#6f7780" stroke-width=".5"/>
+<rect x="79" y="114.5" width="34" height="2" fill="url(#ID-mesh)"/>
+<path d="M40 44v-26q0-8 8-8h40q8 0 8 8v10" fill="none" stroke="url(#ID-chrome)" stroke-width="7" stroke-linecap="round"/>
+<path d="M40 44v-26q0-8 8-8h40q8 0 8 8v10" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2" stroke-linecap="round"/>
+<rect x="93" y="27" width="6" height="7" rx="1.5" fill="#8f979f"/>
+<g class="bt-handle"><rect x="61" y="-6" width="9" height="16" rx="3" fill="#1d2126" stroke="#000" stroke-width=".5"/><rect x="63" y="-4" width="2" height="12" rx="1" fill="#fff" opacity=".2"/></g>
+<rect x="60" y="8" width="11" height="4" rx="1.5" fill="url(#ID-chrome)"/>
+<path class="bt-stream" d="M96 34v46"/>
+<g clip-path="url(#ID-gl)">
+  <g class="bt-beer"><rect x="84" y="80" width="28" height="40" fill="url(#ID-beer)"/><rect x="84" y="80" width="28" height="6" fill="#fff8e6"/></g>
+  <g class="bt-bubbles" fill="#fff6c8"><circle cx="92" cy="114" r=".8"/><circle cx="99" cy="116" r=".7"/><circle cx="104" cy="113" r=".9"/><circle cx="95" cy="110" r=".6"/></g>
+</g>
+<path d="M85 80h26l-2.4 36q-.2 2-2.2 2h-17.2q-2 0-2.2-2z" fill="url(#ID-glassb)" stroke="#d6e2ec" stroke-opacity=".8" stroke-width=".7"/>
+<path d="M88 84l1.6 28" stroke="#fff" stroke-opacity=".55" stroke-width="1.2" stroke-linecap="round"/>
+<g class="bt-drops" fill="#cfe9ff"><circle cx="87.5" cy="92" r=".7"/><circle cx="108.5" cy="98" r=".7"/><circle cx="90" cy="104" r=".6"/></g>`;
+
+/* Ventilateur de plafond : pales vues en perspective (disque aplati), bloc moteur, lampe, chaînettes */
+SVG.ceiling_fan = () => {
+  // une pale vue de dessus, de l'axe (0,0) vers l'extérieur ; le groupe est ensuite aplati en Y
+  const blade = (a) => `<g transform="rotate(${a})"><path d="M8 -4L50 -10Q57 0 50 10L8 4z" fill="url(#ID-cfwood)" stroke="#5a3b1e" stroke-width=".8"/><path d="M8 -4L50 -10" stroke="#e8c48f" stroke-width="1" opacity=".7"/><rect x="5" y="-2.4" width="12" height="4.8" rx="1.2" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/></g>`;
+  return `
+<defs>${DEFS}
+<linearGradient id="ID-cfwood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8743f"/><stop offset=".5" stop-color="#c9935a"/><stop offset="1" stop-color="#8a5a2b"/></linearGradient>
+<linearGradient id="ID-cfbody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d959f"/><stop offset=".35" stop-color="#eef1f4"/><stop offset=".7" stop-color="#b7bec6"/><stop offset="1" stop-color="#7d858e"/></linearGradient>
+<radialGradient id="ID-cfglass" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9dee3"/></radialGradient>
+<linearGradient id="ID-cfbeam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe9a0" stop-opacity="0"/></linearGradient></defs>
+<ellipse cx="60" cy="132" rx="40" ry="3.5" fill="url(#ID-shadow)" opacity=".45"/>
+<!-- plafond -->
+<rect x="0" y="0" width="120" height="6" fill="#000" opacity=".06"/>
+<path d="M0 6h120" stroke="#9aa2ab" stroke-opacity=".5" stroke-width=".8"/>
+<!-- cône de lumière -->
+<path class="cf-beam" d="M50 62L22 132H98L70 62z" fill="url(#ID-cfbeam)"/>
+<!-- souffle d'air vers le bas -->
+<g class="cf-air" fill="none" stroke-linecap="round"><path d="M24 62q-6 14 0 28t0 28"/><path d="M42 66q-6 14 0 28t0 26"/><path d="M78 66q6 14 0 28t0 26"/><path d="M96 62q6 14 0 28t0 28"/></g>
+<!-- rosace et tige -->
+<path d="M50 6h20l-3 5h-14z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".5"/>
+<rect x="58" y="11" width="4" height="20" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+<!-- pales : disque vu de dessus, aplati pour la perspective -->
+<g transform="translate(60 44) scale(1 .3)">
+  <circle class="cf-blur" r="56" fill="#c9935a"/>
+  <g class="cf-blades">${[0, 90, 180, 270].map(blade).join("")}</g>
+</g>
+<!-- bloc moteur -->
+<path d="M44 34q0-5 16-5t16 5v6q0 6-16 6t-16-6z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".6"/>
+<path d="M44 38q16 6 32 0" stroke="#6f7781" stroke-width=".6" fill="none"/>
+<ellipse cx="60" cy="31" rx="15" ry="2.6" fill="#fff" opacity=".35"/>
+<!-- lampe -->
+<path d="M52 46h16l-1 3h-14z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".4"/>
+<path class="cf-glass" d="M51 49h18q0 12-9 12t-9-12z" fill="url(#ID-cfglass)" stroke="#aab2ba" stroke-width=".5"/>
+<path d="M54 51q1 6 4 8" stroke="#fff" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round"/>
+<!-- chaînettes de tirage -->
+<g class="cf-chain c1"><path d="M47 44v14" stroke="#aab2ba" stroke-width=".7" stroke-dasharray="1 .6"/><circle cx="47" cy="59" r="1.3" fill="url(#ID-chrome)"/></g>
+<g class="cf-chain c2"><path d="M73 44v10" stroke="#aab2ba" stroke-width=".7" stroke-dasharray="1 .6"/><circle cx="73" cy="55" r="1.3" fill="url(#ID-chrome)"/></g>`;
+};
+
+SVG.chest_freezer = () => `
+<defs>${DEFS}
+<linearGradient id="ID-side" x1="0" x2="1"><stop offset="0" stop-color="#cfd5db"/><stop offset="1" stop-color="#aeb6be"/></linearGradient>
+<linearGradient id="ID-top" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3e8ec"/></linearGradient>
+<linearGradient id="ID-cav" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe6f5"/><stop offset="1" stop-color="#f4fbff"/></linearGradient>
+<linearGradient id="ID-liner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf0"/><stop offset="1" stop-color="#c9d0d6"/></linearGradient></defs>
+<ellipse cx="62" cy="131" rx="54" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="12" y="126" width="9" height="5" rx="1.5" fill="#3a3f45"/><rect x="88" y="126" width="9" height="5" rx="1.5" fill="#3a3f45"/>
+<path d="M100 73L112 61V117L100 129Z" fill="url(#ID-side)"/>
+<path d="M103 112l6-6M103 116l6-6M103 120l6-6" stroke="#8f979f" stroke-width=".7"/>
+<rect x="8" y="73" width="92" height="56" rx="2.5" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".7"/>
+<rect x="8" y="121" width="92" height="8" rx="2" fill="#e2e6ea"/>
+<path d="M76 123.5h20M76 125.5h20M76 127.5h20" stroke="#aab1b9" stroke-width=".6"/>
+<rect x="68" y="79" width="28" height="11" rx="2" fill="#0c1720" stroke="#8f98a2" stroke-width=".5"/>
+<text class="lcd" x="84.5" y="86.8" text-anchor="middle">--°</text>
+<g class="flake"><path d="M72 81.5v6M69.4 83l5.2 3M69.4 86l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
+<circle class="led l1" cx="72" cy="94" r="1.2"/><circle class="led l2" cx="77" cy="94" r="1.2"/>
+<g class="cavity">
+  <path d="M10 73L98 73L110 61L22 61Z" fill="url(#ID-cav)"/>
+  <path d="M10 73L98 73L110 61L22 61Z" fill="#fffbe6" class="clight"/>
+  <path d="M22 61L110 61M60 61L50 73" stroke="#9fc3db" stroke-width=".6"/>
+  <path d="M18 71l3-4h14l-3 4z" fill="#e5484d"/><path d="M33 71l3-4h12l-3 4z" fill="#3e8ed0"/>
+  <path d="M28 66l2.5-3h10l-2.5 3z" fill="#f2c94c"/><path d="M42 66l2.5-3h9l-2.5 3z" fill="#ffffff" stroke="#c9d3dc" stroke-width=".4"/>
+  <path d="M58 70l4-5h16l-4 5z" fill="#9fd356" opacity=".9"/><path d="M63 64l2-2.5h10l-2 2.5z" fill="#ff8f3d"/>
+  <path d="M80 70l4-5h12l-4 5z" fill="#c4c9cf" stroke="#9aa3ad" stroke-width=".4"/>
+</g>
+<g class="cold-out"><circle cx="40" cy="58" r="2"/><circle cx="58" cy="56" r="2.4"/><circle cx="76" cy="58" r="1.8"/><circle cx="94" cy="57" r="2.1"/></g>
+<g class="lid">
+  <path class="lid-side" d="M100 66L112 54L112 61L100 73Z" fill="url(#ID-side)"/>
+  <path class="lid-top" d="M8 66L100 66L112 54L20 54Z" fill="url(#ID-top)" stroke="#bfc6ce" stroke-width=".6"/>
+  <path class="lid-under" d="M20 54L112 54L112 54L20 54Z" fill="url(#ID-liner)" stroke="#9aa3ad" stroke-width=".6"/>
+  <path class="lid-front" d="M8 66L100 66L100 73L8 73Z" fill="#f1f3f5" stroke="#bfc6ce" stroke-width=".6"/>
+</g>
+<rect class="lid-handle" x="44" y="68.5" width="20" height="2.6" rx="1.3" fill="#7d858e"/>
+<g class="mist"><circle cx="30" cy="131" r="1.1"/><circle cx="46" cy="132" r=".9"/><circle cx="64" cy="131" r="1.2"/><circle cx="80" cy="132" r=".9"/></g>`;
+
+SVG.coffee_maker = (c) => {
     const st = cfStyle(c);
     const defs = `<defs>${DEFS}
 <linearGradient id="ID-glassv" x1="0" x2="1"><stop offset="0" stop-color="#e8f1f7" stop-opacity=".35"/><stop offset=".3" stop-color="#ffffff" stop-opacity=".12"/><stop offset="1" stop-color="#c9d6e0" stop-opacity=".3"/></linearGradient>
@@ -501,107 +800,743 @@ ${lcd(80, 112, 24, 9)}
 <rect x="28" y="61" width="44" height="7" rx="2.5" fill="#1d2126"/><rect x="47" y="59" width="10" height="3" rx="1" fill="#1d2126"/>
 ${steam([44, 56], 19)}
 </g>`;
-  },
+  };
 
-  tv: () => `
-<defs>${DEFS}<clipPath id="ID-scr"><rect x="4" y="38" width="112" height="63" rx="1"/></clipPath>
-<linearGradient id="ID-off" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b2027"/><stop offset=".6" stop-color="#0a0c0f"/><stop offset="1" stop-color="#14181d"/></linearGradient>
-<linearGradient id="ID-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f5a73"/><stop offset=".55" stop-color="#3b2a7a"/><stop offset="1" stop-color="#0f1420"/></linearGradient>
-<linearGradient id="ID-fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f1420" stop-opacity=".95"/><stop offset=".6" stop-color="#0f1420" stop-opacity="0"/></linearGradient>
-<linearGradient id="ID-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38e1ff"/><stop offset="1" stop-color="#8a5cff"/></linearGradient></defs>
-<rect x="2.5" y="36.5" width="115" height="66" rx="2" fill="#0b0d10" stroke="#2c3138" stroke-width=".7"/>
-<rect x="4" y="38" width="112" height="63" rx="1" fill="url(#ID-off)"/>
-<g clip-path="url(#ID-scr)">
-  <g class="tv-content">
-    <rect x="4" y="38" width="112" height="63" fill="#0f1420"/>
-    <rect x="4" y="38" width="112" height="33" fill="url(#ID-hero)"/>
-    <circle cx="92" cy="50" r="9" fill="#ffb35c" opacity=".85"/>
-    <path d="M60 71l14-12l9 6l12-10l21 16z" fill="#1d1640" opacity=".9"/>
-    <rect x="4" y="38" width="112" height="33" fill="url(#ID-fade)"/>
-    <rect x="9" y="51" width="30" height="3.2" rx="1" fill="#fff"/>
-    <rect x="9" y="56" width="22" height="1.6" rx=".8" fill="#9aa3b8"/>
-    <rect x="9" y="61" width="11" height="4" rx="1" fill="#fff"/><path d="M12 61.9l2.4 1.1l-2.4 1.1z" fill="#0f1420"/>
-    <rect x="22" y="61" width="11" height="4" rx="1" fill="#59616b"/>
-    <rect x="9" y="74" width="16" height="1.6" rx=".8" fill="#c9d0db"/>
-    <g class="tv-row">
-      <rect x="9" y="77.5" width="17" height="11" rx="1.2" fill="#e85d75"/><rect x="28" y="77.5" width="17" height="11" rx="1.2" fill="#3fb6a8"/>
-      <rect x="47" y="77.5" width="17" height="11" rx="1.2" fill="#f2b84b"/><rect x="66" y="77.5" width="17" height="11" rx="1.2" fill="#5b7cfa"/>
-      <rect x="85" y="77.5" width="17" height="11" rx="1.2" fill="#a55cd6"/><rect x="104" y="77.5" width="17" height="11" rx="1.2" fill="#4fb36b"/>
-      <rect x="123" y="77.5" width="17" height="11" rx="1.2" fill="#e8834a"/><rect x="142" y="77.5" width="17" height="11" rx="1.2" fill="#3a8fd6"/>
-      <path d="M12 86h8M31 86h10M50 86h7M69 86h9M88 86h10M107 86h8M126 86h9M145 86h8" stroke="#fff" stroke-opacity=".75" stroke-width="1" stroke-linecap="round"/>
-    </g>
-    <rect class="tv-sel" x="8.4" y="76.9" width="18.2" height="12.2" rx="1.6" fill="none" stroke="#fff" stroke-width=".9"/>
-    <rect x="9" y="91.5" width="12" height="1.6" rx=".8" fill="#c9d0db"/>
-    <g class="tv-row2">
-      <rect x="9" y="95" width="24" height="9" rx="1.2" fill="#2f6f8f"/><rect x="35" y="95" width="24" height="9" rx="1.2" fill="#8f3f5f"/>
-      <rect x="61" y="95" width="24" height="9" rx="1.2" fill="#6f6f2f"/><rect x="87" y="95" width="24" height="9" rx="1.2" fill="#3f4f8f"/>
-      <rect x="113" y="95" width="24" height="9" rx="1.2" fill="#2f8f5f"/>
-    </g>
-  </g>
-  <g class="tv-intro">
-    <rect x="4" y="38" width="112" height="63" fill="#05070c"/>
-    <g class="tv-streaks" stroke-linecap="round" fill="none">
-      <path d="M4 44L60 69.5" stroke="#38e1ff"/><path d="M116 44L60 69.5" stroke="#8a5cff"/>
-      <path d="M4 95L60 69.5" stroke="#8a5cff"/><path d="M116 95L60 69.5" stroke="#38e1ff"/>
-      <path d="M60 38v31.5" stroke="#5fd0ff"/><path d="M60 101v-31.5" stroke="#a07cff"/>
-    </g>
-    <g class="tv-logo">
-      <circle cx="60" cy="69.5" r="11" fill="none" stroke="url(#ID-logo)" stroke-width="2.2"/>
-      <path d="M56.5 63.5q0-1.6 1.4-.8l8.6 5.4q1.3.8 0 1.6l-8.6 5.4q-1.4.8-1.4-.8z" fill="url(#ID-logo)"/>
-    </g>
-  </g>
-  <rect class="tv-flash" x="4" y="38" width="112" height="63" fill="#eef6ff"/>
-</g>
-<path d="M4 38L46 38L4 78z" fill="#fff" opacity=".06"/>
-<rect x="4" y="38" width="112" height="63" rx="1" fill="none" stroke="#000" stroke-opacity=".5"/>
-<circle class="tv-led" cx="60" cy="101.8" r=".7"/>`,
-
-  towel_dryer: () => `
+SVG.desktop_pc = () => `
 <defs>${DEFS}
-<linearGradient id="ID-tdglow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb877"/><stop offset="1" stop-color="#ff6a1f"/></linearGradient>
-<linearGradient id="ID-tdtowel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f9fb3"/><stop offset=".5" stop-color="#58c3d4"/><stop offset="1" stop-color="#2a8ea1"/></linearGradient>
-<linearGradient id="ID-tdwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a828b" stop-opacity=".16"/><stop offset="1" stop-color="#7a828b" stop-opacity="0"/></linearGradient></defs>
-<rect x="14" y="10" width="92" height="116" rx="6" fill="url(#ID-tdwall)"/>
-<g class="td-heat"><path d="M44 112q-4-20 2-44t-2-44"/><path d="M60 112q4-20-2-44t2-44"/><path d="M76 112q-4-20 2-44t-2-44"/></g>
-<rect x="22" y="16" width="9" height="106" rx="4.5" fill="#000" opacity=".12"/>
-<rect x="89" y="16" width="9" height="106" rx="4.5" fill="#000" opacity=".12"/>
-<path d="M44 55h32v22h-32z" fill="#237a8b"/>
-<g class="td-bars">
-  <rect x="29" y="22" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
-  <rect x="29" y="38" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
-  <rect x="29" y="54" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
-  <rect x="29" y="70" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
-  <rect x="29" y="86" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
-  <rect x="29" y="102" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+<linearGradient id="ID-pcwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f2a5c"/><stop offset=".55" stop-color="#1c5fc4"/><stop offset="1" stop-color="#5ec8ff"/></linearGradient>
+<linearGradient id="ID-pcdesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c3a5"/><stop offset="1" stop-color="#b79a74"/></linearGradient>
+<linearGradient id="ID-pcglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b3138"/><stop offset="1" stop-color="#090b0e"/></linearGradient>
+<clipPath id="ID-pcclip"><rect x="10" y="22" width="68" height="44" rx="1"/></clipPath></defs>
+<ellipse cx="60" cy="126" rx="56" ry="3.5" fill="url(#ID-shadow)"/>
+<path d="M2 110h116l-5 12h-106z" fill="url(#ID-pcdesk)"/>
+<path d="M2 110h116" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+<path d="M36 104h12l2 7h-16z" fill="url(#ID-dark)"/>
+<rect x="38" y="70" width="8" height="36" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".4"/>
+<ellipse cx="42" cy="108" rx="16" ry="3.2" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".4"/>
+<rect x="6" y="18" width="76" height="52" rx="3.5" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+<rect x="10" y="22" width="68" height="44" rx="1" fill="#0a0d11"/>
+<g class="pc-screen" clip-path="url(#ID-pcclip)">
+  <rect x="10" y="22" width="68" height="44" fill="url(#ID-pcwall)"/>
+  <circle cx="64" cy="32" r="9" fill="#bfeaff" opacity=".35"/>
+  <rect x="13" y="26" width="30" height="24" rx="1.5" fill="#0d1520" stroke="#2b4a73" stroke-width=".4"/>
+  <rect x="13" y="26" width="30" height="3.4" rx="1.5" fill="#22344d"/>
+  <circle cx="15.2" cy="27.7" r=".7" fill="#ff5f56"/><circle cx="17.6" cy="27.7" r=".7" fill="#ffbd2e"/><circle cx="20" cy="27.7" r=".7" fill="#27c93f"/>
+  <g class="pc-code"><rect x="16" y="32" width="16" height="1.6" rx=".8" fill="#6fd8ff"/><rect x="19" y="35.4" width="20" height="1.6" rx=".8" fill="#b894ff"/><rect x="19" y="38.8" width="12" height="1.6" rx=".8" fill="#ffd76a"/><rect x="16" y="42.2" width="22" height="1.6" rx=".8" fill="#6fe3a1"/><rect x="19" y="45.6" width="14" height="1.6" rx=".8" fill="#6fd8ff"/></g>
+  <rect x="46" y="38" width="28" height="19" rx="1.5" fill="#f4f7fb" opacity=".92"/>
+  <g class="pc-bars"><rect x="50" y="48" width="4" height="7" fill="#3b82f6"/><rect x="56" y="43" width="4" height="12" fill="#22c55e"/><rect x="62" y="45.5" width="4" height="9.5" fill="#f59e0b"/><rect x="68" y="41" width="4" height="14" fill="#ef4444"/></g>
+  <rect x="10" y="61" width="68" height="5" fill="#0b1626" opacity=".85"/>
+  <circle cx="14" cy="63.5" r="1.4" fill="#5ec8ff"/><rect x="19" y="62.6" width="3.4" height="1.8" rx=".5" fill="#8fa3bd"/><rect x="24" y="62.6" width="3.4" height="1.8" rx=".5" fill="#8fa3bd"/><rect x="29" y="62.6" width="3.4" height="1.8" rx=".5" fill="#8fa3bd"/>
+  <path class="pc-cursor" d="M0 0l0 6l1.7 -1.6l1.2 2.7l1.1 -.5l-1.2 -2.6l2.3 0z" fill="#fff" stroke="#000" stroke-width=".4"/>
 </g>
-<g class="td-glow" fill="url(#ID-tdglow)">
-  <rect x="29" y="22" width="62" height="5" rx="2.5"/><rect x="29" y="38" width="62" height="5" rx="2.5"/><rect x="29" y="54" width="62" height="5" rx="2.5"/>
-  <rect x="29" y="70" width="62" height="5" rx="2.5"/><rect x="29" y="86" width="62" height="5" rx="2.5"/><rect x="29" y="102" width="62" height="5" rx="2.5"/>
-  <rect x="20" y="14" width="9" height="106" rx="4.5"/><rect x="91" y="14" width="9" height="106" rx="4.5"/>
+<path d="M10 22h68l-28 44h-40z" fill="url(#ID-gloss)" opacity=".35"/>
+<circle class="pc-mled" cx="44" cy="68" r=".9"/>
+<g class="pc-tower">
+  <rect x="86" y="38" width="28" height="74" rx="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+  <rect x="90" y="43" width="20" height="62" rx="1.5" fill="url(#ID-pcglass)" stroke="#3b424a" stroke-width=".4"/>
+  <g class="pc-rgb" fill="none" stroke-width="1.3">
+    <circle cx="100" cy="53" r="7.6"/><circle cx="100" cy="72" r="7.6"/><circle cx="100" cy="91" r="7.6"/>
+  </g>
+  <g class="pc-fan"><circle cx="100" cy="53" r="6.5" fill="#12161a"/><path d="M100 53v-6M100 53l5.2 3M100 53l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="53" r="7.6" fill="none"/></g>
+  <g class="pc-fan"><circle cx="100" cy="72" r="6.5" fill="#12161a"/><path d="M100 72v-6M100 72l5.2 3M100 72l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="72" r="7.6" fill="none"/></g>
+  <g class="pc-fan"><circle cx="100" cy="91" r="6.5" fill="#12161a"/><path d="M100 91v-6M100 91l5.2 3M100 91l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="91" r="7.6" fill="none"/></g>
+  <circle cx="100" cy="53" r="1.4" fill="#d7dce1"/><circle cx="100" cy="72" r="1.4" fill="#d7dce1"/><circle cx="100" cy="91" r="1.4" fill="#d7dce1"/>
+  <path d="M91 44h8l-8 14z" fill="#fff" opacity=".07"/>
+  <rect x="104" y="40.2" width="6" height="1.8" rx=".9" fill="#2a2f35"/>
+  <circle class="pc-led" cx="94" cy="41" r="1.2"/>
+  <rect x="90" y="106.6" width="20" height="3" rx="1" fill="#2a2f35"/>
 </g>
-<path d="M29 23.2h62M29 39.2h62M29 55.2h62M29 71.2h62M29 87.2h62M29 103.2h62" stroke="#fff" stroke-opacity=".85" stroke-width="1"/>
-<rect x="20" y="14" width="9" height="106" rx="4.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".6"/>
-<rect x="91" y="14" width="9" height="106" rx="4.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".6"/>
-<path d="M22.5 18v98M93.5 18v98" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
-<g class="td-glow td-glow2" fill="url(#ID-tdglow)"><rect x="20" y="14" width="9" height="106" rx="4.5"/><rect x="91" y="14" width="9" height="106" rx="4.5"/></g>
-<g class="td-towel">
-  <path d="M42 56h36v30q-3 3-6 0q-3 3-6 0q-3 3-6 0q-3 3-6 0q-3 3-6 0q-3 3-3 0z" fill="url(#ID-tdtowel)"/>
-  <path d="M42 80h36v3h-36z" fill="#e8f7fa" opacity=".9"/>
-  <path d="M42 56h36v3h-36z" fill="#1f7384" opacity=".5"/>
-  <path d="M50 59v20M60 59v20M70 59v20" stroke="#1f7384" stroke-opacity=".25" stroke-width="1"/>
-</g>
-<g class="td-towel td-towel2">
-  <path d="M63 88h20v12q-3 2-5 0q-3 2-5 0q-3 2-5 0q-3 2-5 0z" fill="#f2a6b8"/>
-  <path d="M63 96h20v2h-20z" fill="#fff" opacity=".7"/>
-</g>
-<g class="td-steam"><path d="M48 52q-3-4 0-8t0-8"/><path d="M60 50q-3-4 0-8t0-8"/><path d="M72 52q-3-4 0-8t0-8"/></g>
-<rect x="18" y="120" width="13" height="5" rx="1.5" fill="#3a3f45"/><rect x="89" y="120" width="13" height="5" rx="1.5" fill="#3a3f45"/>
-<rect x="70" y="108" width="36" height="14" rx="3" fill="url(#ID-dark)" stroke="#8f98a2" stroke-width=".6"/>
-${lcd(74, 110, 22, 10)}
-<circle class="td-led" cx="101" cy="115" r="1.4"/>
-<ellipse cx="60" cy="132" rx="46" ry="3" fill="url(#ID-shadow)"/>`,
+<rect x="10" y="114" width="62" height="7" rx="1.4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/>
+<g class="pc-keys" fill="#4b535c"><rect x="12" y="115.2" width="58" height="1.2" opacity=".9"/><rect x="12" y="117.2" width="58" height="1.2" opacity=".9"/><rect x="12" y="119.2" width="58" height="1.2" opacity=".9"/></g>
+<path d="M12 116.4h58M12 118.4h58" stroke="#05070a" stroke-width=".4" stroke-dasharray="2.2 .8"/>
+<ellipse cx="78" cy="117" rx="3.6" ry="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/><path d="M78 114.2v2" stroke="#6f7780" stroke-width=".6"/>`;
 
-  server_rack: () => `
+SVG.dishwasher = () => `
+<defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="38" width="76" height="76" rx="4"/></clipPath>
+<linearGradient id="ID-tub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b646d"/><stop offset="1" stop-color="#2c3238"/></linearGradient></defs>
+<ellipse class="floorlight" cx="60" cy="135" rx="9" ry="2.2"/>
+<ellipse cx="60" cy="133" rx="50" ry="5" fill="url(#ID-shadow)"/>
+<g>
+  <rect x="14" y="8" width="92" height="120" rx="6" fill="url(#ID-inox)" stroke="#9aa2ab" stroke-width=".8"/>
+  <rect x="14" y="8" width="92" height="15" rx="6" fill="url(#ID-dark)"/>
+  <rect x="14" y="17" width="92" height="6" fill="url(#ID-dark)"/>
+  ${lcd(45, 11, 30, 9)}
+  <circle class="led l1" cx="22" cy="15.5" r="1.4"/><circle class="led l2" cx="28" cy="15.5" r="1.4"/>
+  <circle class="led l4" cx="34" cy="15.5" r="1.4"/>
+  <rect x="82" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
+  <rect x="92" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
+  <rect x="40" y="26" width="40" height="5" rx="2.5" fill="#7c848d"/>
+  <rect x="41" y="26" width="38" height="2.4" rx="1.2" fill="#2f353b" opacity=".6"/>
+  <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-tub)"/>
+  <g clip-path="url(#ID-win)">
+    <g class="wash-light"><rect x="22" y="38" width="76" height="76" fill="#8fd3ff" opacity=".18"/></g>
+    <path d="M26 62h68M26 66h68" stroke="#aab2ba" stroke-width="1.1"/>
+    <path d="M30 62v-8M42 62v-8M54 62v-8M66 62v-8M78 62v-8M90 62v-8" stroke="#aab2ba" stroke-width=".7"/>
+    <path d="M32 61l2-12h7l2 12z M47 61l2-12h7l2 12z M65 61l2-12h7l2 12z M80 61l2-12h7l2 12z" fill="#dff3ff" opacity=".7" stroke="#fff" stroke-width=".5"/>
+    <path d="M26 100h68M26 104h68" stroke="#aab2ba" stroke-width="1.1"/>
+    <ellipse cx="33" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+    <ellipse cx="43" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+    <ellipse cx="53" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+    <ellipse cx="63" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
+    <ellipse cx="72" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
+    <path d="M80 99l3-14h9l3 14z" fill="#c4473a"/>
+    <g class="arm arm-top"><rect x="36" y="68" width="48" height="2.6" rx="1.3" fill="#9aa3ad"/></g>
+    <g class="arm arm-bot"><rect x="30" y="107" width="60" height="3" rx="1.5" fill="#9aa3ad"/></g>
+    <circle cx="60" cy="69.3" r="2" fill="#7d868f"/><circle cx="60" cy="108.5" r="2.4" fill="#7d868f"/>
+    <g class="jets">
+      <path d="M40 106l-6-38M50 106l-2-40M70 106l2-40M80 106l6-38M45 67l-4-22M75 67l4-22"/>
+    </g>
+    <g class="drops">
+      <circle cx="35" cy="44" r="1"/><circle cx="52" cy="46" r="1.2"/><circle cx="68" cy="43" r="1"/><circle cx="86" cy="47" r="1.1"/>
+    </g>
+    <g class="steam-in"><path d="M40 112q-4-10 2-18t0-16M60 112q-4-10 2-18t0-16M80 112q-4-10 2-18t0-16"/></g>
+  </g>
+  <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-gloss)"/>
+  <rect x="22" y="38" width="76" height="76" rx="4" fill="none" stroke="#7e8790" stroke-width="1.2"/>
+  <rect x="14" y="118" width="92" height="10" rx="2" fill="#2b3036"/>
+</g>`;
+
+SVG.drawer_freezer = () => `
+<defs>${DEFS}
+<linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfeaf3"/></linearGradient></defs>
+<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="29" y="7" width="62" height="118" rx="3" fill="url(#ID-in)"/>
+<rect class="flight" x="29" y="7" width="62" height="118" fill="#fffbe6" opacity="0"/>
+<path d="M33 12h54" stroke="#b9c8d6" stroke-width="1.2"/><path d="M37 9.5h46" stroke="#cfdbe5" stroke-width="2" stroke-dasharray="2 1.5"/>
+<g class="drawer d1"><rect x="31" y="16" width="58" height="24" rx="2.5" fill="#e9f5ff" opacity=".9" stroke="#9fc3db" stroke-width=".6"/>
+  <rect x="35" y="23" width="12" height="13" rx="2" fill="#e5484d"/><rect x="49" y="26" width="14" height="10" rx="2" fill="#3e8ed0"/><rect x="65" y="22" width="18" height="14" rx="3" fill="#f2c94c"/>
+  <rect x="31" y="16" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".9"/><rect x="50" y="17.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
+<g class="drawer d2 pull"><rect x="31" y="43" width="58" height="26" rx="2.5" fill="#e9f5ff" opacity=".92" stroke="#9fc3db" stroke-width=".6"/>
+  <path d="M35 66l3-14h12l3 14z" fill="#9fd356"/><rect x="55" y="54" width="14" height="12" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".5"/><circle cx="77" cy="61" r="5" fill="#ff8f3d"/>
+  <rect x="31" y="43" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".95"/><rect x="50" y="44.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
+<g class="drawer d3"><rect x="31" y="72" width="58" height="24" rx="2.5" fill="#e9f5ff" opacity=".9" stroke="#9fc3db" stroke-width=".6"/>
+  <rect x="35" y="80" width="20" height="12" rx="2" fill="#c4c9cf"/><rect x="58" y="78" width="10" height="14" rx="2" fill="#e5484d" opacity=".85"/><rect x="71" y="81" width="14" height="11" rx="2" fill="#8a5a2b" opacity=".8"/>
+  <rect x="31" y="72" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".9"/><rect x="50" y="73.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
+<g class="drawer d4"><rect x="31" y="99" width="58" height="23" rx="2.5" fill="#e9f5ff" opacity=".9" stroke="#9fc3db" stroke-width=".6"/>
+  <rect x="35" y="107" width="16" height="11" rx="2" fill="#3e8ed0" opacity=".85"/><rect x="54" y="105" width="30" height="13" rx="3" fill="#f6f7f9" stroke="#c9d3dc" stroke-width=".5"/>
+  <rect x="31" y="99" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".9"/><rect x="50" y="100.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
+<g class="drawer-mist"><circle cx="44" cy="74" r="2"/><circle cx="60" cy="76" r="2.4"/><circle cx="76" cy="74" r="1.8"/></g>
+<g class="dz-door">
+  <rect x="26" y="4" width="68" height="126" rx="6" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".7"/>
+  <rect x="84" y="20" width="3.4" height="46" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <rect x="35" y="12" width="28" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
+  <text class="lcd fr-temp" x="51.5" y="20.8" text-anchor="middle">--°</text>
+  <g class="flake"><path d="M39.5 15v6M36.9 16.5l5.2 3M36.9 19.5l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
+  <circle class="led l1" cx="38" cy="28" r="1.2"/><circle class="led l2" cx="43" cy="28" r="1.2"/>
+  <rect x="26" y="122" width="68" height="8" rx="3" fill="#e2e6ea"/><path d="M34 125h52M34 127h52" stroke="#aab1b9" stroke-width=".6"/>
+  <path d="M30 8v112" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<g class="mist"><circle cx="40" cy="132" r="1.1"/><circle cx="52" cy="133" r=".9"/><circle cx="66" cy="132" r="1.2"/><circle cx="79" cy="133" r=".9"/></g>`;
+
+SVG.dryer = () => `
+<defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="29"/></clipPath>
+<radialGradient id="ID-heat" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ff7b2e" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="60" cy="133" rx="50" ry="5" fill="url(#ID-shadow)"/>
+<g class="shake-soft">
+  ${feet([20, 90], 124)}
+  <rect x="14" y="8" width="92" height="120" rx="8" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".8"/>
+  <path d="M14 16a8 8 0 0 1 8-8h76a8 8 0 0 1 8 8v17H14z" fill="url(#ID-panel)"/>
+  <line x1="14" y1="33" x2="106" y2="33" stroke="#bfc6ce" stroke-width=".8"/>
+  <circle cx="27" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
+  <circle cx="27" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
+  <g class="knob"><line x1="27" y1="21" x2="27" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>
+  ${lcd(43, 13, 30, 11)}
+  <circle class="led l1" cx="49" cy="29" r="1.4"/><circle class="led l2" cx="55" cy="29" r="1.4"/>
+  <circle class="led l3" cx="61" cy="29" r="1.4"/><circle class="led l4" cx="67" cy="29" r="1.4"/>
+  <rect x="80" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
+  <rect x="91" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
+  <rect x="80" y="23" width="19" height="5" rx="1.5" fill="#dfe3e8" stroke="#aeb5bd" stroke-width=".6"/>
+  ${porthole(60, 80, 29, `
+    <rect x="20" y="40" width="80" height="80" fill="#3a4148" opacity=".25"/>
+    ${drumInside(60, 80, 29)}
+    <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`)}
+  <rect x="20" y="72" width="5" height="16" rx="2" fill="url(#ID-chrome)" stroke="#8d959f" stroke-width=".4"/>
+  <rect x="95.5" y="74" width="4" height="12" rx="1.5" fill="#9aa3ad"/>
+  <rect x="22" y="114" width="76" height="9" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
+  <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>
+</g>`;
+
+SVG.fan = () => `
+<defs>${DEFS}
+<radialGradient id="ID-cage" cx=".5" cy=".5" r=".5"><stop offset=".82" stop-color="#cfe6f5" stop-opacity=".1"/><stop offset="1" stop-color="#cfe6f5" stop-opacity=".25"/></radialGradient>
+<linearGradient id="ID-blade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe3f7" stop-opacity=".95"/><stop offset="1" stop-color="#6fa9cf" stop-opacity=".85"/></linearGradient></defs>
+<ellipse cx="60" cy="128" rx="34" ry="4" fill="url(#ID-shadow)"/>
+<g class="fn-air" fill="none" stroke-linecap="round"><path d="M22 40q-10 12 0 26"/><path d="M14 34q-14 18 0 38"/><path d="M98 40q10 12 0 26"/><path d="M106 34q14 18 0 38"/></g>
+<ellipse cx="60" cy="122" rx="28" ry="6" fill="url(#ID-dark)"/>
+<ellipse cx="60" cy="120" rx="27" ry="5.2" fill="#2a2f35"/>
+<path d="M40 119.5q20-5 40 0" stroke="#fff" stroke-opacity=".15" stroke-width="1" fill="none"/>
+<circle class="fn-led l1" cx="50" cy="121" r="1.3"/><circle class="fn-led l2" cx="56" cy="121.8" r="1.3"/><circle class="fn-led l3" cx="62" cy="121.8" r="1.3"/>
+<circle cx="70" cy="121" r="1.9" fill="url(#ID-chrome)"/>
+<rect x="57.5" y="80" width="5" height="40" rx="2" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".4"/>
+<rect x="56.5" y="96" width="7" height="4" rx="1.5" fill="#59616b"/>
+<g class="fn-head">
+  <path d="M52 78h16l-2 8h-12z" fill="url(#ID-dark)"/>
+  <ellipse cx="60" cy="52" rx="13" ry="11" fill="url(#ID-dark)"/>
+  <circle cx="60" cy="52" r="35" fill="url(#ID-cage)" stroke="#d7dce1" stroke-width="1.6"/>
+  <g class="fn-blades">
+    <path d="M60 52q-6-16 2-28q12 6 2 28z" fill="url(#ID-blade)"/>
+    <path d="M60 52q-6-16 2-28q12 6 2 28z" fill="url(#ID-blade)" transform="rotate(72 60 52)"/>
+    <path d="M60 52q-6-16 2-28q12 6 2 28z" fill="url(#ID-blade)" transform="rotate(144 60 52)"/>
+    <path d="M60 52q-6-16 2-28q12 6 2 28z" fill="url(#ID-blade)" transform="rotate(216 60 52)"/>
+    <path d="M60 52q-6-16 2-28q12 6 2 28z" fill="url(#ID-blade)" transform="rotate(288 60 52)"/>
+  </g>
+  <circle class="fn-blur" cx="60" cy="52" r="30" fill="#bfe3f7"/>
+  <g fill="none" stroke="#e6eaee" stroke-opacity=".75" stroke-width=".6">
+    <circle cx="60" cy="52" r="10"/><circle cx="60" cy="52" r="18"/><circle cx="60" cy="52" r="26"/>
+    <path d="M60 17v70M25 52h70M35.3 27.3l49.4 49.4M84.7 27.3l-49.4 49.4M46.6 19.7l26.8 64.6M73.4 19.7l-26.8 64.6M27.7 38.6l64.6 26.8M92.3 38.6l-64.6 26.8"/>
+  </g>
+  <circle cx="60" cy="52" r="6" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
+  <circle cx="60" cy="52" r="2.2" fill="#38a3d6"/>
+  <path d="M34 34a35 35 0 0 1 22-15" stroke="#fff" stroke-opacity=".6" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <g class="fn-ribbon"><path d="M93 44q8 2 12 -2q-4 6 -12 6z" fill="#ff7a59"/></g>
+</g>`;
+
+/* style de réfrigérateur : congélateur en haut (défaut), en bas, French door, américain */
+const fridgeStyle = (c) => ({ top: "top", haut: "top", bottom: "bottom", bas: "bottom", combi: "bottom", french: "french", french_door: "french", american: "american", americain: "american", side_by_side: "american", us: "american" }[String(c?.style || "top").toLowerCase()] || "top");
+
+// contenu du compartiment frigo (bouteilles, pots, fruits, bac à légumes), dessiné dans la zone x, y, w, h
+const fridgeFood = (x, y, w, h) => {
+  const s1 = y + h * 0.33, s2 = y + h * 0.64, cx = x + w / 2;
+  return `
+<path d="M${x + 2} ${s1}h${w - 4}M${x + 2} ${s2}h${w - 4}" stroke="#b9c8d6" stroke-width="1.1"/>
+<rect x="${x + 7}" y="${s1 - 14}" width="6" height="14" rx="1.5" fill="#3fbf7f"/><rect x="${x + 15}" y="${s1 - 10}" width="8" height="10" rx="2" fill="#f2c94c"/>
+<rect x="${cx - 3}" y="${s1 - 8}" width="12" height="8" rx="2" fill="#e5484d"/><rect x="${x + w - 15}" y="${s1 - 12}" width="5" height="12" rx="1.5" fill="#3e8ed0"/>
+<rect x="${x + 9}" y="${s2 - 10}" width="14" height="10" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".6"/><circle cx="${cx + 4}" cy="${s2 - 5}" r="5" fill="#ff8f3d"/><circle cx="${cx + 14}" cy="${s2 - 4}" r="4" fill="#9fd356"/>
+<rect x="${x + 3}" y="${s2 + 6}" width="${w - 6}" height="${y + h - s2 - 9}" rx="2" fill="#e3eef7" stroke="#b9c8d6" stroke-width=".6"/>`;
+};
+// tiroir de congélateur (façade inox + poignée horizontale)
+const fzDrawer = (x, y, w, h, cls) => `
+<g class="${cls}">
+  <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="${x + w * 0.25}" y="${y + 3.5}" width="${w * 0.5}" height="3.2" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M${x + 4} ${y + h - 2}h${w - 8}" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>
+</g>`;
+// afficheur température + flocon
+const fridgeLcd = (x, y) => `
+<rect x="${x}" y="${y}" width="24" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
+<text class="lcd fr-temp" x="${x + 14.5}" y="${y + 8.8}" text-anchor="middle">--°</text>
+<g class="flake"><path d="M${x + 4.5} ${y + 3}v6M${x + 1.9} ${y + 4.5}l5.2 3M${x + 1.9} ${y + 7.5}l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>`;
+const FRIDGE_DEFS = `<defs>${DEFS}
+<linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe9f2"/></linearGradient>
+<linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient></defs>`;
+const fridgeMist = `<g class="mist"><circle cx="40" cy="132" r="1.1"/><circle cx="52" cy="133" r=".9"/><circle cx="66" cy="132" r="1.2"/><circle cx="79" cy="133" r=".9"/></g>`;
+
+const FRIDGE = {
+  // congélateur en haut (modèle d'origine)
+  top: () => `
+<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="29" y="7" width="62" height="36" rx="3" fill="url(#ID-frost)"/>
+<path d="M31 25h58" stroke="#a9cbe2" stroke-width="1"/>
+<rect x="34" y="28" width="22" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
+<rect x="60" y="28" width="26" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
+<rect x="29" y="47" width="62" height="78" rx="3" fill="url(#ID-in)"/>
+<path d="M31 72h58M31 96h58" stroke="#b9c8d6" stroke-width="1.1"/>
+<rect x="36" y="58" width="6" height="14" rx="1.5" fill="#3fbf7f"/><rect x="44" y="62" width="8" height="10" rx="2" fill="#f2c94c"/>
+<rect x="56" y="64" width="12" height="8" rx="2" fill="#e5484d"/><rect x="72" y="60" width="5" height="12" rx="1.5" fill="#3e8ed0"/>
+<rect x="38" y="86" width="14" height="10" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".6"/><circle cx="64" cy="91" r="5" fill="#ff8f3d"/><circle cx="74" cy="92" r="4" fill="#9fd356"/>
+<rect x="32" y="104" width="56" height="18" rx="2" fill="#e3eef7" stroke="#b9c8d6" stroke-width=".6"/>
+<rect class="flight" x="29" y="47" width="62" height="78" fill="#fffbe6" opacity="0"/>
+<g class="fz-door">
+  <rect x="26" y="4" width="68" height="40" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="12" width="3.4" height="24" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+</g>
+<g class="fr-door">
+  <rect x="26" y="46" width="68" height="84" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="52" width="3.4" height="40" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <rect x="35" y="54" width="24" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
+  <text class="lcd fr-temp" x="49.5" y="62.8" text-anchor="middle">--°</text>
+  <g class="flake"><path d="M39.5 57v6M36.9 58.5l5.2 3M36.9 61.5l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
+  <path d="M30 50v76" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>`,
+
+  // combiné : frigo en haut, deux tiroirs de congélation en bas
+  bottom: () => `
+<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="29" y="7" width="62" height="74" rx="3" fill="url(#ID-in)"/>
+${fridgeFood(29, 7, 62, 74)}
+<rect class="flight" x="29" y="7" width="62" height="74" fill="#fffbe6" opacity="0"/>
+<rect x="29" y="86" width="62" height="41" rx="3" fill="url(#ID-frost)"/>
+<path d="M31 106h58" stroke="#a9cbe2" stroke-width="1"/>
+${fzDrawer(26, 108, 68, 22, "fzd")}
+${fzDrawer(26, 85, 68, 22, "fzd fzd-pull")}
+<g class="fr-door">
+  <rect x="26" y="4" width="68" height="79" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="40" width="3.4" height="38" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${fridgeLcd(35, 12)}
+  <path d="M30 8v71" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>`,
+
+  // French door : deux portes battantes en haut, deux tiroirs de congélation en bas
+  french: () => `
+<ellipse cx="60" cy="134" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="16" y="4" width="88" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="19" y="7" width="82" height="70" rx="3" fill="url(#ID-in)"/>
+${fridgeFood(19, 7, 82, 70)}
+<rect class="flight" x="19" y="7" width="82" height="70" fill="#fffbe6" opacity="0"/>
+<rect x="19" y="82" width="82" height="45" rx="3" fill="url(#ID-frost)"/>
+<path d="M21 106h78" stroke="#a9cbe2" stroke-width="1"/>
+${fzDrawer(16, 106, 88, 24, "fzd")}
+${fzDrawer(16, 81, 88, 23, "fzd fzd-pull")}
+<g class="fr-door fr-l">
+  <rect x="16" y="4" width="43.6" height="75" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="53" y="16" width="3.2" height="46" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${fridgeLcd(22, 12)}
+  <path d="M20 8v67" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>
+<g class="fr-door fr-r" style="transform-origin: 104px 0">
+  <rect x="60.4" y="4" width="43.6" height="75" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="63.8" y="16" width="3.2" height="46" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M71 8v67" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
+</g>`,
+
+  // américain side-by-side : congélateur à gauche avec distributeur glaçons / eau, frigo à droite
+  american: () => `
+<ellipse cx="60" cy="134" rx="54" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="12" y="4" width="96" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="15" y="7" width="43" height="120" rx="3" fill="url(#ID-frost)"/>
+<path d="M17 36h39M17 66h39M17 96h39" stroke="#a9cbe2" stroke-width="1"/>
+<rect x="19" y="24" width="14" height="10" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/><rect x="36" y="27" width="17" height="7" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
+<rect x="20" y="54" width="32" height="10" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
+<rect x="62" y="7" width="43" height="120" rx="3" fill="url(#ID-in)"/>
+${fridgeFood(62, 7, 43, 120)}
+<rect class="flight" x="62" y="7" width="43" height="120" fill="#fffbe6" opacity="0"/>
+<g class="fz-door fz-l">
+  <rect x="12" y="4" width="47.6" height="126" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="53.4" y="30" width="3.2" height="66" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${fridgeLcd(19, 14)}
+  <rect x="19" y="32" width="28" height="36" rx="3" fill="#161b21" stroke="#5f6770" stroke-width=".6"/>
+  <rect class="ib-light" x="20.5" y="33.5" width="25" height="2" rx="1" fill="#6fd8ff"/>
+  <path d="M30 36v6h6v-6" fill="#2a3139" stroke="#5f6770" stroke-width=".4"/>
+  <rect x="24" y="44" width="18" height="11" rx="1.5" fill="#20262d" stroke="#3b434c" stroke-width=".5"/>
+  <circle class="ib-drop" cx="33" cy="43" r=".9" fill="#9fdcff"/>
+  <g class="ib-ice"><rect x="27" y="45" width="3" height="3" rx=".6" fill="#e9f6ff" opacity=".8"/><rect x="36" y="46" width="3" height="3" rx=".6" fill="#e9f6ff" opacity=".8"/></g>
+  <rect x="20" y="62" width="26" height="4" rx="1" fill="#2a3139"/><path d="M22 63.2h22M22 64.8h22" stroke="#3b434c" stroke-width=".4"/>
+  <path d="M16 8v118" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>
+<g class="fr-door fr-r">
+  <rect x="60.4" y="4" width="47.6" height="126" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="63.4" y="30" width="3.2" height="66" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M71 8v118" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
+</g>`,
+};
+
+SVG.fridge = (c) => `${FRIDGE_DEFS}${FRIDGE[fridgeStyle(c)]()}${fridgeMist}`;
+
+/* Carte générique : l'utilisateur fournit sa propre image (option `image`) */
+SVG.generic = (c = {}) => {
+  const src = String((c && c.image) || "").trim();
+  const art = src
+    ? `<image class="gn-img" href="${esc(src)}" x="4" y="6" width="112" height="124" preserveAspectRatio="xMidYMid meet"/>`
+    // pas d'image : pictogramme de prise pour inviter à renseigner `image`
+    : `<g class="gn-img gn-empty">
+  <rect x="14" y="22" width="92" height="92" rx="16" fill="none" stroke="#8d959f" stroke-width="2" stroke-dasharray="5 5"/>
+  <rect x="44" y="40" width="32" height="40" rx="8" fill="#b9bfc6"/>
+  <rect x="51" y="30" width="5" height="14" rx="2" fill="#8d959f"/><rect x="64" y="30" width="5" height="14" rx="2" fill="#8d959f"/>
+  <path d="M60 80v14" stroke="#8d959f" stroke-width="4" stroke-linecap="round"/>
+</g>`;
+  return `<ellipse cx="60" cy="128" rx="34" ry="4" fill="#000" opacity=".18"/>${art}`;
+};
+
+SVG.heat_pump = () => `
+<defs>${DEFS}
+<linearGradient id="ID-hp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#cfd5db"/></linearGradient>
+<radialGradient id="ID-grill" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3a4048"/><stop offset="1" stop-color="#1c2025"/></radialGradient></defs>
+<ellipse cx="60" cy="126" rx="56" ry="4" fill="url(#ID-shadow)"/>
+<g class="hp-steam"><path d="M30 30q-3-5 0-9t0-9"/><path d="M46 28q-3-5 0-9t0-9"/><path d="M62 30q-3-5 0-9t0-9"/></g>
+<g class="hp-body">
+<rect x="14" y="114" width="14" height="8" rx="1" fill="#59616b"/><rect x="92" y="114" width="14" height="8" rx="1" fill="#59616b"/>
+<rect x="8" y="34" width="104" height="82" rx="4" fill="url(#ID-hp)" stroke="#9aa2ab" stroke-width=".7"/>
+<path d="M10 37h100" stroke="#fff" stroke-width="1.2"/>
+<path d="M84 40v72" stroke="#b9c0c7" stroke-width=".7"/>
+<g stroke="#bfc6cd" stroke-width=".6"><path d="M88 46h20M88 50h20M88 54h20M88 58h20M88 62h20M88 66h20"/></g>
+<rect x="88" y="84" width="20" height="18" rx="1.5" fill="#e3e7eb" stroke="#aab2ba" stroke-width=".5"/>
+<circle cx="98" cy="93" r="1.3" fill="#9aa2ab"/>
+<circle class="hp-led" cx="104" cy="75" r="1.2"/>
+<circle cx="46" cy="75" r="31" fill="#d4d9de" stroke="#aab2ba" stroke-width=".6"/>
+<circle cx="46" cy="75" r="28" fill="url(#ID-grill)"/>
+<g class="hp-fan" fill="#8e979f"><path d="M46 75q-2-16 8-23q3 9-8 23z"/><path d="M46 75q15-6 23 3q-9 4-23-3z"/><path d="M46 75q-13 10-24 4q5-8 24-4z"/></g>
+<circle cx="46" cy="75" r="4" fill="#59616b"/>
+<g fill="none" stroke="#e6eaee" stroke-opacity=".8" stroke-width=".7"><circle cx="46" cy="75" r="9"/><circle cx="46" cy="75" r="15"/><circle cx="46" cy="75" r="21"/><circle cx="46" cy="75" r="27"/><path d="M46 47v56M18 75h56"/></g>
+</g>
+<g class="hp-out"><circle cx="46" cy="75" r="30"/><circle cx="46" cy="75" r="30"/><circle cx="46" cy="75" r="30"/></g>
+<path d="M112 98h4q3 0 3 3v19" stroke="#c77b3a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M112 104h2q2 0 2 2v14" stroke="#2a2f35" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
+
+SVG.hob = () => `
+<defs>${DEFS}
+<clipPath id="ID-all"><rect x="0" y="0" width="120" height="140" rx="12"/></clipPath>
+<linearGradient id="ID-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2d31"/><stop offset="1" stop-color="#0d0e10"/></linearGradient>
+<linearGradient id="ID-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c4a3"/><stop offset="1" stop-color="#b89a73"/></linearGradient>
+<radialGradient id="ID-hot"><stop offset="0" stop-color="#ffb347"/><stop offset=".45" stop-color="#ff4a1f"/><stop offset="1" stop-color="#8a1205" stop-opacity=".25"/></radialGradient>
+<linearGradient id="ID-pot" x1="0" x2="1"><stop offset="0" stop-color="#8d959e"/><stop offset=".3" stop-color="#f1f3f5"/><stop offset=".6" stop-color="#c3c9cf"/><stop offset="1" stop-color="#7d858e"/></linearGradient></defs>
+<ellipse cx="60" cy="125" rx="50" ry="4" fill="url(#ID-shadow)"/>
+<g transform="translate(-9 -24) scale(1.15)">
+<path d="M12 122L108 122L97 60L23 60Z" fill="#8d959e"/>
+<path d="M14 120L106 120L96 62L24 62Z" fill="url(#ID-glass)"/>
+<g class="zone z1">
+  <ellipse cx="40" cy="99" rx="18" ry="9.7" fill="none" stroke="#5a6068" stroke-width=".5"/>
+  <ellipse class="zglow" cx="40" cy="99" rx="16" ry="8.5" fill="url(#ID-hot)"/>
+  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
+    <ellipse cx="40" cy="99" rx="13.1" ry="7.0"/><ellipse cx="40" cy="99" rx="9.3" ry="4.9"/><ellipse cx="40" cy="99" rx="5.4" ry="2.9"/></g>
+  <ellipse cx="40" cy="99" rx="16" ry="8.5" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
+</g><g class="zone z2">
+  <ellipse cx="82" cy="99" rx="14" ry="7.7" fill="none" stroke="#5a6068" stroke-width=".5"/>
+  <ellipse class="zglow" cx="82" cy="99" rx="12" ry="6.5" fill="url(#ID-hot)"/>
+  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
+    <ellipse cx="82" cy="99" rx="9.8" ry="5.3"/><ellipse cx="82" cy="99" rx="7.0" ry="3.8"/><ellipse cx="82" cy="99" rx="4.1" ry="2.2"/></g>
+  <ellipse cx="82" cy="99" rx="12" ry="6.5" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
+</g><g class="zone z3">
+  <ellipse cx="44" cy="73" rx="13" ry="6.4" fill="none" stroke="#5a6068" stroke-width=".5"/>
+  <ellipse class="zglow" cx="44" cy="73" rx="11" ry="5.2" fill="url(#ID-hot)"/>
+  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
+    <ellipse cx="44" cy="73" rx="9.0" ry="4.3"/><ellipse cx="44" cy="73" rx="6.4" ry="3.0"/><ellipse cx="44" cy="73" rx="3.7" ry="1.8"/></g>
+  <ellipse cx="44" cy="73" rx="11" ry="5.2" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
+</g><g class="zone z4">
+  <ellipse cx="78" cy="73" rx="16" ry="7.7" fill="none" stroke="#5a6068" stroke-width=".5"/>
+  <ellipse class="zglow" cx="78" cy="73" rx="14" ry="6.5" fill="url(#ID-hot)"/>
+  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
+    <ellipse cx="78" cy="73" rx="11.5" ry="5.3"/><ellipse cx="78" cy="73" rx="8.1" ry="3.8"/><ellipse cx="78" cy="73" rx="4.8" ry="2.2"/></g>
+  <ellipse cx="78" cy="73" rx="14" ry="6.5" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
+</g>
+<path d="M30 63L58 63L22 118L16 118Z" fill="#fff" opacity=".05"/>
+<path d="M18 109H102" stroke="#3b4047" stroke-width=".5"/>
+<g class="digits">
+  <text class="zd zd1" x="28" y="116.5" text-anchor="middle">0</text>
+  <text class="zd zd3" x="44" y="116.5" text-anchor="middle">0</text>
+  <text class="zd zd4" x="76" y="116.5" text-anchor="middle">0</text>
+  <text class="zd zd2" x="92" y="116.5" text-anchor="middle">0</text>
+</g>
+<circle cx="60" cy="114.5" r="2.4" fill="none" stroke="#5a6068" stroke-width=".6"/><path d="M60 112.6v1.6" stroke="#5a6068" stroke-width=".6"/>
+<path d="M51 114.5h3M66 114.5h3M67.5 113v3" stroke="#5a6068" stroke-width=".6"/>
+<g class="pan">
+  <path d="M90 66L104 52" stroke="#2b2f34" stroke-width="2.6" stroke-linecap="round"/>
+  <ellipse cx="78" cy="71" rx="13" ry="6.2" fill="#2b2f34"/>
+  <ellipse cx="78" cy="70" rx="11.5" ry="5.2" fill="#3b4047"/>
+  <ellipse cx="76" cy="70" rx="5" ry="2.6" fill="#ffffff"/><ellipse cx="76.5" cy="69.8" rx="2" ry="1.2" fill="#f2b632"/>
+  <g class="sizzle"><path d="M68 64l-1-3M74 62l0-3M84 62l1-3M89 65l2-2"/></g>
+</g>
+<g class="pot">
+  <path d="M24 86l-10-2" stroke="#2b2f34" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M25 80V96Q25 101 40 101Q55 101 55 96V80Z" fill="url(#ID-pot)" stroke="#6f7781" stroke-width=".5"/>
+  <ellipse cx="40" cy="96.5" rx="15" ry="4.5" fill="none" stroke="#6f7781" stroke-width=".4" opacity=".6"/>
+  <g class="lid"><ellipse cx="40" cy="80" rx="15.5" ry="4.6" fill="#d7dce1" stroke="#7d858e" stroke-width=".6"/>
+  <ellipse cx="40" cy="79.4" rx="11" ry="3" fill="#eef1f4"/>
+  <rect x="37.5" y="75" width="5" height="3.4" rx="1.4" fill="#2b2f34"/></g>
+  <g class="steam-pot"><path d="M34 72q-3-5 0-10t0-10"/><path d="M41 70q-3-5 0-10t0-10"/><path d="M48 72q-3-5 0-10t0-10"/></g>
+</g></g>`;
+
+SVG.laptop = () => `
+<defs>${DEFS}
+<linearGradient id="ID-lpwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a63"/><stop offset=".5" stop-color="#6b3fc9"/><stop offset="1" stop-color="#ff8fab"/></linearGradient>
+<linearGradient id="ID-lpbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4e8ec"/><stop offset="1" stop-color="#bfc6cd"/></linearGradient>
+<radialGradient id="ID-lpglow" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#7fdcff" stop-opacity=".55"/><stop offset="1" stop-color="#7fdcff" stop-opacity="0"/></radialGradient>
+<clipPath id="ID-lpclip"><rect x="22" y="21" width="76" height="52" rx="1"/></clipPath></defs>
+<ellipse cx="60" cy="116" rx="54" ry="4" fill="url(#ID-shadow)"/>
+<rect x="16" y="14" width="88" height="64" rx="5" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+<rect x="22" y="21" width="76" height="52" rx="1" fill="#0a0d11"/>
+<g class="lp-screen" clip-path="url(#ID-lpclip)">
+  <rect x="22" y="21" width="76" height="52" fill="url(#ID-lpwall)"/>
+  <rect x="22" y="21" width="76" height="5" fill="#0b1020" opacity=".6"/>
+  <circle cx="26" cy="23.5" r="1" fill="#fff" opacity=".8"/><rect x="82" y="22.6" width="14" height="1.8" rx=".9" fill="#fff" opacity=".7"/>
+  <rect x="27" y="30" width="20" height="14" rx="2" fill="#fff" opacity=".9"/><rect x="50" y="30" width="20" height="14" rx="2" fill="#fff" opacity=".9"/><rect x="73" y="30" width="20" height="14" rx="2" fill="#fff" opacity=".9"/>
+  <circle cx="33" cy="37" r="3" fill="#ffb347"/><circle cx="56" cy="37" r="3" fill="#38d9ff"/><circle cx="79" cy="37" r="3" fill="#43c07a"/>
+  <rect x="38" y="35.4" width="7" height="1.6" rx=".8" fill="#4b535c"/><rect x="61" y="35.4" width="7" height="1.6" rx=".8" fill="#4b535c"/><rect x="84" y="35.4" width="7" height="1.6" rx=".8" fill="#4b535c"/>
+  <rect x="27" y="48" width="66" height="19" rx="2" fill="#0d1520" opacity=".88"/>
+  <path class="lp-line" d="M30 62l8-4l7 3l8-8l8 5l8-7l8 3l8-6l6 2" fill="none" stroke="#38d9ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 64h60" stroke="#3b4a63" stroke-width=".5"/>
+  <circle class="lp-dot" cx="90" cy="53" r="1.6" fill="#fff"/>
+</g>
+<path d="M22 21h76l-26 52h-50z" fill="url(#ID-gloss)" opacity=".3"/>
+<circle cx="60" cy="17.4" r=".9" fill="#2a2f35"/><circle class="lp-cam" cx="60" cy="17.4" r=".45"/>
+<path d="M14 78h92l8 30h-108z" fill="url(#ID-lpbody)" stroke="#9aa2ab" stroke-width=".6"/>
+<path d="M14 78h92" stroke="#fff" stroke-width="1" opacity=".8"/>
+<path d="M6 108h108v3q0 2.5-3 2.5h-102q-3 0-3-2.5z" fill="#aab2ba" stroke="#8f98a2" stroke-width=".5"/>
+<path d="M48 108h24v1.6q-12 1.6-24 0z" fill="#8f98a2"/>
+<path d="M18 81h84l5 20h-94z" fill="#151a1f" opacity=".85"/>
+<g class="lp-keys" fill="#cfd5db">
+  <path d="M20.6 83h8l-1.2 3h-8zM30.4 83h8l-.5 3h-8zM40.2 83h8l-.2 3h-8zM50 83h8v3h-8zM59.8 83h8v3h-8zM69.6 83h8l.2 3h-8zM79.4 83h8l.5 3h-8zM89.2 83h8l1.2 3h-8z"/>
+  <path d="M19.2 87.4h8.6l-1.2 3.2h-8.6zM29.4 87.4h8.6l-.6 3.2h-8.6zM39.6 87.4h8.6l-.2 3.2h-8.6zM49.8 87.4h8.6v3.2h-8.6zM60 87.4h8.6l.2 3.2h-8.6zM70.2 87.4h8.6l.6 3.2h-8.6zM80.4 87.4h8.6l1.2 3.2h-8.6zM90.6 87.4h6.4l1.4 3.2h-6.6z"/>
+  <path d="M17.8 92h9.2l-1.3 3.4h-9.2zM28.6 92h9.2l-.6 3.4h-9.2zM39.4 92h9.2l-.2 3.4h-9.2zM50.2 92h9.2v3.4h-9.2zM61 92h9.2l.2 3.4h-9.2zM71.8 92h9.2l.6 3.4h-9.2zM82.6 92h9.2l1.3 3.4h-9.2z"/>
+</g>
+<path d="M46 97h28l1 4h-30z" fill="#aab2ba" stroke="#8f98a2" stroke-width=".4"/>
+<path d="M18 81h84l5 20h-94z" fill="url(#ID-lpglow)" class="lp-glow"/>
+<circle class="lp-led" cx="60" cy="111" r="1.1"/>`;
+
+SVG.microwave = () => `
+<defs>${DEFS}<clipPath id="ID-win"><rect x="13" y="42" width="66" height="62" rx="4"/></clipPath>
+<linearGradient id="ID-cav" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4f55"/><stop offset="1" stop-color="#22262a"/></linearGradient></defs>
+<ellipse cx="60" cy="117" rx="56" ry="5" fill="url(#ID-shadow)"/>
+<rect x="8" y="111" width="10" height="4" rx="1" fill="#2c3136"/><rect x="102" y="111" width="10" height="4" rx="1" fill="#2c3136"/>
+<rect x="5" y="34" width="110" height="78" rx="6" fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"/>
+<rect x="9" y="38" width="74" height="70" rx="5" fill="#1a1d21"/>
+<rect x="13" y="42" width="66" height="62" rx="4" fill="url(#ID-cav)"/>
+<g clip-path="url(#ID-win)">
+  <rect class="ilight" x="13" y="42" width="66" height="62" fill="url(#ID-warm)"/>
+  <ellipse cx="46" cy="94" rx="24" ry="5" fill="#c8d4dc" opacity=".85"/>
+  <ellipse cx="46" cy="93.4" rx="21" ry="3.8" fill="#e7eef3" opacity=".9"/>
+  <g class="bowl">
+    <path d="M35 80h22q-1 11-11 12q-10-1-11-12z" fill="#f4f1ea" stroke="#c9c2b4" stroke-width=".6"/>
+    <ellipse cx="46" cy="80" rx="11" ry="2.4" fill="#d9822b"/>
+    <path d="M38 85h16" stroke="#3e8ed0" stroke-width="1.2"/>
+  </g>
+  <g class="steam-in"><path d="M42 76q-3-5 0-10t0-10M50 76q-3-5 0-10t0-10"/></g>
+  <rect x="13" y="42" width="66" height="62" fill="url(#ID-mesh)"/>
+</g>
+<path d="M13 60L33 42h14L13 74z" fill="#fff" opacity=".1"/>
+<rect x="84" y="38" width="3" height="70" rx="1.5" fill="url(#ID-chrome)"/>
+${lcd(90, 42, 21, 10)}
+<g fill="#d7dce1" stroke="#9aa2ab" stroke-width=".4">
+  <rect x="90" y="57" width="6" height="5" rx="1.2"/><rect x="97.5" y="57" width="6" height="5" rx="1.2"/><rect x="105" y="57" width="6" height="5" rx="1.2"/>
+  <rect x="90" y="64" width="6" height="5" rx="1.2"/><rect x="97.5" y="64" width="6" height="5" rx="1.2"/><rect x="105" y="64" width="6" height="5" rx="1.2"/>
+  <rect x="90" y="71" width="6" height="5" rx="1.2"/><rect x="97.5" y="71" width="6" height="5" rx="1.2"/><rect x="105" y="71" width="6" height="5" rx="1.2"/>
+</g>
+<circle cx="100.5" cy="88" r="7" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
+<circle cx="100.5" cy="88" r="4.6" fill="#e9ecef"/>
+<g class="knob"><line x1="100.5" y1="88" x2="100.5" y2="84.2" stroke="#4f5964" stroke-width="1.3" stroke-linecap="round"/></g>
+<rect class="start" x="90" y="98" width="21" height="6" rx="2"/>`;
+
+SVG.oven = () => `
+<defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="56" width="76" height="56" rx="4"/></clipPath>
+<linearGradient id="ID-cavity" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3330"/><stop offset="1" stop-color="#181412"/></linearGradient></defs>
+<ellipse cx="60" cy="133" rx="52" ry="5" fill="url(#ID-shadow)"/>
+<rect x="10" y="10" width="100" height="120" rx="5" fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"/>
+<rect x="10" y="10" width="100" height="22" rx="5" fill="url(#ID-dark)"/>
+<rect x="10" y="26" width="100" height="6" fill="url(#ID-dark)"/>
+<circle cx="24" cy="21" r="7" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/>
+<circle cx="24" cy="21" r="4.6" fill="#2a3036"/><g class="knob"><line x1="24" y1="21" x2="24" y2="17.2" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/></g>
+<circle cx="96" cy="21" r="7" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/>
+<circle cx="96" cy="21" r="4.6" fill="#2a3036"/><line x1="96" y1="21" x2="99" y2="18.5" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/>
+${lcd(43, 15, 34, 12)}
+<circle class="led l1" cx="38" cy="21" r="1.3"/>
+<rect x="14" y="36" width="92" height="90" rx="3" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"/>
+<rect x="20" y="40.5" width="80" height="4.5" rx="2.25" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
+<rect x="24" y="44.5" width="3" height="4" fill="#8f979f"/><rect x="93" y="44.5" width="3" height="4" fill="#8f979f"/>
+<rect x="22" y="56" width="76" height="56" rx="4" fill="url(#ID-cavity)"/>
+<g clip-path="url(#ID-win)">
+  <rect class="ilight" x="22" y="56" width="76" height="56" fill="url(#ID-warm)"/>
+  <path class="element" d="M26 61h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>
+  <path d="M24 97h72M24 99.5h72" stroke="#8d8680" stroke-width=".9"/>
+  <path d="M36 97l3-10h42l3 10z" fill="#b5442f"/>
+  <path d="M39 87q21-8 42 0z" fill="#d06a3c"/>
+  <ellipse cx="60" cy="86.5" rx="5" ry="1.4" fill="#5b2a1a"/>
+  <path d="M42 90h36" stroke="#e48a5c" stroke-width=".8"/>
+  <g class="haze"><path d="M44 82q-3-5 0-10t0-10M60 80q-3-5 0-10t0-10M76 82q-3-5 0-10t0-10"/></g>
+</g>
+<path d="M22 70L44 56h16L22 82z" fill="#fff" opacity=".08"/>
+<rect x="22" y="56" width="76" height="56" rx="4" fill="none" stroke="#5d656d" stroke-width="1.2"/>
+<rect x="14" y="118" width="92" height="8" rx="1.5" fill="#000" opacity=".12"/>`;
+
+SVG.pellet_stove = () => `
+<defs>${DEFS}
+<clipPath id="ID-win"><rect x="34" y="46" width="52" height="50" rx="5"/></clipPath>
+<linearGradient id="ID-blk" x1="0" x2="1"><stop offset="0" stop-color="#17191c"/><stop offset=".5" stop-color="#34383e"/><stop offset="1" stop-color="#141618"/></linearGradient>
+<linearGradient id="ID-white" x1="0" x2="1"><stop offset="0" stop-color="#d9dde2"/><stop offset=".55" stop-color="#ffffff"/><stop offset="1" stop-color="#c9ced4"/></linearGradient>
+<linearGradient id="ID-brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1712"/><stop offset="1" stop-color="#0f0706"/></linearGradient>
+<radialGradient id="ID-glow" cx=".5" cy=".85" r=".85"><stop offset="0" stop-color="#ffd27a" stop-opacity=".95"/><stop offset=".45" stop-color="#ff7a1a" stop-opacity=".55"/><stop offset="1" stop-color="#3a0d00" stop-opacity="0"/></radialGradient>
+<linearGradient id="ID-fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff3b0"/><stop offset=".3" stop-color="#ffc23d"/><stop offset=".68" stop-color="#ff7a1a"/><stop offset="1" stop-color="#e5381c" stop-opacity="0"/></linearGradient>
+<linearGradient id="ID-core" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#fff0a0"/><stop offset="1" stop-color="#ffc23d" stop-opacity="0"/></linearGradient></defs>
+<g transform="translate(-6.5 -4.5) scale(1.11)">
+<ellipse cx="60" cy="134" rx="44" ry="4.5" fill="url(#ID-shadow)"/>
+<g class="flue-smoke"><path d="M57 0q-4-5 0-10t0-10"/><path d="M63 -2q-4-5 0-10t0-10"/></g>
+<rect x="53" y="3" width="14" height="11" fill="url(#ID-chrome)"/>
+<rect x="51" y="1" width="18" height="4" rx="1.5" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".4"/>
+<rect x="28" y="124" width="9" height="7" rx="1.5" fill="#24272b"/><rect x="83" y="124" width="9" height="7" rx="1.5" fill="#24272b"/>
+<rect x="22" y="14" width="76" height="113" rx="7" fill="url(#ID-blk)" stroke="#0b0c0e" stroke-width=".6"/>
+<rect x="22" y="22" width="9.5" height="102" rx="3.5" fill="url(#ID-white)"/>
+<rect x="88.5" y="22" width="9.5" height="102" rx="3.5" fill="url(#ID-white)"/>
+<rect x="19" y="11" width="82" height="8" rx="3" fill="#2b2f34" stroke="#474c53" stroke-width=".6"/>
+<rect x="40" y="12.4" width="40" height="5" rx="1.6" fill="#1b1d21" stroke="#555b63" stroke-width=".5"/>
+<path d="M36 23.5h48M36 26h48M36 28.5h48" stroke="#0b0c0e" stroke-width="1.2"/>
+${lcd(46, 31.5, 28, 9)}
+<circle cx="40" cy="36" r="2" fill="#3b4148" stroke="#5a616a" stroke-width=".4"/>
+<circle class="led l1" cx="80" cy="36" r="1.5"/>
+<rect x="31" y="43" width="58" height="56" rx="7" fill="#0f1113" stroke="#4a5058" stroke-width=".8"/>
+<rect x="34" y="46" width="52" height="50" rx="5" fill="url(#ID-brick)"/>
+<g clip-path="url(#ID-win)">
+  <path d="M34 56h52M34 66h52M34 76h52M46 46v10M62 46v10M78 46v10M40 56v10M56 56v10M72 56v10M48 66v10M64 66v10M80 66v10" stroke="#3d2219" stroke-width=".6" opacity=".9"/>
+  <rect class="glow" x="34" y="46" width="52" height="50" fill="url(#ID-glow)"/>
+  <g class="fire">
+    <path class="flame f2" d="M52.5 86C46.5 81 47.5 73 50 68C51.5 73 54 73.5 54 69C57.5 74.5 58.5 82 52.5 86Z" fill="url(#ID-fl)"/>
+    <path class="flame f3" d="M67.5 86C62 82 63 74 65.5 70C66.5 74.5 68.5 74.5 69.5 70C73.5 76.5 72.5 83 67.5 86Z" fill="url(#ID-fl)"/>
+    <path class="flame f1" d="M60 86C51 80 52.5 69 57 62C58 68.5 61 68.5 60.5 60C67.5 67 71 78 60 86Z" fill="url(#ID-fl)"/>
+    <path class="flame f5" d="M59.5 68C57.5 62 59.5 56 61.5 52C62.5 58 63.5 62.5 59.5 68Z" fill="url(#ID-fl)" opacity=".85"/>
+    <path class="flame f4" d="M60 86C56 83 56 77 58.5 72.5C59.5 76 61.5 76.5 62 73C64.5 78 64.5 83 60 86Z" fill="url(#ID-core)"/>
+  </g>
+  <g class="smoke-in"><path d="M55 82q-3-6 0-12t0-12"/><path d="M64 82q-3-6 0-12t0-12"/></g>
+  <path d="M45 92h30l-3.5-7h-23z" fill="#3a3f45" stroke="#5c636b" stroke-width=".5"/>
+  <g class="pellets" fill="#8a5a2b"><rect x="50" y="83.6" width="3" height="1.4" rx=".7"/><rect x="54" y="84.2" width="3" height="1.4" rx=".7" transform="rotate(20 55.5 85)"/><rect x="58" y="83.4" width="3" height="1.4" rx=".7"/><rect x="62" y="84" width="3" height="1.4" rx=".7" transform="rotate(-15 63.5 84.7)"/><rect x="66" y="83.6" width="3" height="1.4" rx=".7"/></g>
+  <g class="embers"><circle cx="51" cy="84.6" r=".9"/><circle cx="55.5" cy="85.2" r="1"/><circle cx="59.5" cy="84.4" r=".9"/><circle cx="63.5" cy="85" r="1"/><circle cx="67.5" cy="84.6" r=".9"/></g>
+  <circle class="igniter" cx="60" cy="88.5" r="1.8"/>
+</g>
+<path d="M36 60L50 46h8L36 70z" fill="#fff" opacity=".08"/>
+<rect x="34" y="46" width="52" height="50" rx="5" fill="none" stroke="#000" stroke-opacity=".5"/>
+<rect x="86.3" y="60" width="2.3" height="16" rx="1.1" fill="url(#ID-chrome)"/>
+<rect x="34" y="104" width="52" height="12" rx="2" fill="#18191c" stroke="#3b4047" stroke-width=".6"/>
+<rect x="52" y="108.5" width="16" height="3" rx="1.5" fill="#4a5058"/>
+<path d="M36 120h48M36 122.5h48" stroke="#0b0c0e" stroke-width="1"/>
+<g class="warm-air"><path d="M42 30q-2-3 0-6t0-6"/><path d="M54 30q-2-3 0-6t0-6"/><path d="M66 30q-2-3 0-6t0-6"/><path d="M78 30q-2-3 0-6t0-6"/></g>
+</g>`;
+
+SVG.pool_pump = () => `
+<defs>${DEFS}
+<clipPath id="ID-win"><rect x="22" y="52" width="16" height="32" rx="3"/></clipPath>
+<clipPath id="ID-pool"><rect x="0" y="113" width="120" height="27"/></clipPath>
+<linearGradient id="ID-motor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f86d8"/><stop offset=".35" stop-color="#6fb0f0"/><stop offset=".6" stop-color="#2f6fbf"/><stop offset="1" stop-color="#174a85"/></linearGradient>
+<linearGradient id="ID-grey" x1="0" x2="1"><stop offset="0" stop-color="#b9c0c7"/><stop offset=".45" stop-color="#eef1f4"/><stop offset="1" stop-color="#a3abb4"/></linearGradient>
+<linearGradient id="ID-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd0ff"/><stop offset="1" stop-color="#0a6fb8"/></linearGradient>
+<linearGradient id="ID-pot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fdcff" stop-opacity=".55"/><stop offset="1" stop-color="#1b88d0" stop-opacity=".85"/></linearGradient></defs>
+<rect x="0" y="113" width="120" height="27" fill="url(#ID-water)"/>
+<g clip-path="url(#ID-pool)">
+  <path d="M0 117h120" stroke="#1d6fa8" stroke-width="2.2" stroke-dasharray="3 1"/>
+  <g class="ripple"><path d="M-30 124q5-2 10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width=".9"/>
+  <path d="M-25 132q5-2 10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width=".9"/></g>
+  <g class="bubbles"><circle cx="108" cy="125" r="1.2"/><circle cx="104" cy="123" r=".9"/><circle cx="106" cy="128" r="1"/><circle cx="101" cy="126" r=".8"/></g>
+</g>
+<rect x="0" y="108" width="120" height="5.5" fill="#d8d0bf"/>
+<path d="M20 108v5.5M44 108v5.5M68 108v5.5M92 108v5.5" stroke="#b7ad98" stroke-width=".6"/>
+<rect x="10" y="100" width="100" height="8" fill="#c4bfb4"/><rect x="10" y="100" width="100" height="1.5" fill="#d6d2c8"/>
+<g class="pipes">
+  <path d="M6 126V72H18" fill="none" stroke="#9aa3ad" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M6 126V72H18" fill="none" stroke="#f1f3f5" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M52 62V26H112V126" fill="none" stroke="#9aa3ad" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M52 62V26H112V126" fill="none" stroke="#f1f3f5" stroke-width="6" stroke-linejoin="round"/>
+  <path class="flow" d="M6 126V72H18"/>
+  <path class="flow" d="M52 62V26H112V124"/>
+  <rect x="2" y="90" width="8" height="5" rx="1" fill="#d5dade" stroke="#9aa3ad" stroke-width=".5"/>
+  <rect x="48" y="38" width="8" height="5" rx="1" fill="#d5dade" stroke="#9aa3ad" stroke-width=".5"/>
+</g>
+<g class="hum">
+<rect x="46" y="92" width="56" height="8" rx="1.5" fill="#3a3f45"/>
+<rect x="18" y="44" width="24" height="48" rx="4" fill="url(#ID-grey)" stroke="#8f979f" stroke-width=".6"/>
+<rect x="16" y="35" width="28" height="9" rx="2.5" fill="#2b3036"/>
+<rect x="19" y="36.5" width="22" height="3" rx="1.5" fill="#cfe9ff" opacity=".55"/>
+<rect x="22" y="52" width="16" height="32" rx="3" fill="url(#ID-pot)"/>
+<g clip-path="url(#ID-win)">
+  <path d="M23 58h14M23 64h14M23 70h14M23 76h14M26 52v32M30 52v32M34 52v32" stroke="#ffffff" stroke-opacity=".35" stroke-width=".5"/>
+  <g class="swirl">
+    <path d="M30 68m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0" fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width=".8" stroke-dasharray="4 3"/>
+    <path d="M27 63q2-2 4 0q-2 1.5-4 0z" fill="#5c9a34"/><path d="M32 72q2-2 4 0q-2 1.5-4 0z" fill="#8a6a2b"/><path d="M26 74q1.5-2 3.5 0q-1.5 1.5-3.5 0z" fill="#4f8a2a"/>
+  </g>
+</g>
+<rect x="22" y="52" width="16" height="32" rx="3" fill="none" stroke="#6f7881" stroke-width=".6"/>
+<circle cx="52" cy="74" r="13" fill="url(#ID-grey)" stroke="#8f979f" stroke-width=".6"/>
+<circle cx="52" cy="74" r="8" fill="none" stroke="#a7afb7" stroke-width=".7"/>
+<rect x="60" y="56" width="42" height="36" rx="6" fill="url(#ID-motor)"/>
+<path d="M65 58v32M69 58v32M73 58v32M77 58v32M81 58v32M85 58v32M89 58v32M93 58v32M97 58v32" stroke="#123a6a" stroke-opacity=".45" stroke-width=".9"/>
+<rect x="64" y="45" width="32" height="11" rx="2" fill="#1d2126" stroke="#40464e" stroke-width=".5"/>
+${lcd(66, 46.5, 24, 8)}
+<circle class="led l1" cx="93" cy="50.5" r="1.3"/>
+<rect x="99" y="58" width="10" height="32" rx="3" fill="url(#ID-grey)" stroke="#8f979f" stroke-width=".6"/>
+<g class="fan"><path d="M104 74l-3.5-5.5M104 74l6-1M104 74l-2.5 6" stroke="#5b636c" stroke-width="2" stroke-linecap="round"/></g>
+<path d="M100.5 63h7M100.5 67h7M100.5 71h7M100.5 75h7M100.5 79h7M100.5 83h7" stroke="#6f7881" stroke-width=".9"/>
+<path d="M64 60q10-3 34 0" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none"/>
+</g>`;
+
+SVG.printer_3d = () => `
+<defs>${DEFS}
+<clipPath id="ID-obj"><rect class="objclip" x="40" y="66" width="40" height="38"/></clipPath>
+<linearGradient id="ID-frame" x1="0" x2="1"><stop offset="0" stop-color="#2a2e33"/><stop offset=".5" stop-color="#4a5058"/><stop offset="1" stop-color="#23272b"/></linearGradient>
+<linearGradient id="ID-alu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f3f5"/><stop offset=".5" stop-color="#b9c0c7"/><stop offset="1" stop-color="#8d959e"/></linearGradient>
+<linearGradient id="ID-pei" x1="0" x2="1"><stop offset="0" stop-color="#3a3326"/><stop offset=".5" stop-color="#6b5a3a"/><stop offset="1" stop-color="#3a3326"/></linearGradient>
+<linearGradient id="ID-fil" x1="0" x2="1"><stop offset="0" style="stop-color:var(--fil)" stop-opacity=".75"/><stop offset=".45" style="stop-color:var(--fil)"/><stop offset="1" style="stop-color:var(--fil)" stop-opacity=".7"/></linearGradient>
+<pattern id="ID-layers" width="4" height="1.3" patternUnits="userSpaceOnUse"><rect width="4" height=".55" fill="#000" opacity=".18"/></pattern></defs>
+<ellipse cx="60" cy="133" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
+<g class="spool">
+  <circle cx="97" cy="20" r="11" fill="#1f2226" stroke="#3b4047" stroke-width=".6"/>
+  <circle cx="97" cy="20" r="9" style="fill:var(--fil)"/>
+  <circle cx="97" cy="20" r="9" fill="none" stroke="#000" stroke-opacity=".22" stroke-width="2.6" stroke-dasharray=".8 1.2"/>
+  <circle cx="97" cy="20" r="4" fill="#2b2f34" stroke="#555b63" stroke-width=".6"/>
+  <circle cx="97" cy="20" r="1.6" fill="#8d959e"/>
+  <path d="M93 16.5l2 2M101 16.5l-2 2M93 23.5l2-2M101 23.5l-2-2" stroke="#555b63" stroke-width=".8"/>
+</g>
+<rect x="94" y="32" width="6" height="10" rx="1.5" fill="url(#ID-frame)"/>
+<rect x="17" y="16" width="10" height="100" rx="2.5" fill="url(#ID-frame)"/>
+<rect x="15.5" y="13" width="13" height="5" rx="2" fill="#33373d"/>
+<rect x="20.8" y="20" width="2.4" height="92" rx="1.2" fill="url(#ID-alu)" opacity=".85"/>
+<rect x="10" y="112" width="100" height="16" rx="4" fill="url(#ID-frame)" stroke="#16181b" stroke-width=".6"/>
+<rect x="12" y="113" width="96" height="1.6" rx=".8" fill="#fff" opacity=".12"/>
+${lcd(78, 116, 26, 9)}
+<circle class="led l1" cx="72" cy="120.5" r="1.4"/>
+<rect x="32" y="108" width="56" height="4" rx="1" fill="#5d646c"/>
+<g class="bedheat"><path d="M40 101q-2-3 0-6t0-6"/><path d="M54 101q-2-3 0-6t0-6"/><path d="M66 101q-2-3 0-6t0-6"/><path d="M80 101q-2-3 0-6t0-6"/></g>
+<rect x="30" y="104" width="60" height="4.5" rx="1" fill="url(#ID-pei)" stroke="#1c1a15" stroke-width=".5"/>
+<g clip-path="url(#ID-obj)"><g class="object">
+  <path d="M49 104C47 96 45 88 48 80C50 74 52 70 52 66H68C68 70 70 74 72 80C75 88 73 96 71 104Z" fill="url(#ID-fil)"/>
+  <path d="M49 104C47 96 45 88 48 80C50 74 52 70 52 66H68C68 70 70 74 72 80C75 88 73 96 71 104Z" fill="url(#ID-layers)"/>
+  <path d="M53 101C52 94 51 88 53 82" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+</g></g>
+<g class="gantry">
+  <rect x="22" y="82" width="76" height="5" rx="1.5" fill="url(#ID-alu)" stroke="#7d858e" stroke-width=".4"/>
+  <rect x="94" y="80" width="6" height="9" rx="1.5" fill="url(#ID-frame)"/>
+  <g class="head">
+    <rect x="51" y="78" width="18" height="21" rx="3" fill="#ececec" stroke="#a7afb7" stroke-width=".6"/>
+    <rect x="51" y="78" width="18" height="5" rx="2" fill="#2b2f34"/>
+    <circle cx="60" cy="90" r="4.2" fill="#2b2f34"/>
+    <g class="hfan"><path d="M60 90l0-3.4M60 90l2.9 1.7M60 90l-2.9 1.7" stroke="#8d959e" stroke-width="1.3" stroke-linecap="round"/></g>
+    <path d="M57.5 99h5l-1.6 4h-1.8z" fill="#c9a43a" stroke="#8a6d1f" stroke-width=".4"/>
+    <path d="M69 81q12-4 25-30" fill="none" stroke="#e9ecef" stroke-opacity=".75" stroke-width="1.6" stroke-linecap="round"/>
+    <circle class="tip" cx="60" cy="103.4" r="1.2"/>
+    <rect class="filpath" x="59.2" y="70" width="1.6" height="8" style="fill:var(--fil)"/>
+  </g>
+</g>`;
+
+SVG.radiator = () => `
+<defs>${DEFS}
+<clipPath id="ID-fins"><path d="M12.0 27H23.4V100Q23.4 104 20.4 104H15.0Q12.0 104 12.0 100Z"/><path d="M24.8 27H36.2V100Q36.2 104 33.2 104H27.8Q24.8 104 24.8 100Z"/><path d="M37.6 27H49.0V100Q49.0 104 46.0 104H40.6Q37.6 104 37.6 100Z"/><path d="M50.4 27H61.8V100Q61.8 104 58.8 104H53.4Q50.4 104 50.4 100Z"/><path d="M63.2 27H74.6V100Q74.6 104 71.6 104H66.2Q63.2 104 63.2 100Z"/><path d="M76.0 27H87.4V100Q87.4 104 84.4 104H79.0Q76.0 104 76.0 100Z"/></clipPath>
+<linearGradient id="ID-fin" x1="0" x2="1"><stop offset="0" stop-color="#e3e6e9"/><stop offset=".25" stop-color="#ffffff"/><stop offset=".85" stop-color="#f6f7f8"/><stop offset="1" stop-color="#d9dde1"/></linearGradient>
+<linearGradient id="ID-side" x1="0" x2="1"><stop offset="0" stop-color="#e7eaed"/><stop offset="1" stop-color="#cdd2d7"/></linearGradient>
+<linearGradient id="ID-heatglow" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff8a3d" stop-opacity=".15"/><stop offset="1" stop-color="#ff5a1f" stop-opacity=".9"/></linearGradient>
+<linearGradient id="ID-box" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e2e5e8"/></linearGradient></defs>
+<g class="rwaves"><path d="M22 18q-3-5 0-10t0-10"/><path d="M38 16q-3-5 0-10t0-10"/><path d="M54 18q-3-5 0-10t0-10"/><path d="M70 16q-3-5 0-10t0-10"/></g>
+<g class="cold-air"><path d="M-6 50q6-3 12 0t12 0"/><path d="M-8 66q6-3 12 0t12 0"/><path d="M-6 82q6-3 12 0t12 0"/></g>
+<path d="M16 30H95.4V108H16Z" fill="#000" opacity=".1" filter="blur(2px)"/>
+<path d="M87.4 27L91.4 23V100L87.4 104Z" fill="url(#ID-side)" stroke="#c9ced4" stroke-width=".4"/>
+<circle cx="89.4" cy="31" r="1.6" fill="#e9ecef" stroke="#aeb5bc" stroke-width=".5"/>
+<path d="M12.0 27L15.5 23H26.9L23.4 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="15.0" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M24.8 27L28.3 23H39.7L36.2 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="27.8" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M37.6 27L41.1 23H52.5L49.0 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="40.6" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M50.4 27L53.9 23H65.3L61.8 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="53.4" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M63.2 27L66.7 23H78.1L74.6 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="66.2" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M76.0 27L79.5 23H90.9L87.4 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="79.0" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/>
+<path d="M12.0 27H23.4V100Q23.4 104 20.4 104H15.0Q12.0 104 12.0 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M24.8 27H36.2V100Q36.2 104 33.2 104H27.8Q24.8 104 24.8 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M37.6 27H49.0V100Q49.0 104 46.0 104H40.6Q37.6 104 37.6 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M50.4 27H61.8V100Q61.8 104 58.8 104H53.4Q50.4 104 50.4 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M63.2 27H74.6V100Q74.6 104 71.6 104H66.2Q63.2 104 63.2 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M76.0 27H87.4V100Q87.4 104 84.4 104H79.0Q76.0 104 76.0 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/>
+<g clip-path="url(#ID-fins)"><rect class="rglow" x="10" y="26" width="87.4" height="80" fill="url(#ID-heatglow)"/></g>
+<path d="M82.4 84h18q2 0 2 2v16q0 3-3 6l-3 10h-10q-2 0-2-2V86q0-2 2-2z" fill="url(#ID-box)" stroke="#bfc6ce" stroke-width=".6"/>
+${lcd(84.8, 86.5, 15, 8)}
+<g class="micon m-comfort" transform="translate(87.4 97.3) scale(.48)"><circle r="2.2"/><path d="M0-4.2v1.1M0 3.1v1.1M-4.2 0h1.1M3.1 0h1.1M-3 -3l.8.8M2.2 2.2l.8.8M-3 3l.8-.8M2.2-2.2l.8-.8" stroke-width=".9" stroke-linecap="round"/></g>
+<g class="micon m-eco" transform="translate(92.4 97.3) scale(.48)"><path d="M1.6-3a3.4 3.4 0 1 0 1.8 5.6a2.8 2.8 0 0 1-1.8-5.6z"/></g>
+<g class="micon m-frost" transform="translate(97.4 97.3) scale(.48)"><path d="M0-3.4v6.8M-3 -1.7l6 3.4M-3 1.7l6-3.4" stroke-width="1.1" stroke-linecap="round"/></g>
+<g fill="#eef0f2" stroke="#a7aeb5" stroke-width=".4"><circle cx="86.8" cy="102.5" r="1.4"/><circle cx="91.8" cy="102.5" r="1.4"/><circle cx="96.8" cy="102.5" r="1.4"/><circle cx="89.3" cy="106.5" r="1.4"/><circle cx="94.3" cy="106.5" r="1.4"/></g>
+<circle class="led l1" cx="96.8" cy="106.5" r=".8"/>`;
+
+SVG.range_hood = () => `
+<defs>${DEFS}
+<linearGradient id="ID-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4c9" stop-opacity=".55"/><stop offset="1" stop-color="#fff4c9" stop-opacity="0"/></linearGradient>
+<linearGradient id="ID-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3138"/><stop offset="1" stop-color="#0d1013"/></linearGradient></defs>
+<ellipse cx="60" cy="133" rx="52" ry="4" fill="url(#ID-shadow)"/>
+<g class="hd-beam"><path d="M24 80l-12 40h32z" fill="url(#ID-beam)"/><path d="M96 80l-12 40h32z" fill="url(#ID-beam)"/></g>
+<g class="hd-air"><path d="M38 118q-4-18 10-36"/><path d="M60 116v-34"/><path d="M82 118q4-18-10-36"/><path d="M28 112q2-16 18-30"/><path d="M92 112q-2-16-18-30"/></g>
+<g class="hd-steam"><path d="M54 96q-3-5 0-9t0-9"/><path d="M60 95q-3-5 0-9t0-9"/><path d="M66 96q-3-5 0-9t0-9"/></g>
+<rect x="46" y="4" width="28" height="46" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"/>
+<path d="M48 4v46" stroke="#fff" stroke-opacity=".6" stroke-width="1.2"/>
+<path d="M50 40h20M50 43h20M50 46h20" stroke="#6f7780" stroke-width=".7"/>
+<path d="M16 50h88l10 20h-108z" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".6"/>
+<path d="M20 52h40l-6 16h-44z" fill="#fff" opacity=".18"/>
+<rect x="6" y="70" width="108" height="8" rx="1.5" fill="url(#ID-chrome)" stroke="#6f7780" stroke-width=".5"/>
+<circle cx="60" cy="60" r="7.5" fill="#22272d" stroke="#6f7780" stroke-width=".6"/>
+<g class="hd-fan"><path d="M60 60l0-6.2M60 60l5.4 3.1M60 60l-5.4 3.1" stroke="#a9b1ba" stroke-width="2.4" stroke-linecap="round"/></g>
+<circle cx="60" cy="60" r="1.6" fill="#d7dce1"/>
+<circle cx="60" cy="60" r="7.5" fill="url(#ID-holes)" opacity=".6"/>
+<circle class="hd-led s1" cx="86" cy="74" r="1.4"/><circle class="hd-led s2" cx="93" cy="74" r="1.4"/><circle class="hd-led s3" cx="100" cy="74" r="1.4"/>
+<circle class="hd-led lt" cx="20" cy="74" r="1.4"/>
+<path d="M17 74h-3M27 74h-3" stroke="#59616b" stroke-width=".8"/>
+<rect x="9" y="78" width="102" height="3" rx="1" fill="#2a2f35"/><rect x="12" y="78" width="96" height="3" fill="url(#ID-mesh)"/>
+<rect class="hd-lamp" x="20" y="79.6" width="8" height="1.8" rx=".9"/><rect class="hd-lamp" x="92" y="79.6" width="8" height="1.8" rx=".9"/>
+<path d="M45 98h30v16q0 4-4 4h-22q-4 0-4-4z" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".6"/>
+<rect x="44" y="96" width="32" height="3" rx="1.5" fill="url(#ID-chrome)"/><rect x="57" y="93.5" width="6" height="3" rx="1.2" fill="#2a2f35"/>
+<path d="M45 102h-5M75 102h5" stroke="#2a2f35" stroke-width="2.2" stroke-linecap="round"/>
+<rect x="10" y="118" width="100" height="7" rx="1.5" fill="url(#ID-glass)" stroke="#05070a" stroke-width=".5"/>
+<ellipse class="hd-zone" cx="60" cy="119.5" rx="17" ry="1.3"/>
+<ellipse cx="88" cy="121" rx="10" ry="1.2" fill="none" stroke="#3a424b" stroke-width=".6"/>`;
+
+SVG.server_rack = () => `
 <defs>${DEFS}
 <linearGradient id="ID-rkframe" x1="0" x2="1"><stop offset="0" stop-color="#2a2f35"/><stop offset=".5" stop-color="#14171b"/><stop offset="1" stop-color="#262b31"/></linearGradient>
 <linearGradient id="ID-rkunit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b424a"/><stop offset=".15" stop-color="#262b31"/><stop offset="1" stop-color="#16191d"/></linearGradient>
@@ -665,429 +1600,9 @@ ${lcd(74, 110, 22, 10)}
 </g>
 <rect x="22" y="121" width="76" height="3" fill="#1c2024"/>
 <path d="M18 130v4M102 130v4" stroke="#14171b" stroke-width="4" stroke-linecap="round"/>
-<path d="M20 6h80" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`,
+<path d="M20 6h80" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`;
 
-  desktop_pc: () => `
-<defs>${DEFS}
-<linearGradient id="ID-pcwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f2a5c"/><stop offset=".55" stop-color="#1c5fc4"/><stop offset="1" stop-color="#5ec8ff"/></linearGradient>
-<linearGradient id="ID-pcdesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c3a5"/><stop offset="1" stop-color="#b79a74"/></linearGradient>
-<linearGradient id="ID-pcglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b3138"/><stop offset="1" stop-color="#090b0e"/></linearGradient>
-<clipPath id="ID-pcclip"><rect x="10" y="22" width="68" height="44" rx="1"/></clipPath></defs>
-<ellipse cx="60" cy="126" rx="56" ry="3.5" fill="url(#ID-shadow)"/>
-<path d="M2 110h116l-5 12h-106z" fill="url(#ID-pcdesk)"/>
-<path d="M2 110h116" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
-<path d="M36 104h12l2 7h-16z" fill="url(#ID-dark)"/>
-<rect x="38" y="70" width="8" height="36" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".4"/>
-<ellipse cx="42" cy="108" rx="16" ry="3.2" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".4"/>
-<rect x="6" y="18" width="76" height="52" rx="3.5" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
-<rect x="10" y="22" width="68" height="44" rx="1" fill="#0a0d11"/>
-<g class="pc-screen" clip-path="url(#ID-pcclip)">
-  <rect x="10" y="22" width="68" height="44" fill="url(#ID-pcwall)"/>
-  <circle cx="64" cy="32" r="9" fill="#bfeaff" opacity=".35"/>
-  <rect x="13" y="26" width="30" height="24" rx="1.5" fill="#0d1520" stroke="#2b4a73" stroke-width=".4"/>
-  <rect x="13" y="26" width="30" height="3.4" rx="1.5" fill="#22344d"/>
-  <circle cx="15.2" cy="27.7" r=".7" fill="#ff5f56"/><circle cx="17.6" cy="27.7" r=".7" fill="#ffbd2e"/><circle cx="20" cy="27.7" r=".7" fill="#27c93f"/>
-  <g class="pc-code"><rect x="16" y="32" width="16" height="1.6" rx=".8" fill="#6fd8ff"/><rect x="19" y="35.4" width="20" height="1.6" rx=".8" fill="#b894ff"/><rect x="19" y="38.8" width="12" height="1.6" rx=".8" fill="#ffd76a"/><rect x="16" y="42.2" width="22" height="1.6" rx=".8" fill="#6fe3a1"/><rect x="19" y="45.6" width="14" height="1.6" rx=".8" fill="#6fd8ff"/></g>
-  <rect x="46" y="38" width="28" height="19" rx="1.5" fill="#f4f7fb" opacity=".92"/>
-  <g class="pc-bars"><rect x="50" y="48" width="4" height="7" fill="#3b82f6"/><rect x="56" y="43" width="4" height="12" fill="#22c55e"/><rect x="62" y="45.5" width="4" height="9.5" fill="#f59e0b"/><rect x="68" y="41" width="4" height="14" fill="#ef4444"/></g>
-  <rect x="10" y="61" width="68" height="5" fill="#0b1626" opacity=".85"/>
-  <circle cx="14" cy="63.5" r="1.4" fill="#5ec8ff"/><rect x="19" y="62.6" width="3.4" height="1.8" rx=".5" fill="#8fa3bd"/><rect x="24" y="62.6" width="3.4" height="1.8" rx=".5" fill="#8fa3bd"/><rect x="29" y="62.6" width="3.4" height="1.8" rx=".5" fill="#8fa3bd"/>
-  <path class="pc-cursor" d="M0 0l0 6l1.7 -1.6l1.2 2.7l1.1 -.5l-1.2 -2.6l2.3 0z" fill="#fff" stroke="#000" stroke-width=".4"/>
-</g>
-<path d="M10 22h68l-28 44h-40z" fill="url(#ID-gloss)" opacity=".35"/>
-<circle class="pc-mled" cx="44" cy="68" r=".9"/>
-<g class="pc-tower">
-  <rect x="86" y="38" width="28" height="74" rx="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
-  <rect x="90" y="43" width="20" height="62" rx="1.5" fill="url(#ID-pcglass)" stroke="#3b424a" stroke-width=".4"/>
-  <g class="pc-rgb" fill="none" stroke-width="1.3">
-    <circle cx="100" cy="53" r="7.6"/><circle cx="100" cy="72" r="7.6"/><circle cx="100" cy="91" r="7.6"/>
-  </g>
-  <g class="pc-fan"><circle cx="100" cy="53" r="6.5" fill="#12161a"/><path d="M100 53v-6M100 53l5.2 3M100 53l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="53" r="7.6" fill="none"/></g>
-  <g class="pc-fan"><circle cx="100" cy="72" r="6.5" fill="#12161a"/><path d="M100 72v-6M100 72l5.2 3M100 72l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="72" r="7.6" fill="none"/></g>
-  <g class="pc-fan"><circle cx="100" cy="91" r="6.5" fill="#12161a"/><path d="M100 91v-6M100 91l5.2 3M100 91l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="91" r="7.6" fill="none"/></g>
-  <circle cx="100" cy="53" r="1.4" fill="#d7dce1"/><circle cx="100" cy="72" r="1.4" fill="#d7dce1"/><circle cx="100" cy="91" r="1.4" fill="#d7dce1"/>
-  <path d="M91 44h8l-8 14z" fill="#fff" opacity=".07"/>
-  <rect x="104" y="40.2" width="6" height="1.8" rx=".9" fill="#2a2f35"/>
-  <circle class="pc-led" cx="94" cy="41" r="1.2"/>
-  <rect x="90" y="106.6" width="20" height="3" rx="1" fill="#2a2f35"/>
-</g>
-<rect x="10" y="114" width="62" height="7" rx="1.4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/>
-<g class="pc-keys" fill="#4b535c"><rect x="12" y="115.2" width="58" height="1.2" opacity=".9"/><rect x="12" y="117.2" width="58" height="1.2" opacity=".9"/><rect x="12" y="119.2" width="58" height="1.2" opacity=".9"/></g>
-<path d="M12 116.4h58M12 118.4h58" stroke="#05070a" stroke-width=".4" stroke-dasharray="2.2 .8"/>
-<ellipse cx="78" cy="117" rx="3.6" ry="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/><path d="M78 114.2v2" stroke="#6f7780" stroke-width=".6"/>`,
-
-  laptop: () => `
-<defs>${DEFS}
-<linearGradient id="ID-lpwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a63"/><stop offset=".5" stop-color="#6b3fc9"/><stop offset="1" stop-color="#ff8fab"/></linearGradient>
-<linearGradient id="ID-lpbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4e8ec"/><stop offset="1" stop-color="#bfc6cd"/></linearGradient>
-<radialGradient id="ID-lpglow" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#7fdcff" stop-opacity=".55"/><stop offset="1" stop-color="#7fdcff" stop-opacity="0"/></radialGradient>
-<clipPath id="ID-lpclip"><rect x="22" y="21" width="76" height="52" rx="1"/></clipPath></defs>
-<ellipse cx="60" cy="116" rx="54" ry="4" fill="url(#ID-shadow)"/>
-<rect x="16" y="14" width="88" height="64" rx="5" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
-<rect x="22" y="21" width="76" height="52" rx="1" fill="#0a0d11"/>
-<g class="lp-screen" clip-path="url(#ID-lpclip)">
-  <rect x="22" y="21" width="76" height="52" fill="url(#ID-lpwall)"/>
-  <rect x="22" y="21" width="76" height="5" fill="#0b1020" opacity=".6"/>
-  <circle cx="26" cy="23.5" r="1" fill="#fff" opacity=".8"/><rect x="82" y="22.6" width="14" height="1.8" rx=".9" fill="#fff" opacity=".7"/>
-  <rect x="27" y="30" width="20" height="14" rx="2" fill="#fff" opacity=".9"/><rect x="50" y="30" width="20" height="14" rx="2" fill="#fff" opacity=".9"/><rect x="73" y="30" width="20" height="14" rx="2" fill="#fff" opacity=".9"/>
-  <circle cx="33" cy="37" r="3" fill="#ffb347"/><circle cx="56" cy="37" r="3" fill="#38d9ff"/><circle cx="79" cy="37" r="3" fill="#43c07a"/>
-  <rect x="38" y="35.4" width="7" height="1.6" rx=".8" fill="#4b535c"/><rect x="61" y="35.4" width="7" height="1.6" rx=".8" fill="#4b535c"/><rect x="84" y="35.4" width="7" height="1.6" rx=".8" fill="#4b535c"/>
-  <rect x="27" y="48" width="66" height="19" rx="2" fill="#0d1520" opacity=".88"/>
-  <path class="lp-line" d="M30 62l8-4l7 3l8-8l8 5l8-7l8 3l8-6l6 2" fill="none" stroke="#38d9ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M30 64h60" stroke="#3b4a63" stroke-width=".5"/>
-  <circle class="lp-dot" cx="90" cy="53" r="1.6" fill="#fff"/>
-</g>
-<path d="M22 21h76l-26 52h-50z" fill="url(#ID-gloss)" opacity=".3"/>
-<circle cx="60" cy="17.4" r=".9" fill="#2a2f35"/><circle class="lp-cam" cx="60" cy="17.4" r=".45"/>
-<path d="M14 78h92l8 30h-108z" fill="url(#ID-lpbody)" stroke="#9aa2ab" stroke-width=".6"/>
-<path d="M14 78h92" stroke="#fff" stroke-width="1" opacity=".8"/>
-<path d="M6 108h108v3q0 2.5-3 2.5h-102q-3 0-3-2.5z" fill="#aab2ba" stroke="#8f98a2" stroke-width=".5"/>
-<path d="M48 108h24v1.6q-12 1.6-24 0z" fill="#8f98a2"/>
-<path d="M18 81h84l5 20h-94z" fill="#151a1f" opacity=".85"/>
-<g class="lp-keys" fill="#cfd5db">
-  <path d="M20.6 83h8l-1.2 3h-8zM30.4 83h8l-.5 3h-8zM40.2 83h8l-.2 3h-8zM50 83h8v3h-8zM59.8 83h8v3h-8zM69.6 83h8l.2 3h-8zM79.4 83h8l.5 3h-8zM89.2 83h8l1.2 3h-8z"/>
-  <path d="M19.2 87.4h8.6l-1.2 3.2h-8.6zM29.4 87.4h8.6l-.6 3.2h-8.6zM39.6 87.4h8.6l-.2 3.2h-8.6zM49.8 87.4h8.6v3.2h-8.6zM60 87.4h8.6l.2 3.2h-8.6zM70.2 87.4h8.6l.6 3.2h-8.6zM80.4 87.4h8.6l1.2 3.2h-8.6zM90.6 87.4h6.4l1.4 3.2h-6.6z"/>
-  <path d="M17.8 92h9.2l-1.3 3.4h-9.2zM28.6 92h9.2l-.6 3.4h-9.2zM39.4 92h9.2l-.2 3.4h-9.2zM50.2 92h9.2v3.4h-9.2zM61 92h9.2l.2 3.4h-9.2zM71.8 92h9.2l.6 3.4h-9.2zM82.6 92h9.2l1.3 3.4h-9.2z"/>
-</g>
-<path d="M46 97h28l1 4h-30z" fill="#aab2ba" stroke="#8f98a2" stroke-width=".4"/>
-<path d="M18 81h84l5 20h-94z" fill="url(#ID-lpglow)" class="lp-glow"/>
-<circle class="lp-led" cx="60" cy="111" r="1.1"/>`,
-
-  wine_cooler: () => `
-<defs>${DEFS}
-<linearGradient id="ID-wnlight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1c9" stop-opacity=".85"/><stop offset=".55" stop-color="#ffd98a" stop-opacity=".25"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></linearGradient>
-<linearGradient id="ID-wncab" x1="0" x2="1"><stop offset="0" stop-color="#2b3036"/><stop offset=".5" stop-color="#14171b"/><stop offset="1" stop-color="#262b31"/></linearGradient>
-<linearGradient id="ID-wnwood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a26b"/><stop offset="1" stop-color="#8a6a3f"/></linearGradient>
-<clipPath id="ID-wnclip"><rect x="30" y="32" width="60" height="86"/></clipPath></defs>
-<ellipse cx="60" cy="133" rx="46" ry="3.5" fill="url(#ID-shadow)"/>
-<rect x="22" y="6" width="76" height="122" rx="4" fill="url(#ID-wncab)" stroke="#05070a" stroke-width=".8"/>
-<rect x="26" y="9" width="68" height="17" rx="2" fill="#0d1013"/>
-<circle class="wn-led" cx="34" cy="17.5" r="1.6"/>
-<path d="M42 15h10M42 18h10M42 21h10" stroke="#3b424a" stroke-width=".8" stroke-linecap="round"/>
-<rect x="64" y="12" width="26" height="11" rx="1.6" fill="#0c1720" stroke="#59616b" stroke-width=".5"/>
-<text class="lcd" x="77" y="20.4" text-anchor="middle">OFF</text>
-<rect x="28" y="30" width="64" height="92" fill="#07090b"/>
-<g class="wn-inside" clip-path="url(#ID-wnclip)">
-  <rect x="30" y="32" width="60" height="86" fill="#14181d"/>
-  <rect class="wn-light" x="30" y="32" width="60" height="86" fill="url(#ID-wnlight)"/>
-  <rect x="31" y="33" width="58" height="2" fill="#fff6dc" class="wn-strip"/>
-  <g class="wn-bottles">
-    <g>
-      <circle cx="37" cy="44" r="5" fill="#5b1226"/><circle cx="48.6" cy="44" r="5" fill="#1f4d2e"/><circle cx="60.2" cy="44" r="5" fill="#5b1226"/><circle cx="71.8" cy="44" r="5" fill="#b0852f"/><circle cx="83.4" cy="44" r="5" fill="#1f4d2e"/>
-      <circle cx="37" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="48.6" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="60.2" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="71.8" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/>
-      <path d="M33.6 41.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M56.8 41.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/>
-    </g>
-    <rect x="30" y="49.5" width="60" height="3" fill="url(#ID-wnwood)"/>
-    <g>
-      <circle cx="37" cy="70" r="5" fill="#d48a8a"/><circle cx="48.6" cy="70" r="5" fill="#5b1226"/><circle cx="60.2" cy="70" r="5" fill="#b0852f"/><circle cx="71.8" cy="70" r="5" fill="#1f4d2e"/><circle cx="83.4" cy="70" r="5" fill="#5b1226"/>
-      <circle cx="37" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="48.6" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="60.2" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="71.8" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/>
-      <path d="M33.6 67.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M45.1 67.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/>
-    </g>
-    <rect x="30" y="75.5" width="60" height="3" fill="url(#ID-wnwood)"/>
-    <g>
-      <circle cx="37" cy="96" r="5" fill="#1f4d2e"/><circle cx="48.6" cy="96" r="5" fill="#b0852f"/><circle cx="60.2" cy="96" r="5" fill="#5b1226"/><circle cx="71.8" cy="96" r="5" fill="#d48a8a"/><circle cx="83.4" cy="96" r="5" fill="#1f4d2e"/>
-      <circle cx="37" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="48.6" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="60.2" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="71.8" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/>
-      <path d="M33.6 93.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M68.4 93.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/>
-    </g>
-    <rect x="30" y="101.5" width="60" height="3" fill="url(#ID-wnwood)"/>
-    <rect x="30" y="112" width="60" height="3" fill="url(#ID-wnwood)"/>
-  </g>
-  <g class="wn-air" fill="none" stroke-linecap="round"><path d="M44 116q-5-14 0-28t-3-30"/><path d="M60 116q5-14 0-28t3-30"/><path d="M76 116q-5-14 0-28t-3-30"/></g>
-</g>
-<g class="wn-door">
-  <rect x="26" y="28" width="68" height="96" rx="2" fill="none" stroke="#0a0c0f" stroke-width="3"/>
-  <rect x="29" y="31" width="62" height="90" fill="#0d1b2a" opacity=".3"/>
-  <g class="wn-drops"><circle cx="40" cy="48" r="1.1"/><circle cx="64" cy="58" r="1.1"/><circle cx="80" cy="46" r="1.1"/><circle cx="52" cy="88" r="1.1"/><circle cx="76" cy="100" r="1.1"/></g>
-  <path d="M29 31h62l-26 90h-36z" fill="url(#ID-gloss)" opacity=".45"/>
-  <rect x="89" y="50" width="3.6" height="46" rx="1.8" fill="url(#ID-chrome)" stroke="#6f7780" stroke-width=".4"/>
-</g>
-<path d="M28 124h64" stroke="#3b424a" stroke-width="1"/>
-<rect x="30" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/><rect x="80" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/>`,
-
-  range_hood: () => `
-<defs>${DEFS}
-<linearGradient id="ID-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4c9" stop-opacity=".55"/><stop offset="1" stop-color="#fff4c9" stop-opacity="0"/></linearGradient>
-<linearGradient id="ID-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3138"/><stop offset="1" stop-color="#0d1013"/></linearGradient></defs>
-<ellipse cx="60" cy="133" rx="52" ry="4" fill="url(#ID-shadow)"/>
-<g class="hd-beam"><path d="M24 80l-12 40h32z" fill="url(#ID-beam)"/><path d="M96 80l-12 40h32z" fill="url(#ID-beam)"/></g>
-<g class="hd-air"><path d="M38 118q-4-18 10-36"/><path d="M60 116v-34"/><path d="M82 118q4-18-10-36"/><path d="M28 112q2-16 18-30"/><path d="M92 112q-2-16-18-30"/></g>
-<g class="hd-steam"><path d="M54 96q-3-5 0-9t0-9"/><path d="M60 95q-3-5 0-9t0-9"/><path d="M66 96q-3-5 0-9t0-9"/></g>
-<rect x="46" y="4" width="28" height="46" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"/>
-<path d="M48 4v46" stroke="#fff" stroke-opacity=".6" stroke-width="1.2"/>
-<path d="M50 40h20M50 43h20M50 46h20" stroke="#6f7780" stroke-width=".7"/>
-<path d="M16 50h88l10 20h-108z" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".6"/>
-<path d="M20 52h40l-6 16h-44z" fill="#fff" opacity=".18"/>
-<rect x="6" y="70" width="108" height="8" rx="1.5" fill="url(#ID-chrome)" stroke="#6f7780" stroke-width=".5"/>
-<circle cx="60" cy="60" r="7.5" fill="#22272d" stroke="#6f7780" stroke-width=".6"/>
-<g class="hd-fan"><path d="M60 60l0-6.2M60 60l5.4 3.1M60 60l-5.4 3.1" stroke="#a9b1ba" stroke-width="2.4" stroke-linecap="round"/></g>
-<circle cx="60" cy="60" r="1.6" fill="#d7dce1"/>
-<circle cx="60" cy="60" r="7.5" fill="url(#ID-holes)" opacity=".6"/>
-<circle class="hd-led s1" cx="86" cy="74" r="1.4"/><circle class="hd-led s2" cx="93" cy="74" r="1.4"/><circle class="hd-led s3" cx="100" cy="74" r="1.4"/>
-<circle class="hd-led lt" cx="20" cy="74" r="1.4"/>
-<path d="M17 74h-3M27 74h-3" stroke="#59616b" stroke-width=".8"/>
-<rect x="9" y="78" width="102" height="3" rx="1" fill="#2a2f35"/><rect x="12" y="78" width="96" height="3" fill="url(#ID-mesh)"/>
-<rect class="hd-lamp" x="20" y="79.6" width="8" height="1.8" rx=".9"/><rect class="hd-lamp" x="92" y="79.6" width="8" height="1.8" rx=".9"/>
-<path d="M45 98h30v16q0 4-4 4h-22q-4 0-4-4z" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".6"/>
-<rect x="44" y="96" width="32" height="3" rx="1.5" fill="url(#ID-chrome)"/><rect x="57" y="93.5" width="6" height="3" rx="1.2" fill="#2a2f35"/>
-<path d="M45 102h-5M75 102h5" stroke="#2a2f35" stroke-width="2.2" stroke-linecap="round"/>
-<rect x="10" y="118" width="100" height="7" rx="1.5" fill="url(#ID-glass)" stroke="#05070a" stroke-width=".5"/>
-<ellipse class="hd-zone" cx="60" cy="119.5" rx="17" ry="1.3"/>
-<ellipse cx="88" cy="121" rx="10" ry="1.2" fill="none" stroke="#3a424b" stroke-width=".6"/>`,
-
-  ac_split: () => `
-<defs>${DEFS}
-<radialGradient id="ID-acheat" cx=".5" cy=".3" r=".6"><stop offset="0" stop-color="#ff9a4a" stop-opacity=".45"/><stop offset=".6" stop-color="#ff7a2e" stop-opacity=".15"/><stop offset="1" stop-color="#ff7a2e" stop-opacity="0"/></radialGradient>
-<linearGradient id="ID-split" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#eef1f4"/><stop offset="1" stop-color="#cfd5db"/></linearGradient></defs>
-<ellipse class="ac-warm" cx="60" cy="98" rx="54" ry="30" fill="url(#ID-acheat)"/>
-<g class="ac-waves"><path d="M30 122q4-4 0-8t0-8"/><path d="M60 126q4-4 0-8t0-8"/><path d="M90 122q4-4 0-8t0-8"/></g>
-<g class="ac-air">
-  <path d="M22 84q-6 14 0 26t-2 22"/><path d="M40 84q-4 14 2 26t0 22"/><path d="M60 84q-3 14 3 26t-1 22"/>
-  <path d="M80 84q-2 14 4 26t0 22"/><path d="M98 84q0 14 6 26t2 22"/>
-</g>
-<g class="ac-drops"><circle cx="34" cy="90" r="1.3"/><circle cx="56" cy="92" r="1.3"/><circle cx="76" cy="90" r="1.3"/><circle cx="92" cy="93" r="1.3"/></g>
-<path d="M6 54q0-10 10-10h88q10 0 10 10v18q0 6-6 8h-96q-6-2-6-8z" fill="url(#ID-split)" stroke="#aab2ba" stroke-width=".7"/>
-<path d="M14 48h92" stroke="#c4cbd2" stroke-width=".6"/>
-<path d="M16 51h88M16 53.5h88" stroke="#d7dce1" stroke-width=".5"/>
-<path d="M10 70h100" stroke="#fff" stroke-opacity=".9" stroke-width="1"/>
-<rect class="ac-slot" x="12" y="73.5" width="96" height="5" rx="2.5" fill="#2a2f35"/>
-<g class="ac-flap"><path d="M12 74.5h96q0 4.5-4 5h-88q-4-.5-4-5z" fill="#f2f4f6" stroke="#aab2ba" stroke-width=".5"/></g>
-<rect x="84" y="58" width="22" height="9" rx="2" fill="#0c1720" opacity=".9"/>
-<text class="lcd" x="95" y="64.6" text-anchor="middle">OFF</text>
-<g class="ac-ico ico-cool" stroke="#4fc3f7" stroke-width=".9" stroke-linecap="round"><path d="M78 59v8M74.5 61l7 4M74.5 65l7-4"/></g>
-<g class="ac-ico ico-heat"><circle cx="78" cy="63" r="2" fill="#ff8a3d"/><path d="M78 58.6v1.2M78 66.2v1.2M73.6 63h1.2M81.2 63h1.2M74.9 59.9l.8.8M80.3 65.3l.8.8M74.9 66.1l.8-.8M80.3 60.7l.8-.8" stroke="#ff8a3d" stroke-width=".8" stroke-linecap="round"/></g>
-<g class="ac-ico ico-dry"><path d="M78 59q-3 4-3 5.6a3 3 0 0 0 6 0q0-1.6-3-5.6z" fill="#7fd6c0"/></g>
-<g class="ac-ico ico-fan" stroke="#cfd6dd" stroke-width="1" stroke-linecap="round" fill="none"><path d="M78 63q-3-4 0-4.5M78 63q4-1 3.5 2.4M78 63q-1 4-4 2"/></g>
-<circle class="led l1" cx="18" cy="64" r="1.1"/>`,
-
-  heat_pump: () => `
-<defs>${DEFS}
-<linearGradient id="ID-hp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#cfd5db"/></linearGradient>
-<radialGradient id="ID-grill" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3a4048"/><stop offset="1" stop-color="#1c2025"/></radialGradient></defs>
-<ellipse cx="60" cy="126" rx="56" ry="4" fill="url(#ID-shadow)"/>
-<g class="hp-steam"><path d="M30 30q-3-5 0-9t0-9"/><path d="M46 28q-3-5 0-9t0-9"/><path d="M62 30q-3-5 0-9t0-9"/></g>
-<g class="hp-body">
-<rect x="14" y="114" width="14" height="8" rx="1" fill="#59616b"/><rect x="92" y="114" width="14" height="8" rx="1" fill="#59616b"/>
-<rect x="8" y="34" width="104" height="82" rx="4" fill="url(#ID-hp)" stroke="#9aa2ab" stroke-width=".7"/>
-<path d="M10 37h100" stroke="#fff" stroke-width="1.2"/>
-<path d="M84 40v72" stroke="#b9c0c7" stroke-width=".7"/>
-<g stroke="#bfc6cd" stroke-width=".6"><path d="M88 46h20M88 50h20M88 54h20M88 58h20M88 62h20M88 66h20"/></g>
-<rect x="88" y="84" width="20" height="18" rx="1.5" fill="#e3e7eb" stroke="#aab2ba" stroke-width=".5"/>
-<circle cx="98" cy="93" r="1.3" fill="#9aa2ab"/>
-<circle class="hp-led" cx="104" cy="75" r="1.2"/>
-<circle cx="46" cy="75" r="31" fill="#d4d9de" stroke="#aab2ba" stroke-width=".6"/>
-<circle cx="46" cy="75" r="28" fill="url(#ID-grill)"/>
-<g class="hp-fan" fill="#8e979f"><path d="M46 75q-2-16 8-23q3 9-8 23z"/><path d="M46 75q15-6 23 3q-9 4-23-3z"/><path d="M46 75q-13 10-24 4q5-8 24-4z"/></g>
-<circle cx="46" cy="75" r="4" fill="#59616b"/>
-<g fill="none" stroke="#e6eaee" stroke-opacity=".8" stroke-width=".7"><circle cx="46" cy="75" r="9"/><circle cx="46" cy="75" r="15"/><circle cx="46" cy="75" r="21"/><circle cx="46" cy="75" r="27"/><path d="M46 47v56M18 75h56"/></g>
-</g>
-<g class="hp-out"><circle cx="46" cy="75" r="30"/><circle cx="46" cy="75" r="30"/><circle cx="46" cy="75" r="30"/></g>
-<path d="M112 98h4q3 0 3 3v19" stroke="#c77b3a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-<path d="M112 104h2q2 0 2 2v14" stroke="#2a2f35" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
-
-  fridge: () => `
-<defs>${DEFS}
-<linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe9f2"/></linearGradient>
-<linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient></defs>
-<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
-<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
-<!-- interiors -->
-<rect x="29" y="7" width="62" height="36" rx="3" fill="url(#ID-frost)"/>
-<path d="M31 25h58" stroke="#a9cbe2" stroke-width="1"/>
-<rect x="34" y="28" width="22" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
-<rect x="60" y="28" width="26" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
-<rect x="29" y="47" width="62" height="78" rx="3" fill="url(#ID-in)"/>
-<path d="M31 72h58M31 96h58" stroke="#b9c8d6" stroke-width="1.1"/>
-<rect x="36" y="58" width="6" height="14" rx="1.5" fill="#3fbf7f"/><rect x="44" y="62" width="8" height="10" rx="2" fill="#f2c94c"/>
-<rect x="56" y="64" width="12" height="8" rx="2" fill="#e5484d"/><rect x="72" y="60" width="5" height="12" rx="1.5" fill="#3e8ed0"/>
-<rect x="38" y="86" width="14" height="10" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".6"/><circle cx="64" cy="91" r="5" fill="#ff8f3d"/><circle cx="74" cy="92" r="4" fill="#9fd356"/>
-<rect x="32" y="104" width="56" height="18" rx="2" fill="#e3eef7" stroke="#b9c8d6" stroke-width=".6"/>
-<rect class="flight" x="29" y="47" width="62" height="78" fill="#fffbe6" opacity="0"/>
-<!-- doors -->
-<g class="fz-door">
-  <rect x="26" y="4" width="68" height="40" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  <rect x="84" y="12" width="3.4" height="24" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-</g>
-<g class="fr-door">
-  <rect x="26" y="46" width="68" height="84" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  <rect x="84" y="52" width="3.4" height="40" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-  <rect x="35" y="54" width="24" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
-  <text class="lcd fr-temp" x="49.5" y="62.8" text-anchor="middle">--°</text>
-  <g class="flake"><path d="M39.5 57v6M36.9 58.5l5.2 3M36.9 61.5l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
-  <path d="M30 50v76" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
-</g>
-<g class="mist"><circle cx="40" cy="132" r="1.1"/><circle cx="52" cy="133" r=".9"/><circle cx="66" cy="132" r="1.2"/><circle cx="79" cy="133" r=".9"/></g>`,
-  pellet_stove: () => `
-<defs>${DEFS}
-<clipPath id="ID-win"><rect x="34" y="46" width="52" height="50" rx="5"/></clipPath>
-<linearGradient id="ID-blk" x1="0" x2="1"><stop offset="0" stop-color="#17191c"/><stop offset=".5" stop-color="#34383e"/><stop offset="1" stop-color="#141618"/></linearGradient>
-<linearGradient id="ID-white" x1="0" x2="1"><stop offset="0" stop-color="#d9dde2"/><stop offset=".55" stop-color="#ffffff"/><stop offset="1" stop-color="#c9ced4"/></linearGradient>
-<linearGradient id="ID-brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1712"/><stop offset="1" stop-color="#0f0706"/></linearGradient>
-<radialGradient id="ID-glow" cx=".5" cy=".85" r=".85"><stop offset="0" stop-color="#ffd27a" stop-opacity=".95"/><stop offset=".45" stop-color="#ff7a1a" stop-opacity=".55"/><stop offset="1" stop-color="#3a0d00" stop-opacity="0"/></radialGradient>
-<linearGradient id="ID-fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff3b0"/><stop offset=".3" stop-color="#ffc23d"/><stop offset=".68" stop-color="#ff7a1a"/><stop offset="1" stop-color="#e5381c" stop-opacity="0"/></linearGradient>
-<linearGradient id="ID-core" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#fff0a0"/><stop offset="1" stop-color="#ffc23d" stop-opacity="0"/></linearGradient></defs>
-<g transform="translate(-6.5 -4.5) scale(1.11)">
-<ellipse cx="60" cy="134" rx="44" ry="4.5" fill="url(#ID-shadow)"/>
-<g class="flue-smoke"><path d="M57 0q-4-5 0-10t0-10"/><path d="M63 -2q-4-5 0-10t0-10"/></g>
-<rect x="53" y="3" width="14" height="11" fill="url(#ID-chrome)"/>
-<rect x="51" y="1" width="18" height="4" rx="1.5" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".4"/>
-<rect x="28" y="124" width="9" height="7" rx="1.5" fill="#24272b"/><rect x="83" y="124" width="9" height="7" rx="1.5" fill="#24272b"/>
-<rect x="22" y="14" width="76" height="113" rx="7" fill="url(#ID-blk)" stroke="#0b0c0e" stroke-width=".6"/>
-<rect x="22" y="22" width="9.5" height="102" rx="3.5" fill="url(#ID-white)"/>
-<rect x="88.5" y="22" width="9.5" height="102" rx="3.5" fill="url(#ID-white)"/>
-<rect x="19" y="11" width="82" height="8" rx="3" fill="#2b2f34" stroke="#474c53" stroke-width=".6"/>
-<rect x="40" y="12.4" width="40" height="5" rx="1.6" fill="#1b1d21" stroke="#555b63" stroke-width=".5"/>
-<path d="M36 23.5h48M36 26h48M36 28.5h48" stroke="#0b0c0e" stroke-width="1.2"/>
-${lcd(46, 31.5, 28, 9)}
-<circle cx="40" cy="36" r="2" fill="#3b4148" stroke="#5a616a" stroke-width=".4"/>
-<circle class="led l1" cx="80" cy="36" r="1.5"/>
-<rect x="31" y="43" width="58" height="56" rx="7" fill="#0f1113" stroke="#4a5058" stroke-width=".8"/>
-<rect x="34" y="46" width="52" height="50" rx="5" fill="url(#ID-brick)"/>
-<g clip-path="url(#ID-win)">
-  <path d="M34 56h52M34 66h52M34 76h52M46 46v10M62 46v10M78 46v10M40 56v10M56 56v10M72 56v10M48 66v10M64 66v10M80 66v10" stroke="#3d2219" stroke-width=".6" opacity=".9"/>
-  <rect class="glow" x="34" y="46" width="52" height="50" fill="url(#ID-glow)"/>
-  <g class="fire">
-    <path class="flame f2" d="M52.5 86C46.5 81 47.5 73 50 68C51.5 73 54 73.5 54 69C57.5 74.5 58.5 82 52.5 86Z" fill="url(#ID-fl)"/>
-    <path class="flame f3" d="M67.5 86C62 82 63 74 65.5 70C66.5 74.5 68.5 74.5 69.5 70C73.5 76.5 72.5 83 67.5 86Z" fill="url(#ID-fl)"/>
-    <path class="flame f1" d="M60 86C51 80 52.5 69 57 62C58 68.5 61 68.5 60.5 60C67.5 67 71 78 60 86Z" fill="url(#ID-fl)"/>
-    <path class="flame f5" d="M59.5 68C57.5 62 59.5 56 61.5 52C62.5 58 63.5 62.5 59.5 68Z" fill="url(#ID-fl)" opacity=".85"/>
-    <path class="flame f4" d="M60 86C56 83 56 77 58.5 72.5C59.5 76 61.5 76.5 62 73C64.5 78 64.5 83 60 86Z" fill="url(#ID-core)"/>
-  </g>
-  <g class="smoke-in"><path d="M55 82q-3-6 0-12t0-12"/><path d="M64 82q-3-6 0-12t0-12"/></g>
-  <path d="M45 92h30l-3.5-7h-23z" fill="#3a3f45" stroke="#5c636b" stroke-width=".5"/>
-  <g class="pellets" fill="#8a5a2b"><rect x="50" y="83.6" width="3" height="1.4" rx=".7"/><rect x="54" y="84.2" width="3" height="1.4" rx=".7" transform="rotate(20 55.5 85)"/><rect x="58" y="83.4" width="3" height="1.4" rx=".7"/><rect x="62" y="84" width="3" height="1.4" rx=".7" transform="rotate(-15 63.5 84.7)"/><rect x="66" y="83.6" width="3" height="1.4" rx=".7"/></g>
-  <g class="embers"><circle cx="51" cy="84.6" r=".9"/><circle cx="55.5" cy="85.2" r="1"/><circle cx="59.5" cy="84.4" r=".9"/><circle cx="63.5" cy="85" r="1"/><circle cx="67.5" cy="84.6" r=".9"/></g>
-  <circle class="igniter" cx="60" cy="88.5" r="1.8"/>
-</g>
-<path d="M36 60L50 46h8L36 70z" fill="#fff" opacity=".08"/>
-<rect x="34" y="46" width="52" height="50" rx="5" fill="none" stroke="#000" stroke-opacity=".5"/>
-<rect x="86.3" y="60" width="2.3" height="16" rx="1.1" fill="url(#ID-chrome)"/>
-<rect x="34" y="104" width="52" height="12" rx="2" fill="#18191c" stroke="#3b4047" stroke-width=".6"/>
-<rect x="52" y="108.5" width="16" height="3" rx="1.5" fill="#4a5058"/>
-<path d="M36 120h48M36 122.5h48" stroke="#0b0c0e" stroke-width="1"/>
-<g class="warm-air"><path d="M42 30q-2-3 0-6t0-6"/><path d="M54 30q-2-3 0-6t0-6"/><path d="M66 30q-2-3 0-6t0-6"/><path d="M78 30q-2-3 0-6t0-6"/></g>
-</g>`,
-  pool_pump: () => `
-<defs>${DEFS}
-<clipPath id="ID-win"><rect x="22" y="52" width="16" height="32" rx="3"/></clipPath>
-<clipPath id="ID-pool"><rect x="0" y="113" width="120" height="27"/></clipPath>
-<linearGradient id="ID-motor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f86d8"/><stop offset=".35" stop-color="#6fb0f0"/><stop offset=".6" stop-color="#2f6fbf"/><stop offset="1" stop-color="#174a85"/></linearGradient>
-<linearGradient id="ID-grey" x1="0" x2="1"><stop offset="0" stop-color="#b9c0c7"/><stop offset=".45" stop-color="#eef1f4"/><stop offset="1" stop-color="#a3abb4"/></linearGradient>
-<linearGradient id="ID-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd0ff"/><stop offset="1" stop-color="#0a6fb8"/></linearGradient>
-<linearGradient id="ID-pot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fdcff" stop-opacity=".55"/><stop offset="1" stop-color="#1b88d0" stop-opacity=".85"/></linearGradient></defs>
-<rect x="0" y="113" width="120" height="27" fill="url(#ID-water)"/>
-<g clip-path="url(#ID-pool)">
-  <path d="M0 117h120" stroke="#1d6fa8" stroke-width="2.2" stroke-dasharray="3 1"/>
-  <g class="ripple"><path d="M-30 124q5-2 10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width=".9"/>
-  <path d="M-25 132q5-2 10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0t10 0" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width=".9"/></g>
-  <g class="bubbles"><circle cx="108" cy="125" r="1.2"/><circle cx="104" cy="123" r=".9"/><circle cx="106" cy="128" r="1"/><circle cx="101" cy="126" r=".8"/></g>
-</g>
-<rect x="0" y="108" width="120" height="5.5" fill="#d8d0bf"/>
-<path d="M20 108v5.5M44 108v5.5M68 108v5.5M92 108v5.5" stroke="#b7ad98" stroke-width=".6"/>
-<rect x="10" y="100" width="100" height="8" fill="#c4bfb4"/><rect x="10" y="100" width="100" height="1.5" fill="#d6d2c8"/>
-<g class="pipes">
-  <path d="M6 126V72H18" fill="none" stroke="#9aa3ad" stroke-width="8" stroke-linejoin="round"/>
-  <path d="M6 126V72H18" fill="none" stroke="#f1f3f5" stroke-width="6" stroke-linejoin="round"/>
-  <path d="M52 62V26H112V126" fill="none" stroke="#9aa3ad" stroke-width="8" stroke-linejoin="round"/>
-  <path d="M52 62V26H112V126" fill="none" stroke="#f1f3f5" stroke-width="6" stroke-linejoin="round"/>
-  <path class="flow" d="M6 126V72H18"/>
-  <path class="flow" d="M52 62V26H112V124"/>
-  <rect x="2" y="90" width="8" height="5" rx="1" fill="#d5dade" stroke="#9aa3ad" stroke-width=".5"/>
-  <rect x="48" y="38" width="8" height="5" rx="1" fill="#d5dade" stroke="#9aa3ad" stroke-width=".5"/>
-</g>
-<g class="hum">
-<rect x="46" y="92" width="56" height="8" rx="1.5" fill="#3a3f45"/>
-<rect x="18" y="44" width="24" height="48" rx="4" fill="url(#ID-grey)" stroke="#8f979f" stroke-width=".6"/>
-<rect x="16" y="35" width="28" height="9" rx="2.5" fill="#2b3036"/>
-<rect x="19" y="36.5" width="22" height="3" rx="1.5" fill="#cfe9ff" opacity=".55"/>
-<rect x="22" y="52" width="16" height="32" rx="3" fill="url(#ID-pot)"/>
-<g clip-path="url(#ID-win)">
-  <path d="M23 58h14M23 64h14M23 70h14M23 76h14M26 52v32M30 52v32M34 52v32" stroke="#ffffff" stroke-opacity=".35" stroke-width=".5"/>
-  <g class="swirl">
-    <path d="M30 68m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0" fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width=".8" stroke-dasharray="4 3"/>
-    <path d="M27 63q2-2 4 0q-2 1.5-4 0z" fill="#5c9a34"/><path d="M32 72q2-2 4 0q-2 1.5-4 0z" fill="#8a6a2b"/><path d="M26 74q1.5-2 3.5 0q-1.5 1.5-3.5 0z" fill="#4f8a2a"/>
-  </g>
-</g>
-<rect x="22" y="52" width="16" height="32" rx="3" fill="none" stroke="#6f7881" stroke-width=".6"/>
-<circle cx="52" cy="74" r="13" fill="url(#ID-grey)" stroke="#8f979f" stroke-width=".6"/>
-<circle cx="52" cy="74" r="8" fill="none" stroke="#a7afb7" stroke-width=".7"/>
-<rect x="60" y="56" width="42" height="36" rx="6" fill="url(#ID-motor)"/>
-<path d="M65 58v32M69 58v32M73 58v32M77 58v32M81 58v32M85 58v32M89 58v32M93 58v32M97 58v32" stroke="#123a6a" stroke-opacity=".45" stroke-width=".9"/>
-<rect x="64" y="45" width="32" height="11" rx="2" fill="#1d2126" stroke="#40464e" stroke-width=".5"/>
-${lcd(66, 46.5, 24, 8)}
-<circle class="led l1" cx="93" cy="50.5" r="1.3"/>
-<rect x="99" y="58" width="10" height="32" rx="3" fill="url(#ID-grey)" stroke="#8f979f" stroke-width=".6"/>
-<g class="fan"><path d="M104 74l-3.5-5.5M104 74l6-1M104 74l-2.5 6" stroke="#5b636c" stroke-width="2" stroke-linecap="round"/></g>
-<path d="M100.5 63h7M100.5 67h7M100.5 71h7M100.5 75h7M100.5 79h7M100.5 83h7" stroke="#6f7881" stroke-width=".9"/>
-<path d="M64 60q10-3 34 0" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none"/>
-</g>`,
-  chest_freezer: () => `
-<defs>${DEFS}
-<linearGradient id="ID-side" x1="0" x2="1"><stop offset="0" stop-color="#cfd5db"/><stop offset="1" stop-color="#aeb6be"/></linearGradient>
-<linearGradient id="ID-top" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3e8ec"/></linearGradient>
-<linearGradient id="ID-cav" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe6f5"/><stop offset="1" stop-color="#f4fbff"/></linearGradient>
-<linearGradient id="ID-liner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf0"/><stop offset="1" stop-color="#c9d0d6"/></linearGradient></defs>
-<ellipse cx="62" cy="131" rx="54" ry="4.5" fill="url(#ID-shadow)"/>
-<rect x="12" y="126" width="9" height="5" rx="1.5" fill="#3a3f45"/><rect x="88" y="126" width="9" height="5" rx="1.5" fill="#3a3f45"/>
-<path d="M100 73L112 61V117L100 129Z" fill="url(#ID-side)"/>
-<path d="M103 112l6-6M103 116l6-6M103 120l6-6" stroke="#8f979f" stroke-width=".7"/>
-<rect x="8" y="73" width="92" height="56" rx="2.5" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".7"/>
-<rect x="8" y="121" width="92" height="8" rx="2" fill="#e2e6ea"/>
-<path d="M76 123.5h20M76 125.5h20M76 127.5h20" stroke="#aab1b9" stroke-width=".6"/>
-<rect x="68" y="79" width="28" height="11" rx="2" fill="#0c1720" stroke="#8f98a2" stroke-width=".5"/>
-<text class="lcd" x="84.5" y="86.8" text-anchor="middle">--°</text>
-<g class="flake"><path d="M72 81.5v6M69.4 83l5.2 3M69.4 86l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
-<circle class="led l1" cx="72" cy="94" r="1.2"/><circle class="led l2" cx="77" cy="94" r="1.2"/>
-<g class="cavity">
-  <path d="M10 73L98 73L110 61L22 61Z" fill="url(#ID-cav)"/>
-  <path d="M10 73L98 73L110 61L22 61Z" fill="#fffbe6" class="clight"/>
-  <path d="M22 61L110 61M60 61L50 73" stroke="#9fc3db" stroke-width=".6"/>
-  <path d="M18 71l3-4h14l-3 4z" fill="#e5484d"/><path d="M33 71l3-4h12l-3 4z" fill="#3e8ed0"/>
-  <path d="M28 66l2.5-3h10l-2.5 3z" fill="#f2c94c"/><path d="M42 66l2.5-3h9l-2.5 3z" fill="#ffffff" stroke="#c9d3dc" stroke-width=".4"/>
-  <path d="M58 70l4-5h16l-4 5z" fill="#9fd356" opacity=".9"/><path d="M63 64l2-2.5h10l-2 2.5z" fill="#ff8f3d"/>
-  <path d="M80 70l4-5h12l-4 5z" fill="#c4c9cf" stroke="#9aa3ad" stroke-width=".4"/>
-</g>
-<g class="cold-out"><circle cx="40" cy="58" r="2"/><circle cx="58" cy="56" r="2.4"/><circle cx="76" cy="58" r="1.8"/><circle cx="94" cy="57" r="2.1"/></g>
-<g class="lid">
-  <path class="lid-side" d="M100 66L112 54L112 61L100 73Z" fill="url(#ID-side)"/>
-  <path class="lid-top" d="M8 66L100 66L112 54L20 54Z" fill="url(#ID-top)" stroke="#bfc6ce" stroke-width=".6"/>
-  <path class="lid-under" d="M20 54L112 54L112 54L20 54Z" fill="url(#ID-liner)" stroke="#9aa3ad" stroke-width=".6"/>
-  <path class="lid-front" d="M8 66L100 66L100 73L8 73Z" fill="#f1f3f5" stroke="#bfc6ce" stroke-width=".6"/>
-</g>
-<rect class="lid-handle" x="44" y="68.5" width="20" height="2.6" rx="1.3" fill="#7d858e"/>
-<g class="mist"><circle cx="30" cy="131" r="1.1"/><circle cx="46" cy="132" r=".9"/><circle cx="64" cy="131" r="1.2"/><circle cx="80" cy="132" r=".9"/></g>`,
-  drawer_freezer: () => `
-<defs>${DEFS}
-<linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfeaf3"/></linearGradient></defs>
-<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
-<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
-<rect x="29" y="7" width="62" height="118" rx="3" fill="url(#ID-in)"/>
-<rect class="flight" x="29" y="7" width="62" height="118" fill="#fffbe6" opacity="0"/>
-<path d="M33 12h54" stroke="#b9c8d6" stroke-width="1.2"/><path d="M37 9.5h46" stroke="#cfdbe5" stroke-width="2" stroke-dasharray="2 1.5"/>
-<g class="drawer d1"><rect x="31" y="16" width="58" height="24" rx="2.5" fill="#e9f5ff" opacity=".9" stroke="#9fc3db" stroke-width=".6"/>
-  <rect x="35" y="23" width="12" height="13" rx="2" fill="#e5484d"/><rect x="49" y="26" width="14" height="10" rx="2" fill="#3e8ed0"/><rect x="65" y="22" width="18" height="14" rx="3" fill="#f2c94c"/>
-  <rect x="31" y="16" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".9"/><rect x="50" y="17.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
-<g class="drawer d2 pull"><rect x="31" y="43" width="58" height="26" rx="2.5" fill="#e9f5ff" opacity=".92" stroke="#9fc3db" stroke-width=".6"/>
-  <path d="M35 66l3-14h12l3 14z" fill="#9fd356"/><rect x="55" y="54" width="14" height="12" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".5"/><circle cx="77" cy="61" r="5" fill="#ff8f3d"/>
-  <rect x="31" y="43" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".95"/><rect x="50" y="44.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
-<g class="drawer d3"><rect x="31" y="72" width="58" height="24" rx="2.5" fill="#e9f5ff" opacity=".9" stroke="#9fc3db" stroke-width=".6"/>
-  <rect x="35" y="80" width="20" height="12" rx="2" fill="#c4c9cf"/><rect x="58" y="78" width="10" height="14" rx="2" fill="#e5484d" opacity=".85"/><rect x="71" y="81" width="14" height="11" rx="2" fill="#8a5a2b" opacity=".8"/>
-  <rect x="31" y="72" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".9"/><rect x="50" y="73.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
-<g class="drawer d4"><rect x="31" y="99" width="58" height="23" rx="2.5" fill="#e9f5ff" opacity=".9" stroke="#9fc3db" stroke-width=".6"/>
-  <rect x="35" y="107" width="16" height="11" rx="2" fill="#3e8ed0" opacity=".85"/><rect x="54" y="105" width="30" height="13" rx="3" fill="#f6f7f9" stroke="#c9d3dc" stroke-width=".5"/>
-  <rect x="31" y="99" width="58" height="5" rx="2" fill="#cfe6f5" opacity=".9"/><rect x="50" y="100.3" width="20" height="2" rx="1" fill="#9fc3db"/></g>
-<g class="drawer-mist"><circle cx="44" cy="74" r="2"/><circle cx="60" cy="76" r="2.4"/><circle cx="76" cy="74" r="1.8"/></g>
-<g class="dz-door">
-  <rect x="26" y="4" width="68" height="126" rx="6" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".7"/>
-  <rect x="84" y="20" width="3.4" height="46" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-  <rect x="35" y="12" width="28" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
-  <text class="lcd fr-temp" x="51.5" y="20.8" text-anchor="middle">--°</text>
-  <g class="flake"><path d="M39.5 15v6M36.9 16.5l5.2 3M36.9 19.5l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
-  <circle class="led l1" cx="38" cy="28" r="1.2"/><circle class="led l2" cx="43" cy="28" r="1.2"/>
-  <rect x="26" y="122" width="68" height="8" rx="3" fill="#e2e6ea"/><path d="M34 125h52M34 127h52" stroke="#aab1b9" stroke-width=".6"/>
-  <path d="M30 8v112" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
-</g>
-<g class="mist"><circle cx="40" cy="132" r="1.1"/><circle cx="52" cy="133" r=".9"/><circle cx="66" cy="132" r="1.2"/><circle cx="79" cy="133" r=".9"/></g>`,
-  solar: () => `
+SVG.solar = () => `
 <defs>${DEFS}
 <clipPath id="ID-pan"><path d="M7.1 93.1L40.4 93.1L53.9 50.9L20.6 50.9Z M42.1 93.1L75.4 93.1L88.9 50.9L55.6 50.9Z"/></clipPath>
 <linearGradient id="ID-cell" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#132a52"/><stop offset=".55" stop-color="#1f4683"/><stop offset="1" stop-color="#3a6fb8"/></linearGradient>
@@ -1131,8 +1646,162 @@ ${lcd(66, 46.5, 24, 8)}
 <path d="M94 88h16M94 90.5h16M94 93h16" stroke="#b3bac2" stroke-width=".6"/>
 ${lcd(93, 71, 18, 8)}
 <circle class="led l1" cx="96" cy="83" r="1.3"/>
-<path d="M104 80l-2 4h3l-2 4" stroke="#ffb400" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
-  vmc: () => `
+<path d="M104 80l-2 4h3l-2 4" stroke="#ffb400" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+/* Chargeur de batterie d'outils (perceuse, visseuse…) : batterie posée sur son socle, vue de 3/4 */
+SVG.tool_charger = () => {
+  // repère de la batterie : P0 = coin avant-gauche du dessus, a = arête avant, b = profondeur, H = hauteur
+  const P = [22, 50], A = [46, 12], B = [30, -13], H = 30;
+  const pt = (u, v, h = 0) => `${(P[0] + A[0] * u + B[0] * v).toFixed(1)} ${(P[1] + A[1] * u + B[1] * v + h).toFixed(1)}`;
+  // nervures du dessus (grille comme sur la photo)
+  const ribs = [0.18, 0.34, 0.5, 0.66, 0.82].map((v) => `M${pt(0.08, v)}L${pt(0.92, v)}`).join("")
+    + [0.25, 0.5, 0.75].map((u) => `M${pt(u, 0.1)}L${pt(u, 0.9)}`).join("");
+  // jauge 4 LED sur la face avant de la batterie
+  const gauge = [0, 1, 2, 3].map((i) => {
+    const u = 0.52 + i * 0.1;
+    return `<path class="tc-g tc-g${i + 1}" d="M${pt(u, 0, 5)}L${pt(u + 0.07, 0, 5)}L${pt(u + 0.07, 0, 7.6)}L${pt(u, 0, 7.6)}z"/>`;
+  }).join("");
+  const skew = (Math.atan2(A[1], A[0]) * 180 / Math.PI).toFixed(1);
+  return `
+<defs>${DEFS}
+<linearGradient id="ID-tcfront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#30363d"/><stop offset="1" stop-color="#15191d"/></linearGradient>
+<linearGradient id="ID-tcside" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22272c"/><stop offset="1" stop-color="#0d1013"/></linearGradient>
+<linearGradient id="ID-tctop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4148"/><stop offset="1" stop-color="#1c2126"/></linearGradient>
+<radialGradient id="ID-tcglow"><stop offset="0" stop-color="#43e08a" stop-opacity=".55"/><stop offset="1" stop-color="#43e08a" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="62" cy="124" rx="54" ry="5" fill="url(#ID-shadow)"/>
+<!-- câble d'alimentation enroulé à gauche -->
+<path class="tc-cable" d="M14 96 C4 95, 2 84, 9 80 C16 76, 22 84, 15 89 C8 94, 3 104, 9 110 C14 115, 6 120, 2 118" fill="none" stroke="#14171a" stroke-width="2.6" stroke-linecap="round"/>
+<path class="tc-flow" d="M2 118 C6 120, 14 115, 9 110 C3 104, 8 94, 15 89 C22 84, 16 76, 9 80 C2 84, 4 95, 14 96" fill="none" stroke="#43e08a" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="3 9"/>
+<!-- socle du chargeur -->
+<path d="M10 88 L76 105 L76 122 L10 105 Z" fill="url(#ID-tcfront)" stroke="#05070a" stroke-width=".5"/>
+<path d="M76 105 L114 88 L114 104 L76 122 Z" fill="url(#ID-tcside)" stroke="#05070a" stroke-width=".5"/>
+<path d="M10 88 L48 72 L114 88 L76 105 Z" fill="url(#ID-tctop)" stroke="#05070a" stroke-width=".5"/>
+<path d="M10 88 L76 105 L114 88" fill="none" stroke="#5b636c" stroke-width=".6" opacity=".7"/>
+<g stroke="#05070a" stroke-width="1.1" stroke-linecap="round">${[0, 1, 2, 3, 4, 5].map((i) => { const x = 88 + i * 4, y = 101 - i * 1.8; return `<path d="M${x} ${y}v9"/>`; }).join("")}</g>
+<!-- voyants du chargeur : défaut + charge -->
+<path d="M15.5 95.2l1.6 -2.8l1.6 2.8z" fill="none" stroke="#8b939c" stroke-width=".45"/>
+<circle class="tc-err" cx="17.1" cy="98.6" r="1.05"/>
+<rect x="15.6" y="101.4" width="3" height="1.7" rx=".3" fill="none" stroke="#8b939c" stroke-width=".45"/>
+<circle class="tc-led" cx="17.1" cy="105.4" r="1.15"/>
+<ellipse class="tc-glow" cx="62" cy="86" rx="44" ry="12" fill="url(#ID-tcglow)"/>
+<!-- batterie posée sur le socle -->
+<path d="M${pt(0, 0)}L${pt(1, 0)}L${pt(1, 0, H)}L${pt(0, 0, H)}Z" fill="url(#ID-tcfront)" stroke="#05070a" stroke-width=".5"/>
+<path d="M${pt(1, 0)}L${pt(1, 1)}L${pt(1, 1, H - 2)}L${pt(1, 0, H)}Z" fill="url(#ID-tcside)" stroke="#05070a" stroke-width=".5"/>
+<path d="M${pt(0, 0)}L${pt(0, 1)}L${pt(1, 1)}L${pt(1, 0)}Z" fill="url(#ID-tctop)" stroke="#05070a" stroke-width=".5"/>
+<path d="${ribs}" stroke="#0b0d10" stroke-width="2.2" stroke-linecap="round"/>
+<path d="${ribs}" stroke="#4a525a" stroke-width=".5" stroke-linecap="round" transform="translate(-.5 -.6)"/>
+<path d="M${pt(0, 0, H - 6)}L${pt(1, 0, H - 6)}" stroke="#05070a" stroke-width=".8"/>
+<path d="M${pt(0, 0)}L${pt(1, 0)}L${pt(1, 1)}" fill="none" stroke="#6a737c" stroke-width=".6" opacity=".7"/>
+<!-- plaque générique 18 V -->
+<g transform="translate(${pt(0.1, 0, 12).replace(" ", " ")}) skewY(${skew})">
+  <rect x="0" y="0" width="18" height="7" rx="3.5" fill="#e9ecef"/>
+  <rect x="0" y="0" width="7" height="7" rx="3.5" fill="#d63a2f"/>
+  <path d="M4.2 1.2l-1.8 2.8h1.4l-.8 2l2.2 -3h-1.4z" fill="#fff"/>
+  <text x="12.5" y="5.4" text-anchor="middle" font-size="4.6" font-weight="700" fill="#1b1f24" font-family="Arial, sans-serif">18V</text>
+</g>
+<g class="tc-gauge">${gauge}</g>
+<path class="tc-bolt" d="M${pt(0.86, 0, 14)}l-2.6 4.6h2.2l-1.4 4.2l4 -5.6h-2.3l1.6 -3.2z"/>`;
+};
+
+SVG.towel_dryer = () => `
+<defs>${DEFS}
+<linearGradient id="ID-tdglow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb877"/><stop offset="1" stop-color="#ff6a1f"/></linearGradient>
+<linearGradient id="ID-tdtowel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f9fb3"/><stop offset=".5" stop-color="#58c3d4"/><stop offset="1" stop-color="#2a8ea1"/></linearGradient>
+<linearGradient id="ID-tdwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a828b" stop-opacity=".16"/><stop offset="1" stop-color="#7a828b" stop-opacity="0"/></linearGradient></defs>
+<rect x="14" y="10" width="92" height="116" rx="6" fill="url(#ID-tdwall)"/>
+<g class="td-heat"><path d="M44 112q-4-20 2-44t-2-44"/><path d="M60 112q4-20-2-44t2-44"/><path d="M76 112q-4-20 2-44t-2-44"/></g>
+<rect x="22" y="16" width="9" height="106" rx="4.5" fill="#000" opacity=".12"/>
+<rect x="89" y="16" width="9" height="106" rx="4.5" fill="#000" opacity=".12"/>
+<path d="M44 55h32v22h-32z" fill="#237a8b"/>
+<g class="td-bars">
+  <rect x="29" y="22" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+  <rect x="29" y="38" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+  <rect x="29" y="54" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+  <rect x="29" y="70" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+  <rect x="29" y="86" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+  <rect x="29" y="102" width="62" height="5" rx="2.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".5"/>
+</g>
+<g class="td-glow" fill="url(#ID-tdglow)">
+  <rect x="29" y="22" width="62" height="5" rx="2.5"/><rect x="29" y="38" width="62" height="5" rx="2.5"/><rect x="29" y="54" width="62" height="5" rx="2.5"/>
+  <rect x="29" y="70" width="62" height="5" rx="2.5"/><rect x="29" y="86" width="62" height="5" rx="2.5"/><rect x="29" y="102" width="62" height="5" rx="2.5"/>
+  <rect x="20" y="14" width="9" height="106" rx="4.5"/><rect x="91" y="14" width="9" height="106" rx="4.5"/>
+</g>
+<path d="M29 23.2h62M29 39.2h62M29 55.2h62M29 71.2h62M29 87.2h62M29 103.2h62" stroke="#fff" stroke-opacity=".85" stroke-width="1"/>
+<rect x="20" y="14" width="9" height="106" rx="4.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".6"/>
+<rect x="91" y="14" width="9" height="106" rx="4.5" fill="url(#ID-body)" stroke="#aeb6be" stroke-width=".6"/>
+<path d="M22.5 18v98M93.5 18v98" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
+<g class="td-glow td-glow2" fill="url(#ID-tdglow)"><rect x="20" y="14" width="9" height="106" rx="4.5"/><rect x="91" y="14" width="9" height="106" rx="4.5"/></g>
+<g class="td-towel">
+  <path d="M42 56h36v30q-3 3-6 0q-3 3-6 0q-3 3-6 0q-3 3-6 0q-3 3-6 0q-3 3-3 0z" fill="url(#ID-tdtowel)"/>
+  <path d="M42 80h36v3h-36z" fill="#e8f7fa" opacity=".9"/>
+  <path d="M42 56h36v3h-36z" fill="#1f7384" opacity=".5"/>
+  <path d="M50 59v20M60 59v20M70 59v20" stroke="#1f7384" stroke-opacity=".25" stroke-width="1"/>
+</g>
+<g class="td-towel td-towel2">
+  <path d="M63 88h20v12q-3 2-5 0q-3 2-5 0q-3 2-5 0q-3 2-5 0z" fill="#f2a6b8"/>
+  <path d="M63 96h20v2h-20z" fill="#fff" opacity=".7"/>
+</g>
+<g class="td-steam"><path d="M48 52q-3-4 0-8t0-8"/><path d="M60 50q-3-4 0-8t0-8"/><path d="M72 52q-3-4 0-8t0-8"/></g>
+<rect x="18" y="120" width="13" height="5" rx="1.5" fill="#3a3f45"/><rect x="89" y="120" width="13" height="5" rx="1.5" fill="#3a3f45"/>
+<rect x="70" y="108" width="36" height="14" rx="3" fill="url(#ID-dark)" stroke="#8f98a2" stroke-width=".6"/>
+${lcd(74, 110, 22, 10)}
+<circle class="td-led" cx="101" cy="115" r="1.4"/>
+<ellipse cx="60" cy="132" rx="46" ry="3" fill="url(#ID-shadow)"/>`;
+
+SVG.tv = () => `
+<defs>${DEFS}<clipPath id="ID-scr"><rect x="4" y="38" width="112" height="63" rx="1"/></clipPath>
+<linearGradient id="ID-off" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b2027"/><stop offset=".6" stop-color="#0a0c0f"/><stop offset="1" stop-color="#14181d"/></linearGradient>
+<linearGradient id="ID-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f5a73"/><stop offset=".55" stop-color="#3b2a7a"/><stop offset="1" stop-color="#0f1420"/></linearGradient>
+<linearGradient id="ID-fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f1420" stop-opacity=".95"/><stop offset=".6" stop-color="#0f1420" stop-opacity="0"/></linearGradient>
+<linearGradient id="ID-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38e1ff"/><stop offset="1" stop-color="#8a5cff"/></linearGradient></defs>
+<rect x="2.5" y="36.5" width="115" height="66" rx="2" fill="#0b0d10" stroke="#2c3138" stroke-width=".7"/>
+<rect x="4" y="38" width="112" height="63" rx="1" fill="url(#ID-off)"/>
+<g clip-path="url(#ID-scr)">
+  <g class="tv-content">
+    <rect x="4" y="38" width="112" height="63" fill="#0f1420"/>
+    <rect x="4" y="38" width="112" height="33" fill="url(#ID-hero)"/>
+    <circle cx="92" cy="50" r="9" fill="#ffb35c" opacity=".85"/>
+    <path d="M60 71l14-12l9 6l12-10l21 16z" fill="#1d1640" opacity=".9"/>
+    <rect x="4" y="38" width="112" height="33" fill="url(#ID-fade)"/>
+    <rect x="9" y="51" width="30" height="3.2" rx="1" fill="#fff"/>
+    <rect x="9" y="56" width="22" height="1.6" rx=".8" fill="#9aa3b8"/>
+    <rect x="9" y="61" width="11" height="4" rx="1" fill="#fff"/><path d="M12 61.9l2.4 1.1l-2.4 1.1z" fill="#0f1420"/>
+    <rect x="22" y="61" width="11" height="4" rx="1" fill="#59616b"/>
+    <rect x="9" y="74" width="16" height="1.6" rx=".8" fill="#c9d0db"/>
+    <g class="tv-row">
+      <rect x="9" y="77.5" width="17" height="11" rx="1.2" fill="#e85d75"/><rect x="28" y="77.5" width="17" height="11" rx="1.2" fill="#3fb6a8"/>
+      <rect x="47" y="77.5" width="17" height="11" rx="1.2" fill="#f2b84b"/><rect x="66" y="77.5" width="17" height="11" rx="1.2" fill="#5b7cfa"/>
+      <rect x="85" y="77.5" width="17" height="11" rx="1.2" fill="#a55cd6"/><rect x="104" y="77.5" width="17" height="11" rx="1.2" fill="#4fb36b"/>
+      <rect x="123" y="77.5" width="17" height="11" rx="1.2" fill="#e8834a"/><rect x="142" y="77.5" width="17" height="11" rx="1.2" fill="#3a8fd6"/>
+      <path d="M12 86h8M31 86h10M50 86h7M69 86h9M88 86h10M107 86h8M126 86h9M145 86h8" stroke="#fff" stroke-opacity=".75" stroke-width="1" stroke-linecap="round"/>
+    </g>
+    <rect class="tv-sel" x="8.4" y="76.9" width="18.2" height="12.2" rx="1.6" fill="none" stroke="#fff" stroke-width=".9"/>
+    <rect x="9" y="91.5" width="12" height="1.6" rx=".8" fill="#c9d0db"/>
+    <g class="tv-row2">
+      <rect x="9" y="95" width="24" height="9" rx="1.2" fill="#2f6f8f"/><rect x="35" y="95" width="24" height="9" rx="1.2" fill="#8f3f5f"/>
+      <rect x="61" y="95" width="24" height="9" rx="1.2" fill="#6f6f2f"/><rect x="87" y="95" width="24" height="9" rx="1.2" fill="#3f4f8f"/>
+      <rect x="113" y="95" width="24" height="9" rx="1.2" fill="#2f8f5f"/>
+    </g>
+  </g>
+  <g class="tv-intro">
+    <rect x="4" y="38" width="112" height="63" fill="#05070c"/>
+    <g class="tv-streaks" stroke-linecap="round" fill="none">
+      <path d="M4 44L60 69.5" stroke="#38e1ff"/><path d="M116 44L60 69.5" stroke="#8a5cff"/>
+      <path d="M4 95L60 69.5" stroke="#8a5cff"/><path d="M116 95L60 69.5" stroke="#38e1ff"/>
+      <path d="M60 38v31.5" stroke="#5fd0ff"/><path d="M60 101v-31.5" stroke="#a07cff"/>
+    </g>
+    <g class="tv-logo">
+      <circle cx="60" cy="69.5" r="11" fill="none" stroke="url(#ID-logo)" stroke-width="2.2"/>
+      <path d="M56.5 63.5q0-1.6 1.4-.8l8.6 5.4q1.3.8 0 1.6l-8.6 5.4q-1.4.8-1.4-.8z" fill="url(#ID-logo)"/>
+    </g>
+  </g>
+  <rect class="tv-flash" x="4" y="38" width="112" height="63" fill="#eef6ff"/>
+</g>
+<path d="M4 38L46 38L4 78z" fill="#fff" opacity=".06"/>
+<rect x="4" y="38" width="112" height="63" rx="1" fill="none" stroke="#000" stroke-opacity=".5"/>
+<circle class="tv-led" cx="60" cy="101.8" r=".7"/>`;
+
+SVG.vmc = () => `
 <defs>${DEFS}
 <clipPath id="ID-all"><rect x="0" y="0" width="120" height="140" rx="12"/></clipPath>
 <clipPath id="ID-hole"><circle cx="60" cy="70" r="25"/></clipPath>
@@ -1165,138 +1834,127 @@ ${lcd(93, 71, 18, 8)}
   </g>
 </g>
 <circle cx="60" cy="70" r="25" fill="none" stroke="#b5bcc3" stroke-width="1"/>
-<g class="intake"><path d="M20 98q8-6 14-4"/><path d="M98 100q-8-6-14-3"/><path d="M28 40q8 2 12 8"/><path d="M94 42q-8 2-12 8"/><path d="M60 112q-2-6 0-12"/></g>`,
-  hob: () => `
+<g class="intake"><path d="M20 98q8-6 14-4"/><path d="M98 100q-8-6-14-3"/><path d="M28 40q8 2 12 8"/><path d="M94 42q-8 2-12 8"/><path d="M60 112q-2-6 0-12"/></g>`;
+
+SVG.washer = () => `
+<defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="28"/></clipPath></defs>
+<ellipse cx="60" cy="133" rx="50" ry="5" fill="url(#ID-shadow)"/>
+<g class="shake">
+  ${feet([20, 90], 124)}
+  <rect x="14" y="8" width="92" height="120" rx="8" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".8"/>
+  <path d="M14 16a8 8 0 0 1 8-8h76a8 8 0 0 1 8 8v17H14z" fill="url(#ID-panel)"/>
+  <line x1="14" y1="33" x2="106" y2="33" stroke="#bfc6ce" stroke-width=".8"/>
+  <rect x="19" y="13" width="25" height="15" rx="2" fill="#f8f9fb" stroke="#b9c0c8" stroke-width=".7"/>
+  <rect x="24" y="22.5" width="15" height="2.2" rx="1.1" fill="#a6aeb7"/>
+  ${lcd(49, 13, 30, 11)}
+  <circle class="led l1" cx="55" cy="29" r="1.4"/><circle class="led l2" cx="61" cy="29" r="1.4"/>
+  <circle class="led l3" cx="67" cy="29" r="1.4"/><circle class="led l4" cx="73" cy="29" r="1.4"/>
+  <circle cx="93" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
+  <circle cx="93" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
+  <g class="knob"><line x1="93" y1="21" x2="93" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>
+  ${porthole(60, 80, 28, `
+    ${drumInside(60, 80, 28)}
+    <g class="water"><path class="wave" d="M10 88q10-4 20 0t20 0t20 0t20 0t20 0t20 0v30H10z"/></g>
+    <g class="foam">
+      <circle cx="44" cy="90" r="2.2"/><circle cx="52" cy="92" r="1.6"/><circle cx="61" cy="89" r="2.6"/>
+      <circle cx="70" cy="91" r="1.8"/><circle cx="77" cy="88" r="1.4"/><circle cx="56" cy="95" r="1.2"/>
+    </g>`)}
+  <rect x="20" y="72" width="5" height="16" rx="2" fill="url(#ID-chrome)" stroke="#8d959f" stroke-width=".4"/>
+  <rect x="95.5" y="74" width="4" height="12" rx="1.5" fill="#9aa3ad"/>
+  <rect x="22" y="117" width="76" height="6" rx="2" fill="#000" opacity=".05"/>
+</g>`;
+
+SVG.water_heater = () => `
 <defs>${DEFS}
-<clipPath id="ID-all"><rect x="0" y="0" width="120" height="140" rx="12"/></clipPath>
-<linearGradient id="ID-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2d31"/><stop offset="1" stop-color="#0d0e10"/></linearGradient>
-<linearGradient id="ID-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c4a3"/><stop offset="1" stop-color="#b89a73"/></linearGradient>
-<radialGradient id="ID-hot"><stop offset="0" stop-color="#ffb347"/><stop offset=".45" stop-color="#ff4a1f"/><stop offset="1" stop-color="#8a1205" stop-opacity=".25"/></radialGradient>
-<linearGradient id="ID-pot" x1="0" x2="1"><stop offset="0" stop-color="#8d959e"/><stop offset=".3" stop-color="#f1f3f5"/><stop offset=".6" stop-color="#c3c9cf"/><stop offset="1" stop-color="#7d858e"/></linearGradient></defs>
-<ellipse cx="60" cy="125" rx="50" ry="4" fill="url(#ID-shadow)"/>
-<g transform="translate(-9 -24) scale(1.15)">
-<path d="M12 122L108 122L97 60L23 60Z" fill="#8d959e"/>
-<path d="M14 120L106 120L96 62L24 62Z" fill="url(#ID-glass)"/>
-<g class="zone z1">
-  <ellipse cx="40" cy="99" rx="18" ry="9.7" fill="none" stroke="#5a6068" stroke-width=".5"/>
-  <ellipse class="zglow" cx="40" cy="99" rx="16" ry="8.5" fill="url(#ID-hot)"/>
-  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
-    <ellipse cx="40" cy="99" rx="13.1" ry="7.0"/><ellipse cx="40" cy="99" rx="9.3" ry="4.9"/><ellipse cx="40" cy="99" rx="5.4" ry="2.9"/></g>
-  <ellipse cx="40" cy="99" rx="16" ry="8.5" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
-</g><g class="zone z2">
-  <ellipse cx="82" cy="99" rx="14" ry="7.7" fill="none" stroke="#5a6068" stroke-width=".5"/>
-  <ellipse class="zglow" cx="82" cy="99" rx="12" ry="6.5" fill="url(#ID-hot)"/>
-  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
-    <ellipse cx="82" cy="99" rx="9.8" ry="5.3"/><ellipse cx="82" cy="99" rx="7.0" ry="3.8"/><ellipse cx="82" cy="99" rx="4.1" ry="2.2"/></g>
-  <ellipse cx="82" cy="99" rx="12" ry="6.5" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
-</g><g class="zone z3">
-  <ellipse cx="44" cy="73" rx="13" ry="6.4" fill="none" stroke="#5a6068" stroke-width=".5"/>
-  <ellipse class="zglow" cx="44" cy="73" rx="11" ry="5.2" fill="url(#ID-hot)"/>
-  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
-    <ellipse cx="44" cy="73" rx="9.0" ry="4.3"/><ellipse cx="44" cy="73" rx="6.4" ry="3.0"/><ellipse cx="44" cy="73" rx="3.7" ry="1.8"/></g>
-  <ellipse cx="44" cy="73" rx="11" ry="5.2" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
-</g><g class="zone z4">
-  <ellipse cx="78" cy="73" rx="16" ry="7.7" fill="none" stroke="#5a6068" stroke-width=".5"/>
-  <ellipse class="zglow" cx="78" cy="73" rx="14" ry="6.5" fill="url(#ID-hot)"/>
-  <g class="coil" fill="none" stroke="#ff5a1f" stroke-width=".7">
-    <ellipse cx="78" cy="73" rx="11.5" ry="5.3"/><ellipse cx="78" cy="73" rx="8.1" ry="3.8"/><ellipse cx="78" cy="73" rx="4.8" ry="2.2"/></g>
-  <ellipse cx="78" cy="73" rx="14" ry="6.5" fill="none" stroke="#7d848c" stroke-width=".7" stroke-dasharray="2 1.4"/>
+<linearGradient id="ID-cyl" x1="0" x2="1"><stop offset="0" stop-color="#c3c9cf"/><stop offset=".3" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef0f2"/><stop offset="1" stop-color="#aeb5bc"/></linearGradient>
+<linearGradient id="ID-copper" x1="0" x2="1"><stop offset="0" stop-color="#a0603a"/><stop offset=".45" stop-color="#e2a477"/><stop offset="1" stop-color="#8a4f2e"/></linearGradient>
+<linearGradient id="ID-arc" x1="0" x2="1"><stop offset="0" stop-color="#3e8ed0"/><stop offset=".5" stop-color="#f2c94c"/><stop offset="1" stop-color="#e5484d"/></linearGradient></defs>
+<g class="hw-waves">
+  <path d="M46 12q-3-4 0-8t0-8"/><path d="M60 10q-3-4 0-8t0-8"/><path d="M74 12q-3-4 0-8t0-8"/>
 </g>
-<path d="M30 63L58 63L22 118L16 118Z" fill="#fff" opacity=".05"/>
-<path d="M18 109H102" stroke="#3b4047" stroke-width=".5"/>
-<g class="digits">
-  <text class="zd zd1" x="28" y="116.5" text-anchor="middle">0</text>
-  <text class="zd zd3" x="44" y="116.5" text-anchor="middle">0</text>
-  <text class="zd zd4" x="76" y="116.5" text-anchor="middle">0</text>
-  <text class="zd zd2" x="92" y="116.5" text-anchor="middle">0</text>
-</g>
-<circle cx="60" cy="114.5" r="2.4" fill="none" stroke="#5a6068" stroke-width=".6"/><path d="M60 112.6v1.6" stroke="#5a6068" stroke-width=".6"/>
-<path d="M51 114.5h3M66 114.5h3M67.5 113v3" stroke="#5a6068" stroke-width=".6"/>
-<g class="pan">
-  <path d="M90 66L104 52" stroke="#2b2f34" stroke-width="2.6" stroke-linecap="round"/>
-  <ellipse cx="78" cy="71" rx="13" ry="6.2" fill="#2b2f34"/>
-  <ellipse cx="78" cy="70" rx="11.5" ry="5.2" fill="#3b4047"/>
-  <ellipse cx="76" cy="70" rx="5" ry="2.6" fill="#ffffff"/><ellipse cx="76.5" cy="69.8" rx="2" ry="1.2" fill="#f2b632"/>
-  <g class="sizzle"><path d="M68 64l-1-3M74 62l0-3M84 62l1-3M89 65l2-2"/></g>
-</g>
-<g class="pot">
-  <path d="M24 86l-10-2" stroke="#2b2f34" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M25 80V96Q25 101 40 101Q55 101 55 96V80Z" fill="url(#ID-pot)" stroke="#6f7781" stroke-width=".5"/>
-  <ellipse cx="40" cy="96.5" rx="15" ry="4.5" fill="none" stroke="#6f7781" stroke-width=".4" opacity=".6"/>
-  <g class="lid"><ellipse cx="40" cy="80" rx="15.5" ry="4.6" fill="#d7dce1" stroke="#7d858e" stroke-width=".6"/>
-  <ellipse cx="40" cy="79.4" rx="11" ry="3" fill="#eef1f4"/>
-  <rect x="37.5" y="75" width="5" height="3.4" rx="1.4" fill="#2b2f34"/></g>
-  <g class="steam-pot"><path d="M34 72q-3-5 0-10t0-10"/><path d="M41 70q-3-5 0-10t0-10"/><path d="M48 72q-3-5 0-10t0-10"/></g>
-</g></g>`,
-  radiator: () => `
+<ellipse cx="60" cy="133" rx="34" ry="4" fill="url(#ID-shadow)"/>
+<rect x="49" y="114" width="6" height="18" fill="url(#ID-copper)"/>
+<rect x="65" y="114" width="6" height="18" fill="url(#ID-copper)"/>
+<rect x="48" y="122" width="8" height="3" rx="1" fill="#3e8ed0"/>
+<rect x="64" y="122" width="8" height="3" rx="1" fill="#e5484d"/>
+<rect x="40" y="117" width="9" height="5" rx="1.2" fill="#c9a43a" stroke="#8a6d1f" stroke-width=".4"/>
+<path d="M30 26q0-14 30-14t30 14v80q0 12-30 12t-30-12z" fill="url(#ID-cyl)" stroke="#a7aeb5" stroke-width=".8"/>
+<path d="M30 26q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
+<path d="M30 104q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
+<rect x="38" y="58" width="44" height="40" rx="5" fill="#f4f6f8" stroke="#b5bcc3" stroke-width=".7"/>
+<circle cx="60" cy="76" r="13" fill="url(#ID-chrome)"/>
+<circle cx="60" cy="76" r="11" fill="#fcfcfd"/>
+<path d="M51.5 84.5a12 12 0 1 1 17 0" fill="none" stroke="url(#ID-arc)" stroke-width="2.2" stroke-linecap="round" transform="rotate(0 60 76)"/>
+<path d="M60 67.4v2M52.6 70.6l1.4 1.4M67.4 70.6l-1.4 1.4M50 76h2M68 76h2" stroke="#7d868f" stroke-width=".7"/>
+<g class="needle"><path d="M60 76l-1.1 0l1.1-8.5l1.1 8.5z" fill="#c62828"/></g>
+<circle cx="60" cy="76" r="1.6" fill="#3a4148"/>
+<text class="gauge-txt" x="60" y="85" text-anchor="middle">--°</text>
+<circle class="hw-led" cx="76" cy="92" r="1.8"/>
+<rect x="43" y="90.5" width="16" height="3" rx="1.2" fill="#d5dade"/>
+<path d="M36 40q4-6 6-1" stroke="#fff" stroke-opacity=".9" stroke-width="2" fill="none" stroke-linecap="round"/>
+<rect x="34" y="34" width="5" height="70" rx="2.5" fill="#fff" opacity=".35"/>`;
+
+/* cave à vin ; avec zone2_temperature : bi-zone (rouges en haut, blancs en bas), deux afficheurs */
+SVG.wine_cooler = (c) => {
+  const dual = !!(c && c.zone2_temperature);
+  return `
 <defs>${DEFS}
-<clipPath id="ID-fins"><path d="M12.0 27H23.4V100Q23.4 104 20.4 104H15.0Q12.0 104 12.0 100Z"/><path d="M24.8 27H36.2V100Q36.2 104 33.2 104H27.8Q24.8 104 24.8 100Z"/><path d="M37.6 27H49.0V100Q49.0 104 46.0 104H40.6Q37.6 104 37.6 100Z"/><path d="M50.4 27H61.8V100Q61.8 104 58.8 104H53.4Q50.4 104 50.4 100Z"/><path d="M63.2 27H74.6V100Q74.6 104 71.6 104H66.2Q63.2 104 63.2 100Z"/><path d="M76.0 27H87.4V100Q87.4 104 84.4 104H79.0Q76.0 104 76.0 100Z"/></clipPath>
-<linearGradient id="ID-fin" x1="0" x2="1"><stop offset="0" stop-color="#e3e6e9"/><stop offset=".25" stop-color="#ffffff"/><stop offset=".85" stop-color="#f6f7f8"/><stop offset="1" stop-color="#d9dde1"/></linearGradient>
-<linearGradient id="ID-side" x1="0" x2="1"><stop offset="0" stop-color="#e7eaed"/><stop offset="1" stop-color="#cdd2d7"/></linearGradient>
-<linearGradient id="ID-heatglow" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff8a3d" stop-opacity=".15"/><stop offset="1" stop-color="#ff5a1f" stop-opacity=".9"/></linearGradient>
-<linearGradient id="ID-box" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e2e5e8"/></linearGradient></defs>
-<g class="rwaves"><path d="M22 18q-3-5 0-10t0-10"/><path d="M38 16q-3-5 0-10t0-10"/><path d="M54 18q-3-5 0-10t0-10"/><path d="M70 16q-3-5 0-10t0-10"/></g>
-<g class="cold-air"><path d="M-6 50q6-3 12 0t12 0"/><path d="M-8 66q6-3 12 0t12 0"/><path d="M-6 82q6-3 12 0t12 0"/></g>
-<path d="M16 30H95.4V108H16Z" fill="#000" opacity=".1" filter="blur(2px)"/>
-<path d="M87.4 27L91.4 23V100L87.4 104Z" fill="url(#ID-side)" stroke="#c9ced4" stroke-width=".4"/>
-<circle cx="89.4" cy="31" r="1.6" fill="#e9ecef" stroke="#aeb5bc" stroke-width=".5"/>
-<path d="M12.0 27L15.5 23H26.9L23.4 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="15.0" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M24.8 27L28.3 23H39.7L36.2 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="27.8" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M37.6 27L41.1 23H52.5L49.0 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="40.6" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M50.4 27L53.9 23H65.3L61.8 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="53.4" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M63.2 27L66.7 23H78.1L74.6 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="66.2" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/><path d="M76.0 27L79.5 23H90.9L87.4 27Z" fill="#eef0f2" stroke="#cfd4d9" stroke-width=".4"/><rect x="79.0" y="24" width="8.4" height="1.6" rx=".8" fill="#c3c9cf"/>
-<path d="M12.0 27H23.4V100Q23.4 104 20.4 104H15.0Q12.0 104 12.0 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M24.8 27H36.2V100Q36.2 104 33.2 104H27.8Q24.8 104 24.8 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M37.6 27H49.0V100Q49.0 104 46.0 104H40.6Q37.6 104 37.6 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M50.4 27H61.8V100Q61.8 104 58.8 104H53.4Q50.4 104 50.4 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M63.2 27H74.6V100Q74.6 104 71.6 104H66.2Q63.2 104 63.2 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/><path d="M76.0 27H87.4V100Q87.4 104 84.4 104H79.0Q76.0 104 76.0 100Z" fill="url(#ID-fin)" stroke="#d2d6da" stroke-width=".4"/>
-<g clip-path="url(#ID-fins)"><rect class="rglow" x="10" y="26" width="87.4" height="80" fill="url(#ID-heatglow)"/></g>
-<path d="M82.4 84h18q2 0 2 2v16q0 3-3 6l-3 10h-10q-2 0-2-2V86q0-2 2-2z" fill="url(#ID-box)" stroke="#bfc6ce" stroke-width=".6"/>
-${lcd(84.8, 86.5, 15, 8)}
-<g class="micon m-comfort" transform="translate(87.4 97.3) scale(.48)"><circle r="2.2"/><path d="M0-4.2v1.1M0 3.1v1.1M-4.2 0h1.1M3.1 0h1.1M-3 -3l.8.8M2.2 2.2l.8.8M-3 3l.8-.8M2.2-2.2l.8-.8" stroke-width=".9" stroke-linecap="round"/></g>
-<g class="micon m-eco" transform="translate(92.4 97.3) scale(.48)"><path d="M1.6-3a3.4 3.4 0 1 0 1.8 5.6a2.8 2.8 0 0 1-1.8-5.6z"/></g>
-<g class="micon m-frost" transform="translate(97.4 97.3) scale(.48)"><path d="M0-3.4v6.8M-3 -1.7l6 3.4M-3 1.7l6-3.4" stroke-width="1.1" stroke-linecap="round"/></g>
-<g fill="#eef0f2" stroke="#a7aeb5" stroke-width=".4"><circle cx="86.8" cy="102.5" r="1.4"/><circle cx="91.8" cy="102.5" r="1.4"/><circle cx="96.8" cy="102.5" r="1.4"/><circle cx="89.3" cy="106.5" r="1.4"/><circle cx="94.3" cy="106.5" r="1.4"/></g>
-<circle class="led l1" cx="96.8" cy="106.5" r=".8"/>`,
-  printer_3d: () => `
-<defs>${DEFS}
-<clipPath id="ID-obj"><rect class="objclip" x="40" y="66" width="40" height="38"/></clipPath>
-<linearGradient id="ID-frame" x1="0" x2="1"><stop offset="0" stop-color="#2a2e33"/><stop offset=".5" stop-color="#4a5058"/><stop offset="1" stop-color="#23272b"/></linearGradient>
-<linearGradient id="ID-alu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f3f5"/><stop offset=".5" stop-color="#b9c0c7"/><stop offset="1" stop-color="#8d959e"/></linearGradient>
-<linearGradient id="ID-pei" x1="0" x2="1"><stop offset="0" stop-color="#3a3326"/><stop offset=".5" stop-color="#6b5a3a"/><stop offset="1" stop-color="#3a3326"/></linearGradient>
-<linearGradient id="ID-fil" x1="0" x2="1"><stop offset="0" style="stop-color:var(--fil)" stop-opacity=".75"/><stop offset=".45" style="stop-color:var(--fil)"/><stop offset="1" style="stop-color:var(--fil)" stop-opacity=".7"/></linearGradient>
-<pattern id="ID-layers" width="4" height="1.3" patternUnits="userSpaceOnUse"><rect width="4" height=".55" fill="#000" opacity=".18"/></pattern></defs>
-<ellipse cx="60" cy="133" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
-<g class="spool">
-  <circle cx="97" cy="20" r="11" fill="#1f2226" stroke="#3b4047" stroke-width=".6"/>
-  <circle cx="97" cy="20" r="9" style="fill:var(--fil)"/>
-  <circle cx="97" cy="20" r="9" fill="none" stroke="#000" stroke-opacity=".22" stroke-width="2.6" stroke-dasharray=".8 1.2"/>
-  <circle cx="97" cy="20" r="4" fill="#2b2f34" stroke="#555b63" stroke-width=".6"/>
-  <circle cx="97" cy="20" r="1.6" fill="#8d959e"/>
-  <path d="M93 16.5l2 2M101 16.5l-2 2M93 23.5l2-2M101 23.5l-2-2" stroke="#555b63" stroke-width=".8"/>
-</g>
-<rect x="94" y="32" width="6" height="10" rx="1.5" fill="url(#ID-frame)"/>
-<rect x="17" y="16" width="10" height="100" rx="2.5" fill="url(#ID-frame)"/>
-<rect x="15.5" y="13" width="13" height="5" rx="2" fill="#33373d"/>
-<rect x="20.8" y="20" width="2.4" height="92" rx="1.2" fill="url(#ID-alu)" opacity=".85"/>
-<rect x="10" y="112" width="100" height="16" rx="4" fill="url(#ID-frame)" stroke="#16181b" stroke-width=".6"/>
-<rect x="12" y="113" width="96" height="1.6" rx=".8" fill="#fff" opacity=".12"/>
-${lcd(78, 116, 26, 9)}
-<circle class="led l1" cx="72" cy="120.5" r="1.4"/>
-<rect x="32" y="108" width="56" height="4" rx="1" fill="#5d646c"/>
-<g class="bedheat"><path d="M40 101q-2-3 0-6t0-6"/><path d="M54 101q-2-3 0-6t0-6"/><path d="M66 101q-2-3 0-6t0-6"/><path d="M80 101q-2-3 0-6t0-6"/></g>
-<rect x="30" y="104" width="60" height="4.5" rx="1" fill="url(#ID-pei)" stroke="#1c1a15" stroke-width=".5"/>
-<g clip-path="url(#ID-obj)"><g class="object">
-  <path d="M49 104C47 96 45 88 48 80C50 74 52 70 52 66H68C68 70 70 74 72 80C75 88 73 96 71 104Z" fill="url(#ID-fil)"/>
-  <path d="M49 104C47 96 45 88 48 80C50 74 52 70 52 66H68C68 70 70 74 72 80C75 88 73 96 71 104Z" fill="url(#ID-layers)"/>
-  <path d="M53 101C52 94 51 88 53 82" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-</g></g>
-<g class="gantry">
-  <rect x="22" y="82" width="76" height="5" rx="1.5" fill="url(#ID-alu)" stroke="#7d858e" stroke-width=".4"/>
-  <rect x="94" y="80" width="6" height="9" rx="1.5" fill="url(#ID-frame)"/>
-  <g class="head">
-    <rect x="51" y="78" width="18" height="21" rx="3" fill="#ececec" stroke="#a7afb7" stroke-width=".6"/>
-    <rect x="51" y="78" width="18" height="5" rx="2" fill="#2b2f34"/>
-    <circle cx="60" cy="90" r="4.2" fill="#2b2f34"/>
-    <g class="hfan"><path d="M60 90l0-3.4M60 90l2.9 1.7M60 90l-2.9 1.7" stroke="#8d959e" stroke-width="1.3" stroke-linecap="round"/></g>
-    <path d="M57.5 99h5l-1.6 4h-1.8z" fill="#c9a43a" stroke="#8a6d1f" stroke-width=".4"/>
-    <path d="M69 81q12-4 25-30" fill="none" stroke="#e9ecef" stroke-opacity=".75" stroke-width="1.6" stroke-linecap="round"/>
-    <circle class="tip" cx="60" cy="103.4" r="1.2"/>
-    <rect class="filpath" x="59.2" y="70" width="1.6" height="8" style="fill:var(--fil)"/>
+<linearGradient id="ID-wnlight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1c9" stop-opacity=".85"/><stop offset=".55" stop-color="#ffd98a" stop-opacity=".25"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></linearGradient>
+<linearGradient id="ID-wncab" x1="0" x2="1"><stop offset="0" stop-color="#2b3036"/><stop offset=".5" stop-color="#14171b"/><stop offset="1" stop-color="#262b31"/></linearGradient>
+<linearGradient id="ID-wnwood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a26b"/><stop offset="1" stop-color="#8a6a3f"/></linearGradient>
+<clipPath id="ID-wnclip"><rect x="30" y="32" width="60" height="86"/></clipPath></defs>
+<ellipse cx="60" cy="133" rx="46" ry="3.5" fill="url(#ID-shadow)"/>
+<rect x="22" y="6" width="76" height="122" rx="4" fill="url(#ID-wncab)" stroke="#05070a" stroke-width=".8"/>
+<rect x="26" y="9" width="68" height="17" rx="2" fill="#0d1013"/>
+<circle class="wn-led" cx="34" cy="17.5" r="1.6"/>
+<path d="M42 15h10M42 18h10M42 21h10" stroke="#3b424a" stroke-width=".8" stroke-linecap="round"/>
+${dual ? `
+<rect x="58" y="12" width="16" height="11" rx="1.6" fill="#0c1720" stroke="#59616b" stroke-width=".5"/>
+<text class="lcd" x="66" y="20.4" text-anchor="middle">OFF</text>
+<rect x="76" y="12" width="16" height="11" rx="1.6" fill="#0c1720" stroke="#59616b" stroke-width=".5"/>
+<text class="lcd lcd2" x="84" y="20.4" text-anchor="middle">--</text>
+<circle cx="66" cy="10.2" r=".9" fill="#c0392b"/><circle cx="84" cy="10.2" r=".9" fill="#f2d16b"/>` : `
+<rect x="64" y="12" width="26" height="11" rx="1.6" fill="#0c1720" stroke="#59616b" stroke-width=".5"/>
+<text class="lcd" x="77" y="20.4" text-anchor="middle">OFF</text>`}
+<rect x="28" y="30" width="64" height="92" fill="#07090b"/>
+<g class="wn-inside" clip-path="url(#ID-wnclip)">
+  <rect x="30" y="32" width="60" height="86" fill="#14181d"/>
+  <rect class="wn-light" x="30" y="32" width="60" height="86" fill="url(#ID-wnlight)"/>
+  <rect x="31" y="33" width="58" height="2" fill="#fff6dc" class="wn-strip"/>
+  <g class="wn-bottles">
+    <g>
+      <circle cx="37" cy="44" r="5" fill="#5b1226"/><circle cx="48.6" cy="44" r="5" fill="#1f4d2e"/><circle cx="60.2" cy="44" r="5" fill="#5b1226"/><circle cx="71.8" cy="44" r="5" fill="#b0852f"/><circle cx="83.4" cy="44" r="5" fill="#1f4d2e"/>
+      <circle cx="37" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="48.6" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="60.2" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="71.8" cy="44" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/>
+      <path d="M33.6 41.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M56.8 41.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/>
+    </g>
+    <rect x="30" y="49.5" width="60" height="3" fill="url(#ID-wnwood)"/>
+    <g>
+      <circle cx="37" cy="70" r="5" fill="#d48a8a"/><circle cx="48.6" cy="70" r="5" fill="#5b1226"/><circle cx="60.2" cy="70" r="5" fill="#b0852f"/><circle cx="71.8" cy="70" r="5" fill="#1f4d2e"/><circle cx="83.4" cy="70" r="5" fill="#5b1226"/>
+      <circle cx="37" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="48.6" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="60.2" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="71.8" cy="70" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/>
+      <path d="M33.6 67.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M45.1 67.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/>
+    </g>
+    <rect x="30" y="75.5" width="60" height="3" fill="url(#ID-wnwood)"/>
+    <g>
+      <circle cx="37" cy="96" r="5" fill="#1f4d2e"/><circle cx="48.6" cy="96" r="5" fill="#b0852f"/><circle cx="60.2" cy="96" r="5" fill="#5b1226"/><circle cx="71.8" cy="96" r="5" fill="#d48a8a"/><circle cx="83.4" cy="96" r="5" fill="#1f4d2e"/>
+      <circle cx="37" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="48.6" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="60.2" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/><circle cx="71.8" cy="96" r="2.4" fill="none" stroke="#fff" stroke-opacity=".22"/>
+      <path d="M33.6 93.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M68.4 93.6a4.6 4.6 0 0 1 4-2" stroke="#fff" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round"/>
+    </g>
+    <rect x="30" y="101.5" width="60" height="3" fill="url(#ID-wnwood)"/>
+    <rect x="30" y="112" width="60" height="3" fill="url(#ID-wnwood)"/>
   </g>
-</g>`,
+  ${dual ? `<rect class="wn-cold" x="30" y="78.5" width="60" height="40" fill="#9fdcff"/>
+  <rect x="30" y="76" width="60" height="3.4" fill="#0a0c0f"/><rect x="30" y="76" width="60" height="1" fill="#3b424a"/>` : ""}
+  <g class="wn-air" fill="none" stroke-linecap="round"><path d="M44 116q-5-14 0-28t-3-30"/><path d="M60 116q5-14 0-28t3-30"/><path d="M76 116q-5-14 0-28t-3-30"/></g>
+</g>
+<g class="wn-door">
+  <rect x="26" y="28" width="68" height="96" rx="2" fill="none" stroke="#0a0c0f" stroke-width="3"/>
+  <rect x="29" y="31" width="62" height="90" fill="#0d1b2a" opacity=".3"/>
+  <g class="wn-drops"><circle cx="40" cy="48" r="1.1"/><circle cx="64" cy="58" r="1.1"/><circle cx="80" cy="46" r="1.1"/><circle cx="52" cy="88" r="1.1"/><circle cx="76" cy="100" r="1.1"/></g>
+  <path d="M29 31h62l-26 90h-36z" fill="url(#ID-gloss)" opacity=".45"/>
+  <rect x="89" y="50" width="3.6" height="46" rx="1.8" fill="url(#ID-chrome)" stroke="#6f7780" stroke-width=".4"/>
+</g>
+<path d="M28 124h64" stroke="#3b424a" stroke-width="1"/>
+<rect x="30" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/><rect x="80" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/>`;
 };
 
 /* ------------------------------------------------------------------ */
@@ -1328,6 +1986,24 @@ const DEF = {
   heat_pump: { accent: "heat", threshold: 60,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
     keys: ["pac", "pompe_a_chaleur", "heat_pump", "heatpump", "unite_ext", "groupe_ext", "outdoor_unit"] },
+  fan: { accent: "cold", threshold: 5,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["ventilateur", "ventilo", "fan", "brasseur", "dyson"] },
+  tool_charger: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
+    keys: ["chargeur", "charger", "batterie_outil", "outil", "perceuse", "visseuse", "tool_battery", "power_tool", "makita", "dewalt", "ryobi", "milwaukee", "einhell", "parkside"] },
+  ceiling_fan: { accent: "cold", threshold: 5,
+    fields: ["entity", "power", "energy", "cost", "light", "switch"],
+    keys: ["ventilateur_plafond", "ventilo_plafond", "plafond", "ceiling_fan", "ceiling", "brasseur_d_air"] },
+  generic: { accent: "active", threshold: 5,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: [] },
+  beer_tap: { accent: "cold", threshold: 30,
+    fields: ["entity", "power", "energy", "cost", "temperature", "keg_level", "pouring", "switch"],
+    keys: ["biere", "beer", "tireuse", "perfectdraft", "beertender", "pompe_a_biere", "kegerator", "draft"] },
+  av_receiver: { accent: "active", threshold: 40,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["ampli", "amplificateur", "home_cinema", "homecinema", "avr", "receiver", "denon", "yamaha", "onkyo", "marantz", "pioneer"] },
   tv: { accent: "active", threshold: 25,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["tv", "tele", "television", "televiseur", "bravia", "webos", "android_tv", "tizen", "salon_tv"] },
@@ -1350,7 +2026,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },
   wine_cooler: { accent: "cold", threshold: 15,
-    fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "zone2_temperature", "door", "switch"],
     keys: ["cave_a_vin", "cave", "vin", "wine", "cellar", "wine_cooler", "wine_fridge", "vinotheque"] },
   fridge: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "freezer_temperature", "door", "freezer_door", "switch"],
@@ -1436,6 +2112,15 @@ function fmtUnit(hass, st, digits, minDigits = 0) {
   const u = st.attributes.unit_of_measurement;
   return u ? `${fmtNum(hass, v, digits, minDigits)} ${u}` : fmtNum(hass, v, digits, minDigits);
 }
+// Énergie en kWh (Wh et MWh convertis), sans décimale au-delà de 1000 kWh ; autres unités inchangées
+function fmtEnergy(hass, st) {
+  const v = num(st); if (v === null) return null;
+  const u = st.attributes.unit_of_measurement;
+  const f = { Wh: 1e-3, kWh: 1, MWh: 1e3, GWh: 1e6 }[u];
+  if (f === undefined) return fmtUnit(hass, st, 2);
+  const k = v * f;
+  return `${fmtNum(hass, k, Math.abs(k) >= 1000 ? 0 : 2)} kWh`;
+}
 function parseRemaining(st) {
   if (!st) return null;
   const v = String(st.state);
@@ -1490,9 +2175,7 @@ class ApplianceCardBase extends HTMLElement {
   setConfig(config) {
     if (!config) throw new Error("Invalid configuration");
     if (!["entity", "power", "power_solar", "switch", "temperature", "zone_1"].some((f) => config[f])) {
-      throw new Error(lang() === "fr"
-        ? "Indique au moins `entity`, `power`, `switch` ou `temperature`."
-        : "Set at least one of `entity`, `power`, `switch` or `temperature`.");
+      throw new Error(tr(undefined, "err_need_entity"));
     }
     this._config = { ...config };
     this._kind = this.constructor.kind;
@@ -1516,10 +2199,16 @@ class ApplianceCardBase extends HTMLElement {
   getCardSize() { return 4; }
   getGridOptions() { return { columns: 12, min_columns: 6 }; }
 
+  // liste des capteurs de buse (imprimante multi-buses) ; une simple chaîne est acceptée
+  _nozzles() {
+    const n = this._config.nozzle_temperatures;
+    return (Array.isArray(n) ? n : n ? [n] : []).filter((i) => typeof i === "string" && i);
+  }
+
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "freezer_door"].map((k) => c[k]).filter(Boolean);
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "freezer_door"].map((k) => c[k]).filter(Boolean).concat(this._nozzles());
   }
 
   _build() {
@@ -1580,7 +2269,7 @@ class ApplianceCardBase extends HTMLElement {
       temp: S(c.temperature), target: S(c.target_temperature),
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
-      runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light),
+      runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -1590,6 +2279,11 @@ class ApplianceCardBase extends HTMLElement {
     if (m.tempVal == null) m.tempVal = num(m.temp);
     if (m.targetVal == null) m.targetVal = num(m.target);
     m.tempUnit = m.temp?.attributes.unit_of_measurement || hass.config?.unit_system?.temperature || "°C";
+    m.nozzles = kind === "printer_3d" ? this._nozzles() : [];
+    if (m.nozzles.length) {
+      const t = m.nozzles.map((i) => num(S(i))).filter((v) => v != null);
+      if (t.length) m.tempVal = Math.max(...t);
+    }
 
     const ref = main || sw;
     const mainIds = ["entity", "power", "power_solar", "switch", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean);
@@ -1692,6 +2386,9 @@ class ApplianceCardBase extends HTMLElement {
           const per = watts / n;
           const lv = Math.max(1, Math.min(9, Math.round(per / zp * 9)));
           [0, 3, 1, 2].slice(0, n).forEach((z) => { zl[z] = lv; });
+        } else if (watts == null && base === "running") {
+          // pas de capteur de puissance : l'état de `entity` (binary_sensor, sensor d'état "run"…) suffit pour « en marche »
+          zl[0] = 5;
         }
       } else zl = zl.map((v) => v ?? 0);
       const now = Date.now(), keep = (c.residual_minutes ?? 10) * 60000;
@@ -1744,6 +2441,44 @@ class ApplianceCardBase extends HTMLElement {
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
       m.acMode = mode && mode !== "off" ? mode : null;
       m.accent = m.status === "heating" ? "heat" : "cold";
+    } else if (kind === "fan" || kind === "ceiling_fan") {
+      const isFan = main && domainOf(c.entity) === "fan", fs = isFan ? String(main.state).toLowerCase() : "";
+      let lvl = 0, st = null;
+      if (isFan && !BAD.includes(fs)) {
+        if (fs === "on") { const p = Number(main.attributes.percentage); lvl = Number.isFinite(p) && p > 0 ? (p <= 34 ? 1 : p <= 67 ? 2 : 3) : 2; m.pct = Number.isFinite(p) ? p : null; }
+      } else if (["off", "unavailable"].includes(base)) st = base;
+      else if (watts !== null) {
+        lvl = watts > (c.high_threshold ?? 40) ? 3 : watts > (c.mid_threshold ?? 30) ? 2 : powered ? 1 : 0;
+        if (!lvl) st = watts >= (c.standby_threshold ?? 0.3) ? "standby" : "off";
+      } else lvl = ["running", "on"].includes(base) ? 2 : 0;
+      m.status = st || (lvl ? `fan_${lvl}` : "off");
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      if (kind === "fan") m.osc = isFan && main.attributes.oscillating != null ? !!main.attributes.oscillating : c.oscillating !== false;
+      else {
+        // ventilateur de plafond : lampe intégrée (entité `light`), « lumière seule » si les pales sont à l'arrêt
+        m.lights = isOn(m.light);
+        if (m.lights && m.status === "off" && base !== "unavailable") m.status = "lights";
+      }
+    } else if (kind === "beer_tap") {
+      if (["off", "unavailable"].includes(base)) m.status = base;
+      else if (isOn(m.pouring)) m.status = "pouring";
+      else if (watts !== null) m.status = watts > threshold ? "cooling" : watts >= (c.standby_threshold ?? 0.3) ? "ready" : "off";
+      else m.status = base === "running" ? "cooling" : "ready";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      if (m.keg != null && m.keg <= (c.keg_alert ?? 10) && m.status !== "off") m.alerts.push("keg_low");
+    } else if (kind === "av_receiver") {
+      const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
+      const a = isMp ? (main.attributes || {}) : {};
+      if (isMp && !BAD.includes(ms)) m.status = ["on", "playing", "idle", "buffering"].includes(ms) ? "playing" : ms === "paused" ? "paused" : ms === "standby" ? "standby" : "off";
+      else if (["off", "unavailable"].includes(base)) m.status = base;
+      else if (watts !== null) m.status = watts > threshold ? "playing" : watts >= (c.standby_threshold ?? 0.2) ? "standby" : "off";
+      else m.status = base === "running" ? "playing" : "standby";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      if (m.status === "playing" && a.is_volume_muted) m.status = "muted";
+      m.vol = a.volume_level != null ? Number(a.volume_level) : null;
+      m.source = a.source || null;
+      const maxP = c.max_power ?? 250;
+      m.amp = m.vol != null ? m.vol : (watts !== null ? Math.max(.25, Math.min(1, watts / maxP)) : .6);
     } else if (kind === "tv") {
       const dom = main ? domainOf(c.entity) : null, ms = main ? String(main.state).toLowerCase() : "";
       if (dom === "media_player" && !BAD.includes(ms)) {
@@ -1764,11 +2499,14 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "running" ? "speed1" : base === "standby" ? "off" : base;
       m.lights = m.light ? isOn(m.light) : (m.status === "lights" || ((m.status === "speed1" || m.status === "speed2") && c.light === undefined && watts !== null && watts > threshold));
     } else if (kind === "towel_dryer") {
+      // entité climate : hvac_action fait foi (heating / idle / off), hvac_mode seulement en repli
+      const isClimate = main && domainOf(c.entity) === "climate";
+      const act = isClimate ? String(main.attributes.hvac_action || "").toLowerCase() : "";
       m.radMode = modeOf(m, main, c);
       if (base === "off" || base === "unavailable") m.status = base;
-      else if (m.radMode === "off") m.status = "off";
-      else if (powered || (watts === null && base === "running" && !m.mode)) m.status = "heating";
-      else m.status = base === "standby" || isOn(sw) || m.radMode ? "at_target" : "off";
+      else if (m.radMode === "off" || act === "off" || (isClimate && main.state === "off")) m.status = "off";
+      else if (act === "heating" || powered || (watts === null && !act && base === "running" && !m.mode)) m.status = "heating";
+      else m.status = act || base === "standby" || isOn(sw) || m.radMode ? "at_target" : "off";
     } else if (kind === "server_rack") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
@@ -1778,6 +2516,12 @@ class ApplianceCardBase extends HTMLElement {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
+    } else if (kind === "tool_charger") {
+      // > seuil : en charge ; petite conso résiduelle : batterie chargée (maintien) ; sinon socle vide / veille
+      const full = m.batt != null && m.batt >= (c.full_level ?? 100);
+      if (base === "off" || base === "unavailable") m.status = base;
+      else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? 1) ? "charged" : "standby";
+      else m.status = base === "running" && !full ? "charging" : full ? "charged" : "standby";
     } else if (kind === "coffee_maker") {
       const warmT = c.warm_threshold ?? 5;
       if (["off", "unavailable"].includes(base)) m.status = base;
@@ -1790,6 +2534,8 @@ class ApplianceCardBase extends HTMLElement {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered || (watts === null && base === "running") ? "cooling" : "standby";
       if (m.tempVal != null && m.tempVal > (c.max_temperature ?? 18)) m.alerts.push("too_warm");
+      // bi-zone : seuil propre à la zone basse (vins blancs), sinon le même
+      if (m.zone2 != null && m.zone2 > (c.max_temperature_2 ?? c.max_temperature ?? 18)) m.alerts.push("too_warm");
     } else if (kind === "fridge") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered ? "cooling" : "standby";
@@ -1806,7 +2552,8 @@ class ApplianceCardBase extends HTMLElement {
       if (/rin[cç]|rinse/.test(txt)) m.phase = "rinse";
       else if (/essor|spin|centrif|essorage/.test(txt)) m.phase = "spin";
       else if (/refroid|cool|anti.?froiss|wrinkle/.test(txt)) m.phase = "cool";
-      else if (/s[eé]ch|dry/.test(txt)) m.phase = "dry";
+      // en début de mot : les clés Home Connect « laundry_care_washer_program_… » contiennent « dry »
+      else if (/(^|[^a-zà-ÿ])(s[eé]ch|dry)/.test(txt)) m.phase = "dry";
       else m.phase = kind === "dryer" ? "dry" : "wash";
     }
     if (isOn(m.door) || isOn(m.fdoor)) m.alerts.unshift("door_open");
@@ -1838,7 +2585,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -1859,7 +2606,7 @@ class ApplianceCardBase extends HTMLElement {
       return v != null ? `${Math.round(v)}°` : "ON";
     }
     if (kind === "solar") {
-      if (m.status === "night") return lang(hass) === "fr" ? "NUIT" : "NIGHT";
+      if (m.status === "night") return tr(hass, "lcd_night");
       if (m.watts == null) return "--";
       return m.watts >= 1000 ? `${(m.watts / 1000).toFixed(m.watts >= 10000 ? 0 : 1)}kW` : `${Math.round(m.watts)}W`;
     }
@@ -1882,10 +2629,9 @@ class ApplianceCardBase extends HTMLElement {
       return m.status === "standby" ? "STBY" : "OFF";
     }
     if (kind === "pellet_stove") {
-      const fr = lang(hass) === "fr";
-      if (m.status === "ignition") return fr ? "ALLUM" : "IGNIT";
-      if (m.status === "extinguishing") return fr ? "EXTIN" : "COOL";
-      if (m.status === "alarm") return fr ? "ALARM" : "ALARM";
+      if (m.status === "ignition") return tr(hass, "lcd_ignition");
+      if (m.status === "extinguishing") return tr(hass, "lcd_extinguishing");
+      if (m.status === "alarm") return "ALARM";
       if (m.status === "standby") return "ECO";
       if (m.status === "heating") return m.tempVal != null ? `${Math.round(m.tempVal)}°` : m.level != null ? `P${Math.round(m.level)}` : "ON";
       return fmtClock(hass, new Date());
@@ -1895,14 +2641,24 @@ class ApplianceCardBase extends HTMLElement {
       if (active) return m.remaining ? lcdDuration(m.remaining) : "ON";
       return fmtClock(hass, new Date());
     }
+    if (kind === "beer_tap") {
+      if (m.status === "off" || m.status === "unavailable") return "";
+      return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 1)}°` : m.status === "cooling" ? "COLD" : "READY";
+    }
+    if (kind === "av_receiver") {
+      if (["off", "unavailable", "standby"].includes(m.status)) return "";
+      if (m.status === "muted") return "MUTE";
+      if (m.status === "paused") return "PAUSE";
+      if (m.source) return String(m.source).toUpperCase().slice(0, 9);
+      return m.vol != null ? `VOL ${Math.round(m.vol * 100)}` : "ON";
+    }
     if (kind === "ac_split") {
       if (m.status === "off" || m.status === "unavailable") return "";
       return m.targetVal != null ? `${Math.round(m.targetVal)}°` : m.tempVal != null ? `${Math.round(m.tempVal)}°` : "ON";
     }
     if (kind === "coffee_maker") {
-      const fr = lang(hass) === "fr";
-      if (m.status === "brewing") return fr ? "CAFE" : "BREW";
-      if (m.status === "ready") return fr ? "PRET" : "READY";
+      if (m.status === "brewing") return tr(hass, "lcd_brewing");
+      if (m.status === "ready") return tr(hass, "lcd_ready");
       if (m.status === "off") return "OFF";
       return fmtClock(hass, new Date());
     }
@@ -1926,15 +2682,27 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging"].includes(m.status);
     $("wrap").className = [
       "wrap", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", m.acMode ? `mode-${m.acMode}` : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
+    if (kind === "av_receiver") $("wrap").style.setProperty("--amp", (m.amp ?? .6).toFixed(2));
+    if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
+    if (kind === "tool_charger") {
+      // jauge 4 LED : niveau réel si capteur, sinon remplissage en boucle pendant la charge
+      const st = m.status, lv = m.batt != null ? Math.max(0, Math.min(100, m.batt)) : null;
+      const lit = st === "charged" ? 4 : st === "charging" && lv != null ? Math.min(4, Math.floor(lv / 25)) : 0;
+      $("wrap").classList.toggle("seq", st === "charging" && lv == null);
+      this.shadowRoot.querySelectorAll(".tc-g").forEach((g, i) => {
+        g.classList.toggle("on", i < lit);
+        g.classList.toggle("next", st === "charging" && lv != null && i === lit);
+      });
+    }
     if (kind === "tv") {
       const prev = this._tvPrev, on = m.status === "screen_on";
       const scr = this.shadowRoot.querySelector(".tv-flash");
@@ -1948,6 +2716,8 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
+    const lcd2 = sr.querySelector(".lcd2");
+    if (lcd2) lcd2.textContent = m.status === "unavailable" ? "--" : m.zone2 != null ? `${fmtNum(hass, m.zone2, 0)}°` : "--°";
     if (kind === "server_rack") $("wrap").style.setProperty("--load", (m.load ?? 0.4).toFixed(2));
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
     if (kind === "radiator" || kind === "towel_dryer") {
@@ -2009,6 +2779,9 @@ class ApplianceCardBase extends HTMLElement {
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
     if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode)}`;
+    if ((kind === "fan" || kind === "ceiling_fan") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
+    if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
+    if (kind === "av_receiver" && m.source && ["playing", "paused", "muted"].includes(m.status)) statusTxt += ` · ${m.source}`;
     if (kind === "tv" && m.status === "screen_on" && m.main && domainOf(c.entity) === "media_player") {
       const a = m.main.attributes || {}, what = a.app_name || a.media_title || a.source;
       if (what) statusTxt += ` · ${what}`;
@@ -2053,6 +2826,7 @@ class ApplianceCardBase extends HTMLElement {
     // progress bar
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
+    else if (kind === "tool_charger" && m.status === "charging" && m.batt != null) pct = m.batt;
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
         const floor = kind === "water_heater" ? 10 : 20;
@@ -2086,8 +2860,15 @@ class ApplianceCardBase extends HTMLElement {
     if (kind === "chest_freezer" || kind === "drawer_freezer") {
       if (m.tempVal != null) tile("mdi:snowflake-thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, tr(hass, "temperature"), tEntity,
         m.alerts.includes("too_warm") ? "warn" : "");
+    } else if (kind === "beer_tap") {
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, tr(hass, "temperature"), tEntity);
+      if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, tr(hass, "keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
+    } else if (kind === "tool_charger") {
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, tr(hass, "battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, tr(hass, "temperature"), tEntity, m.alerts.includes("too_warm") ? "warn" : "");
+      const dual = !!c.zone2_temperature, max1 = c.max_temperature ?? 18, max2 = c.max_temperature_2 ?? max1;
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, tr(hass, dual ? "zone_top" : "temperature"), tEntity, m.tempVal > max1 ? "warn" : "");
+      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1)} ${m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, tr(hass, "zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
     } else if (kind === "fridge") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, tr(hass, "fridge_temp"), tEntity,
         m.tempVal > (c.max_temperature ?? 8) ? "warn" : "");
@@ -2103,7 +2884,13 @@ class ApplianceCardBase extends HTMLElement {
       if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, tr(hass, "humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
     } else if (kind === "printer_3d") {
       if (m.progress != null) tile("mdi:progress-check", `${fmtNum(hass, m.progress, 0)} %`, tr(hass, "progress"), c.progress);
-      if (m.tempVal != null) tile("mdi:printer-3d-nozzle-heat", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, tr(hass, "nozzle"), tEntity);
+      if (m.nozzles && m.nozzles.length) {
+        // une puce par buse : T0, T1, T2…
+        m.nozzles.forEach((id, i) => {
+          const v = num(hass.states[id]);
+          tile("mdi:printer-3d-nozzle-heat", v != null ? `${fmtNum(hass, v, 0)} ${m.tempUnit}` : "—", `T${i}`, id);
+        });
+      } else if (m.tempVal != null) tile("mdi:printer-3d-nozzle-heat", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, tr(hass, "nozzle"), tEntity);
       if (m.bedTemp != null) tile("mdi:heat-wave", `${fmtNum(hass, m.bedTemp, 0)} ${m.tempUnit}`, tr(hass, "bed"), c.bed_temperature);
     } else if (kind === "pool_pump") {
       if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, tr(hass, "water"), tEntity);
@@ -2121,12 +2908,12 @@ class ApplianceCardBase extends HTMLElement {
     if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", fmtDuration(m.remaining), tr(hass, "remaining"), c.remaining);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
-    if (m.pw) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", tr(hass, solar ? "production" : dual ? "grid" : "power"), c.power);
+    if (m.pw && c.show_power !== false) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", tr(hass, solar ? "production" : dual ? "grid" : "power"), c.power);
     if (m.pwS) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", tr(hass, "solar_surplus"), c.power_solar);
-    if (m.energy) tile("mdi:lightning-bolt-circle", fmtUnit(hass, m.energy, 2) ?? "—", tr(hass, solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
-    if (m.energyS) tile("mdi:solar-power-variant", fmtUnit(hass, m.energyS, 2) ?? "—", tr(hass, "energy_solar"), c.energy_solar);
+    if (m.energy) tile("mdi:lightning-bolt-circle", fmtEnergy(hass, m.energy) ?? "—", tr(hass, solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
+    if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", tr(hass, "energy_solar"), c.energy_solar);
     if (m.cost) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", tr(hass, solar ? "savings" : "cost"), c.cost);
-    if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, lang(hass) === "fr" ? "de la crête" : "of peak", c.power);
+    if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, tr(hass, "of_peak"), c.power);
     $("stats").innerHTML = tiles.join("");
     $("stats").style.display = tiles.length ? "" : "none";
   }
@@ -2155,6 +2942,10 @@ const SEL = {
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
   light: { entity: { domain: ["light", "switch", "binary_sensor", "input_boolean"] } },
+  zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
+  battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  keg_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  pouring: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
   bed_temperature: { entity: { domain: ["sensor"], device_class: "temperature" } },
   humidity: { entity: { domain: ["sensor"], device_class: "humidity" } },
   mode: { entity: { domain: ["select", "input_select", "sensor", "climate"] } },
@@ -2179,16 +2970,39 @@ function buildForm(kind) {
           ] : []),
           ...(kind === "wine_cooler" ? [
             { name: "max_temperature", selector: { number: { min: 5, max: 25, step: 0.5, mode: "box" } } },
+            { name: "max_temperature_2", selector: { number: { min: 3, max: 25, step: 0.5, mode: "box" } } },
           ] : []),
           ...(kind === "fridge" ? [
+            { name: "style", selector: { select: { mode: "dropdown", options: [
+              { value: "top", label: "Congélateur en haut / Top freezer" }, { value: "bottom", label: "Congélateur en bas / Bottom freezer" },
+              { value: "french", label: "French door" }, { value: "american", label: "Américain / Side-by-side" }] } } },
             { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
           ] : []),
           { name: "animations", selector: { boolean: {} }, default: true },
-          ...(kind === "printer_3d" ? [{ name: "filament_color", selector: { text: {} } }] : []),
+          ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }] : []),
+          ...(kind === "printer_3d" ? [
+            { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
+            { name: "filament_color", selector: { text: {} } },
+          ] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
               { value: "auto", label: "Auto (saison) / Auto (season)" }, { value: "cool", label: "Climatisation / Cooling" }, { value: "heat", label: "Chauffage / Heating" }] } } },
+          ] : []),
+          ...(kind === "ceiling_fan" ? [
+            { name: "mid_threshold", selector: { number: { min: 5, max: 200, step: 1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "high_threshold", selector: { number: { min: 5, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "fan" ? [
+            { name: "oscillating", selector: { boolean: {} }, default: true },
+            { name: "mid_threshold", selector: { number: { min: 5, max: 200, step: 1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "high_threshold", selector: { number: { min: 5, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "tool_charger" ? [
+            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "av_receiver" ? [
+            { name: "max_power", selector: { number: { min: 50, max: 2000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(kind === "range_hood" ? [
             { name: "high_threshold", selector: { number: { min: 40, max: 600, step: 5, mode: "box", unit_of_measurement: "W" } } },
@@ -2198,6 +3012,7 @@ function buildForm(kind) {
               { value: "filtre", label: "Filtre / Drip" }, { value: "dosette", label: "Dosettes / Pods" }, { value: "expresso", label: "Expresso / Bean-to-cup" }] } } },
             { name: "warm_threshold", selector: { number: { min: 0, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
+          { name: "show_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
@@ -2229,7 +3044,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -2249,7 +3064,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : kind === "tv" ? pick((i) => i.startsWith("media_player.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : kind === "tv" || kind === "av_receiver" ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -2258,11 +3073,13 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "wine_cooler"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
-  if (temp && ["fridge", "water_heater", "oven", "air_fryer", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
+  if (temp && ["fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
+  const batt = kind === "tool_charger" ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
+  if (batt) cfg.battery_level = batt;
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;
 }
@@ -2334,6 +3151,15 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .top { grid-template-areas: "illus head" "stats stats"; }
   .illus { width: var(--appliance-illustration-size-small, 84px); }
   .stats { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); }
+}
+/* carte très étroite (ex. 3 cartes côte à côte) : illustration au-dessus, titre et statut centrés et sur plusieurs lignes */
+@container (max-width: 230px) {
+  .top { grid-template-columns: minmax(0, 1fr); grid-template-areas: "illus" "head" "stats"; justify-items: center; }
+  .head { flex-direction: column; align-items: center; text-align: center; width: 100%; }
+  .info { align-items: center; width: 100%; }
+  .name { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+  .status { justify-content: center; flex-wrap: wrap; }
+  .status span:last-child { white-space: normal; overflow: visible; text-overflow: clip; }
 }
 
 /* ---------- illustration: shared ---------- */
@@ -2620,6 +3446,18 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .fz-door, .fr-door { transform-origin: 26px 0; transition: transform .6s cubic-bezier(.3,.7,.3,1); }
 .door-open .fr-door { transform: scaleX(.16) skewY(-6deg); }
 .fz-open .fz-door { transform: scaleX(.16) skewY(-6deg); }
+/* variantes : French door / américain (porte droite pivotant à droite), tiroirs de congélation */
+.k-fridge .fr-l { transform-origin: 16px 0; }
+.k-fridge .fz-l { transform-origin: 12px 0; }
+.k-fridge .fr-r { transform-origin: 108px 0; }
+.door-open .fr-r { transform: scaleX(.16) skewY(6deg); }
+.fzd { transform-box: view-box; transform-origin: 60px 96px; transition: transform .6s ease, filter .6s; }
+.fz-open .fzd-pull { transform: translateY(5px) scale(1.06); filter: drop-shadow(0 3px 3px rgba(0,0,0,.25)); }
+/* distributeur glaçons / eau du modèle américain */
+.ib-light { opacity: .15; transition: opacity .6s; }
+.k-fridge.st-cooling .ib-light { opacity: .9; animation: ac-pulse 3s ease-in-out infinite; }
+.ib-drop { opacity: 0; }
+.k-fridge.st-cooling .ib-drop { animation: ac-fall 2.6s ease-in infinite; }
 .flight { transition: opacity .4s; } .door-open .flight { opacity: .35; }
 .flake { stroke: var(--ac-cold); transform-origin: 39.5px 60px; }
 .k-fridge.st-cooling .flake, .k-chest_freezer.st-cooling .flake, .k-drawer_freezer.st-cooling .flake { animation: ac-pulse 2.4s ease-in-out infinite; }
@@ -2791,6 +3629,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-heat_pump.st-cooling .hp-led, .k-heat_pump.st-heating .hp-led, .k-heat_pump.st-ac_dry .hp-led, .k-heat_pump.st-defrost .hp-led { fill: #3ddc84; }
 .k-heat_pump.st-at_target .hp-led, .k-heat_pump.st-ac_fan .hp-led { fill: #ffd76a; }
 @keyframes hp-wave { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(1.55); } }
+
 /* ---------- towel dryer ---------- */
 .td-glow { opacity: 0; transition: opacity .8s; }
 .td-glow2 { mix-blend-mode: multiply; }
@@ -2882,6 +3721,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-towel_dryer.mode-eco.st-heating .td-glow { opacity: .55; } .k-towel_dryer.mode-frost.st-heating .td-glow { opacity: .3; }
 .k-towel_dryer.mode-frost .lcd { fill: #6fd8ff; }
 .wrap.solar-heat { --c: var(--ac-accent, #f5b301); }
+
 /* ---------- wine cooler ---------- */
 .wn-led { fill: #5a636d; transition: fill .3s; }
 .k-wine_cooler.st-cooling .wn-led { fill: #38d9ff; filter: drop-shadow(0 0 1.4px #38d9ff); animation: ac-pulse 2.4s ease-in-out infinite; }
@@ -2901,10 +3741,163 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .wn-door { transform-box: view-box; transform-origin: 26px 76px; transition: transform .6s cubic-bezier(.3,.7,.3,1); }
 .door-open .wn-door { transform: scaleX(.2) skewY(-5deg); }
 .k-wine_cooler .lcd { fill: #6fd8ff; }
+/* bi-zone : zone basse (blancs) plus froide, voile bleuté */
+.wn-cold { opacity: 0; transition: opacity .8s; }
+.k-wine_cooler.st-standby .wn-cold { opacity: .07; }
+.k-wine_cooler.st-cooling .wn-cold { opacity: .14; animation: wn-chill 4s ease-in-out infinite; }
+@keyframes wn-chill { 0%, 100% { opacity: .08; } 50% { opacity: .18; } }
 .k-wine_cooler.st-off .lcd { fill: #24404f; }
 .k-wine_cooler.warm .lcd { fill: var(--ac-alert); }
 .no-anim *, .no-anim { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+
+/* ---------- beer tap ---------- */
+.k-beer_tap svg { overflow: visible; }
+.k-beer_tap .lcd { fill: #24404f; }
+.k-beer_tap:not(.st-off):not(.st-unavailable) .lcd { fill: #6fd8ff; }
+.bt-flake { opacity: .25; transition: opacity .4s; }
+.k-beer_tap.st-cooling .bt-flake { opacity: 1; animation: ac-pulse 1.8s ease-in-out infinite; }
+.k-beer_tap.st-ready .bt-flake, .k-beer_tap.st-pouring .bt-flake { opacity: .8; }
+.bt-mist circle { fill: #bfe6ff; opacity: 0; }
+.k-beer_tap.st-cooling .bt-mist circle { animation: ac-mist 3s ease-out infinite; }
+.bt-mist circle:nth-child(2) { animation-delay: 1s !important; } .bt-mist circle:nth-child(3) { animation-delay: 2s !important; }
+.bt-keg { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(var(--keg, .7)); transition: transform 1s; }
+.bt-handle { transform-box: view-box; transform-origin: 65.5px 10px; transition: transform .5s cubic-bezier(.3,1.4,.5,1); }
+.k-beer_tap.st-pouring .bt-handle { transform: rotate(32deg); }
+.bt-stream { fill: none; stroke: #f0b23a; stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 5 2; opacity: 0; transition: opacity .3s; }
+.k-beer_tap.st-pouring .bt-stream { opacity: .95; animation: cf-flow .35s linear infinite; }
+.bt-beer { transform-box: view-box; transform-origin: 98px 118px; transform: scaleY(0); transition: transform 1s ease; }
+.k-beer_tap.st-ready .bt-beer, .k-beer_tap.st-cooling .bt-beer { transform: scaleY(.95); }
+.k-beer_tap.st-pouring .bt-beer { animation: bt-fill 6s cubic-bezier(.2,.6,.4,1) forwards; }
+.bt-bubbles circle { opacity: 0; }
+.k-beer_tap:not(.st-off) .bt-bubbles circle { animation: bt-bub 2.2s ease-in infinite; }
+.bt-bubbles circle:nth-child(2) { animation-delay: .6s !important; } .bt-bubbles circle:nth-child(3) { animation-delay: 1.1s !important; } .bt-bubbles circle:nth-child(4) { animation-delay: 1.6s !important; }
+.bt-drops circle { opacity: 0; transition: opacity 1s; }
+.k-beer_tap.st-cooling .bt-drops circle, .k-beer_tap.st-ready .bt-drops circle { opacity: .9; animation: ac-drip 4s ease-in infinite; }
+.k-beer_tap.st-off .bt-beer { transform: scaleY(0); }
+@keyframes bt-fill { from { transform: scaleY(0); } to { transform: scaleY(.95); } }
+@keyframes bt-bub { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-26px); } }
+
+/* ---------- AV receiver ---------- */
+.k-av_receiver svg { overflow: visible; }
+.k-av_receiver .lcd { fill: #24404f; }
+.k-av_receiver.st-playing .lcd, .k-av_receiver.st-paused .lcd { fill: #38d9ff; }
+.k-av_receiver.st-muted .lcd { fill: #ff8a3d; }
+.av-pwr { fill: #3a2222; transition: fill .3s; }
+.k-av_receiver.st-standby .av-pwr { fill: #ff3b30; }
+.k-av_receiver.st-playing .av-pwr, .k-av_receiver.st-muted .av-pwr, .k-av_receiver.st-paused .av-pwr { fill: #38d9ff; }
+.av-eq rect { fill: #38d9ff; opacity: .12; transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(.15); transition: opacity .4s; }
+.k-av_receiver.st-playing .av-eq rect { opacity: .9; animation: av-eq .9s ease-in-out infinite alternate; }
+.k-av_receiver.st-paused .av-eq rect, .k-av_receiver.st-muted .av-eq rect { opacity: .5; }
+.av-eq rect:nth-child(2) { animation-duration: .6s !important; } .av-eq rect:nth-child(3) { animation-duration: .75s !important; } .av-eq rect:nth-child(4) { animation-duration: .5s !important; }
+.av-eq rect:nth-child(5) { animation-duration: .85s !important; } .av-eq rect:nth-child(6) { animation-duration: .55s !important; } .av-eq rect:nth-child(7) { animation-duration: .7s !important; }
+.av-eq rect:nth-child(8) { animation-duration: .45s !important; } .av-eq rect:nth-child(9) { animation-duration: .8s !important; } .av-eq rect:nth-child(10) { animation-duration: .65s !important; }
+.av-ring { opacity: 0; transition: opacity .6s; }
+.k-av_receiver.st-playing .av-ring { opacity: calc(.4 + var(--amp, .6) * .6); animation: ac-glow 2.4s ease-in-out infinite; }
+.k-av_receiver.st-muted .av-ring, .k-av_receiver.st-paused .av-ring { opacity: .35; }
+.av-knob { transform-box: view-box; transform-origin: 99px 74px; transform: rotate(calc(-135deg + var(--amp, .6) * 270deg)); transition: transform .8s ease; }
+.k-av_receiver.st-off .av-knob, .k-av_receiver.st-standby .av-knob { transform: rotate(-135deg); }
+.av-waves path { stroke: #38d9ff; stroke-width: 1.6; opacity: 0; }
+.k-av_receiver.st-playing .av-waves path { animation: av-wave calc(1.6s - var(--amp, .6) * .8s) ease-out infinite; }
+.av-waves path:nth-child(2), .av-waves path:nth-child(4) { animation-delay: .4s !important; }
+.av-notes { opacity: 0; }
+.k-av_receiver.st-playing .av-notes { animation: av-notes 3.2s ease-in-out infinite; }
+@keyframes av-eq { from { transform: scaleY(.15); } to { transform: scaleY(calc(.3 + var(--amp, .6) * .7)); } }
+@keyframes av-wave { 0% { opacity: 0; } 30% { opacity: .85; } 100% { opacity: 0; } }
+@keyframes av-notes { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }
+
+/* ---------- fan ---------- */
+.k-fan svg { overflow: visible; }
+.k-fan { --fspd: 1s; }
+.k-fan.st-fan_1 { --fspd: .55s; } .k-fan.st-fan_2 { --fspd: .28s; } .k-fan.st-fan_3 { --fspd: .16s; }
+.fn-blades { transform-box: view-box; transform-origin: 60px 52px; }
+.k-fan.st-fan_1 .fn-blades, .k-fan.st-fan_2 .fn-blades, .k-fan.st-fan_3 .fn-blades { animation: ac-rot var(--fspd) linear infinite; }
+.fn-blur { opacity: 0; transition: opacity .6s; }
+.k-fan.st-fan_2 .fn-blur { opacity: .12; } .k-fan.st-fan_3 .fn-blur { opacity: .2; }
+.fn-head { transform-box: view-box; transform-origin: 60px 80px; }
+.k-fan.osc.st-fan_1 .fn-head, .k-fan.osc.st-fan_2 .fn-head, .k-fan.osc.st-fan_3 .fn-head { animation: fn-osc 7s ease-in-out infinite; }
+.fn-air path { stroke: #bfe3f7; stroke-width: 1.8; opacity: 0; stroke-dasharray: 4 6; }
+.k-fan.st-fan_1 .fn-air path { opacity: .45; animation: ac-blow 1.4s linear infinite; }
+.k-fan.st-fan_2 .fn-air path, .k-fan.st-fan_3 .fn-air path { opacity: .8; animation: ac-blow .7s linear infinite; }
+.fn-air path:nth-child(2), .fn-air path:nth-child(4) { animation-delay: -.3s !important; }
+.fn-ribbon { transform-box: view-box; transform-origin: 93px 45px; }
+.k-fan.st-fan_1 .fn-ribbon { animation: fn-flap .5s ease-in-out infinite alternate; }
+.k-fan.st-fan_2 .fn-ribbon, .k-fan.st-fan_3 .fn-ribbon { animation: fn-flap .18s ease-in-out infinite alternate; }
+.fn-led { fill: #3a424b; transition: fill .3s; }
+.k-fan.st-fan_1 .l1, .k-fan.st-fan_2 .l1, .k-fan.st-fan_2 .l2, .k-fan.st-fan_3 .fn-led { fill: #38d9ff; }
+.k-fan.st-standby .l1 { fill: #ff8a3d; }
+@keyframes fn-osc { 0%, 100% { transform: scaleX(1) translateX(0); } 25% { transform: scaleX(.82) translateX(-4px); } 50% { transform: scaleX(1) translateX(0); } 75% { transform: scaleX(.82) translateX(4px); } }
+@keyframes fn-flap { from { transform: rotate(-12deg) scaleY(.8); } to { transform: rotate(14deg) scaleY(1.1); } }
+
+/* ---------- generic (image perso) ---------- */
+.k-generic svg { overflow: visible; }
+.gn-img { transition: opacity .4s, filter .4s; }
+.k-generic.st-off .gn-img, .k-generic.st-unavailable .gn-img { opacity: .45; filter: grayscale(1); }
+.k-generic.st-idle .gn-img, .k-generic.st-standby .gn-img { opacity: .75; filter: grayscale(.5); }
+.k-generic.active .gn-img { filter: drop-shadow(0 0 4px var(--c)); animation: gn-glow 2.6s ease-in-out infinite; }
+@keyframes gn-glow { 0%, 100% { filter: drop-shadow(0 0 3px var(--c)); } 50% { filter: drop-shadow(0 0 8px var(--c)); } }
+.k-generic .gn-empty { opacity: .6; }
+
+/* ---------- tool battery charger ---------- */
+.k-tool_charger svg { overflow: visible; }
+/* voyants du socle */
+.tc-led, .tc-err { fill: #3a424b; transition: fill .3s; }
+.k-tool_charger.st-charging .tc-led { fill: #43e08a; filter: drop-shadow(0 0 1.4px #43e08a); animation: tc-blink 1.2s ease-in-out infinite; }
+.k-tool_charger.st-charged .tc-led { fill: #43e08a; filter: drop-shadow(0 0 1.4px #43e08a); }
+.k-tool_charger.st-standby .tc-led { fill: #2f7a50; }
+.k-tool_charger.alert .tc-err { fill: var(--ac-alert, #e5484d); filter: drop-shadow(0 0 1.2px #e5484d); }
+/* jauge 4 LED de la batterie : allumées selon le capteur de niveau, sinon remplissage en boucle */
+.tc-g { fill: #2a3036; transition: fill .4s; }
+.tc-g.on { fill: #43e08a; filter: drop-shadow(0 0 .8px #43e08a); }
+.tc-g.next { animation: tc-g-blink 1.2s ease-in-out infinite; }
+.k-tool_charger.seq .tc-g1 { animation: tc-g1 4s linear infinite; } .k-tool_charger.seq .tc-g2 { animation: tc-g2 4s linear infinite; }
+.k-tool_charger.seq .tc-g3 { animation: tc-g3 4s linear infinite; } .k-tool_charger.seq .tc-g4 { animation: tc-g4 4s linear infinite; }
+/* éclair et halo pendant la charge */
+.tc-bolt { fill: #43e08a; opacity: 0; transition: opacity .4s; }
+.k-tool_charger.st-charging .tc-bolt { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
+.tc-glow { opacity: 0; transition: opacity .8s; }
+.k-tool_charger.st-charging .tc-glow { opacity: .9; animation: tc-breathe 2.4s ease-in-out infinite; }
+.k-tool_charger.st-charged .tc-glow { opacity: .35; }
+/* énergie qui circule dans le câble */
+.tc-flow { opacity: 0; transition: opacity .5s; }
+.k-tool_charger.st-charging .tc-flow { opacity: .85; animation: tc-flow 1.1s linear infinite; }
+@keyframes tc-flow { to { stroke-dashoffset: -12; } }
+@keyframes tc-blink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+@keyframes tc-breathe { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+@keyframes tc-g-blink { 0%, 100% { fill: #2a3036; } 50% { fill: #43e08a; } }
+/* chaque LED s'allume à son tour, puis toutes s'éteignent ensemble : 0 → 4 barres */
+@keyframes tc-g1 { 0%, 8% { fill: #2a3036; } 12%, 88% { fill: #43e08a; } 92%, 100% { fill: #2a3036; } }
+@keyframes tc-g2 { 0%, 28% { fill: #2a3036; } 32%, 88% { fill: #43e08a; } 92%, 100% { fill: #2a3036; } }
+@keyframes tc-g3 { 0%, 48% { fill: #2a3036; } 52%, 88% { fill: #43e08a; } 92%, 100% { fill: #2a3036; } }
+@keyframes tc-g4 { 0%, 68% { fill: #2a3036; } 72%, 88% { fill: #43e08a; } 92%, 100% { fill: #2a3036; } }
+
+/* ---------- ceiling fan ---------- */
+.k-ceiling_fan svg { overflow: visible; }
+.k-ceiling_fan { --cspd: 1s; }
+.k-ceiling_fan.st-fan_1 { --cspd: 1.1s; } .k-ceiling_fan.st-fan_2 { --cspd: .55s; } .k-ceiling_fan.st-fan_3 { --cspd: .3s; }
+/* les pales tournent dans le disque aplati : centre de leur boîte = l'axe */
+.cf-blades { transform-box: fill-box; transform-origin: center; }
+.k-ceiling_fan.st-fan_1 .cf-blades, .k-ceiling_fan.st-fan_2 .cf-blades, .k-ceiling_fan.st-fan_3 .cf-blades { animation: ac-rot var(--cspd) linear infinite; }
+.cf-blur { opacity: 0; transition: opacity .6s; }
+.k-ceiling_fan.st-fan_2 .cf-blur { opacity: .06; } .k-ceiling_fan.st-fan_3 .cf-blur { opacity: .11; }
+/* air brassé vers le bas */
+.cf-air path { stroke: #bfe3f7; stroke-width: 1.6; opacity: 0; stroke-dasharray: 4 7; }
+.k-ceiling_fan.st-fan_1 .cf-air path { opacity: .4; animation: cf-down 1.6s linear infinite; }
+.k-ceiling_fan.st-fan_2 .cf-air path, .k-ceiling_fan.st-fan_3 .cf-air path { opacity: .75; animation: cf-down .8s linear infinite; }
+.cf-air path:nth-child(2), .cf-air path:nth-child(4) { animation-delay: -.4s !important; }
+/* chaînettes qui se balancent */
+.cf-chain { transform-box: view-box; }
+.cf-chain.c1 { transform-origin: 47px 44px; } .cf-chain.c2 { transform-origin: 73px 44px; }
+.k-ceiling_fan.st-fan_1 .cf-chain { animation: cf-sway 2.4s ease-in-out infinite; }
+.k-ceiling_fan.st-fan_2 .cf-chain, .k-ceiling_fan.st-fan_3 .cf-chain { animation: cf-sway 1.2s ease-in-out infinite; }
+.cf-chain.c2 { animation-delay: -.6s !important; }
+/* lampe */
+.cf-glass { transition: fill .4s, filter .4s; }
+.k-ceiling_fan.lights-on .cf-glass { fill: #fff6d5; filter: drop-shadow(0 0 3px #ffe9a0); }
+.cf-beam { opacity: 0; transition: opacity .6s; }
+.k-ceiling_fan.lights-on .cf-beam { opacity: 1; }
+@keyframes cf-down { to { stroke-dashoffset: -22; } }
+@keyframes cf-sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
 `;
 
 /* ------------------------------------------------------------------ */
@@ -2933,16 +3926,20 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-aquarium-card — carte Lovelace aquarium animé (puissance, kWh, température, coût)
  * type: custom:appliance-aquarium-card
  */
 const I18N_AQUARIUM = {
-  fr: { power: 'Puissance', energy: 'Énergie', temp: 'Eau', cost: 'Coût', name: 'Aquarium', alert: 'Température hors plage', unavailable: 'Indisponible' },
+fr: { power: 'Puissance', energy: 'Énergie', temp: 'Eau', cost: 'Coût', name: 'Aquarium', alert: 'Température hors plage', unavailable: 'Indisponible' },
   en: { power: 'Power', energy: 'Energy', temp: 'Water', cost: 'Cost', name: 'Aquarium', alert: 'Temperature out of range', unavailable: 'Unavailable' },
   it: { power: 'Potenza', energy: 'Energia', temp: 'Acqua', cost: 'Costo', name: 'Acquario', alert: 'Temperatura fuori intervallo', unavailable: 'Non disponibile' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class ApplianceAquariumCard extends HTMLElement {
   static getStubConfig() {
@@ -2965,12 +3962,12 @@ class ApplianceAquariumCard extends HTMLElement {
           { name: 'temp_max', selector: { number: { min: 0, max: 40, step: 0.5, mode: 'box' } } },
         ] },
         { type: 'grid', name: '', schema: [
-          { name: 'show_power', selector: { boolean: {} } },
-          { name: 'show_energy', selector: { boolean: {} } },
-          { name: 'show_temperature', selector: { boolean: {} } },
-          { name: 'show_cost', selector: { boolean: {} } },
+          { name: 'show_power', selector: { boolean: {} }, default: true },
+          { name: 'show_energy', selector: { boolean: {} }, default: true },
+          { name: 'show_temperature', selector: { boolean: {} }, default: true },
+          { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_AQUARIUM) } } },
       ],
     };
   }
@@ -2978,7 +3975,7 @@ class ApplianceAquariumCard extends HTMLElement {
   setConfig(config) {
     this._config = {
       show_power: true, show_energy: true, show_temperature: true, show_cost: true,
-      temp_min: 24, temp_max: 27, price_per_kwh: 0.2, max_power: 200, language: 'fr',
+      temp_min: 24, temp_max: 27, price_per_kwh: 0.2, max_power: 200,
       ...config,
     };
     this._built = false;
@@ -2986,13 +3983,18 @@ class ApplianceAquariumCard extends HTMLElement {
   }
 
   set hass(hass) {
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config && (this._config.language || lang(hass));
+    if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
+   
     this._hass = hass;
     this._update();
   }
 
   getCardSize() { return 5; }
 
-  _t(k) { return (I18N_AQUARIUM[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_AQUARIUM.fr)[k]; }
+_t(k) { return (I18N_AQUARIUM[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_AQUARIUM.fr)[k]; }
+
 
   _build() {
     const c = this._config;
@@ -3028,7 +4030,7 @@ class ApplianceAquariumCard extends HTMLElement {
       .title { font-weight:600; font-size:1.05em; margin:0 4px 8px; display:flex; justify-content:space-between; align-items:center; }
       .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
       .alert .badge { display:inline-block; }
-      svg { width:100%; height:auto; display:block; border-radius:10px; }
+      svg { width:100%; height:auto; display:block; border-radius:10px; transform:scale(0.8); transform-origin:top center; }
       .tint { fill:var(--water, #2a8fd6); opacity:.45; transition:fill 1.5s; }
       .night-overlay { fill:#050b24; opacity:0; transition:opacity 1.2s; }
       .night .night-overlay { opacity:.6; }
@@ -3054,7 +4056,7 @@ class ApplianceAquariumCard extends HTMLElement {
       @keyframes blink { 50% { opacity:.35 } }
     </style>
     <ha-card>
-      <div class="title"><span id="name">${c.name || this._t('name')}</span><span class="badge" id="badge">${this._t('alert')}</span></div>
+      <div class="title"><span id="name">${esc(c.name || this._t('name'))}</span><span class="badge" id="badge">${this._t('alert')}</span></div>
       <svg viewBox="0 0 320 200" id="tank">
         <defs>
           <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d8cf0"/><stop offset="1" stop-color="#0b4fb8"/></linearGradient>
@@ -3138,7 +4140,7 @@ class ApplianceAquariumCard extends HTMLElement {
     if (c.show_temperature) items.push(['t', this._t('temp'), fmt(temp, 1, '°C')]);
     if (c.show_cost) items.push(['c', this._t('cost'), fmt(cost, 2, '€')]);
     root.getElementById('stats').innerHTML = items.map(([k, l, v]) =>
-      `<div class="stat ${k}"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+      `<div class="stat ${k}"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 
@@ -3152,16 +4154,22 @@ window.customCards.push({ type: 'appliance-aquarium-card', name: 'Aquarium Card'
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-linky-card — compteur Linky animé (écran LCD, jauge vs puissance souscrite, index HP/HC)
  * type: custom:appliance-linky-card
  */
 const I18N_LINKY = {
-  fr: { power: 'PUISSANCE', hp: 'INDEX HP', hc: 'INDEX HC', tariff: 'TARIF EN COURS', cost: 'COÛT JOUR', subscribed: 'Souscrite', name: 'Linky', conso: 'conso', alert: 'Dépassement' },
+fr: { power: 'PUISSANCE', hp: 'INDEX HP', hc: 'INDEX HC', tariff: 'TARIF EN COURS', cost: 'COÛT JOUR', subscribed: 'Souscrite', name: 'Linky', conso: 'conso', alert: 'Dépassement' },
   en: { power: 'POWER', hp: 'PEAK INDEX', hc: 'OFF-PEAK INDEX', tariff: 'CURRENT TARIFF', cost: 'COST TODAY', subscribed: 'Subscribed', name: 'Linky', conso: 'usage', alert: 'Overload' },
   it: { power: 'POTENZA', hp: 'INDICE F1', hc: 'INDICE F2', tariff: 'TARIFFA ATTUALE', cost: 'COSTO OGGI', subscribed: 'Impegnata', name: 'Contatore Linky', conso: 'consumo', alert: 'Sovraccarico' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+// Aiguilles L1 / L2 / L3 (mode « needles ») : couleurs distinctes du vert / orange / rouge de la jauge
+const PHASE_COLORS = ['#1e88e5', '#8e24aa', '#00897b'];
 
 class ApplianceLinkyCard extends HTMLElement {
   static getStubConfig() {
@@ -3173,40 +4181,60 @@ class ApplianceLinkyCard extends HTMLElement {
       schema: [
         { name: 'name', selector: { text: {} } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor' } } },
+        { name: 'entity_active_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
+        { type: 'grid', name: '', schema: [
+          { name: 'entity_power_l1', selector: { entity: { domain: 'sensor' } } },
+          { name: 'entity_power_l2', selector: { entity: { domain: 'sensor' } } },
+          { name: 'entity_power_l3', selector: { entity: { domain: 'sensor' } } },
+        ] },
+        { name: 'phase_gauge', selector: { select: { mode: 'dropdown', options: ['needles', 'cycle', 'max'] } }, default: 'needles' },
         { name: 'entity_hp', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_hc', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
+        // Plusieurs index de soutirage (Tempo : 6, semaine/week-end : 4…) : [{ entity, name }], remplace HP/HC
+        { name: 'indexes', selector: { object: {} } },
+        { name: 'entity_injection', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
+        { name: 'entity_power_injection', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_tariff', selector: { entity: { domain: ['sensor', 'select'] } } },
         { name: 'entity_cost', selector: { entity: { domain: 'sensor' } } },
         { name: 'subscribed_power', selector: { number: { min: 3, max: 36, step: 1, mode: 'box', unit_of_measurement: 'kVA' } } },
         { name: 'hc_ranges', selector: { text: {} } },
         { type: 'grid', name: '', schema: [
-          { name: 'show_gauge', selector: { boolean: {} } },
-          { name: 'show_index', selector: { boolean: {} } },
-          { name: 'show_tariff', selector: { boolean: {} } },
-          { name: 'show_cost', selector: { boolean: {} } },
+          { name: 'show_gauge', selector: { boolean: {} }, default: true },
+          { name: 'show_phases', selector: { boolean: {} }, default: true },
+          { name: 'show_index', selector: { boolean: {} }, default: true },
+          { name: 'show_injection', selector: { boolean: {} }, default: true },
+          { name: 'show_tariff', selector: { boolean: {} }, default: true },
+          { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_LINKY) } } },
       ],
     };
   }
 
   setConfig(config) {
     this._config = {
-      show_gauge: true, show_index: true, show_tariff: true, show_cost: true,
-      subscribed_power: 9, hc_ranges: '', language: 'fr', ...config,
+      show_gauge: true, show_phases: true, show_index: true, show_injection: true, show_tariff: true, show_cost: true,
+      phase_gauge: 'needles', subscribed_power: 9, hc_ranges: '', ...config,
     };
     this._built = false;
     this._build();
   }
 
-  set hass(hass) { this._hass = hass; this._update(); }
+  set hass(hass) {
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config && (this._config.language || lang(hass));
+    if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
+    this._hass = hass; this._update(); }
   getCardSize() { return 5; }
-  _t(k) { return (I18N_LINKY[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_LINKY.fr)[k]; }
+_t(k) { return (I18N_LINKY[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_LINKY.fr)[k]; }
+
 
   connectedCallback() {
-    // Défilement des pages de l'écran LCD toutes les 3 s
+    // Défilement des pages de l'écran LCD toutes les 3 s (et des phases, en mode jauge « cycle »)
     this._timer = setInterval(() => {
       this._page = (this._page || 0) + 1; this._renderLcd();
+      this._cycle = (this._cycle || 0) + 1;
+      if (this._tri && this._config.phase_gauge === 'cycle') this._update();
       const b = this.shadowRoot && this.shadowRoot.getElementById('b2');
       if (b) { b.classList.add('press'); setTimeout(() => b.classList.remove('press'), 250); }
     }, 3000);
@@ -3242,14 +4270,23 @@ class ApplianceLinkyCard extends HTMLElement {
       .leds { display:flex; justify-content:center; gap:14px; margin-top:8px; font-size:.55em; letter-spacing:.06em; color:#3b4a08; }
       .led { width:9px; height:9px; border-radius:50%; background:#5a2a2a; margin:0 auto 2px; }
       .led.conso { background:#ff3b30; box-shadow:0 0 8px #ff3b30; animation:pulse var(--pulse,2s) infinite; }
-      .led.hc { background:#ffb300; box-shadow:0 0 8px #ffb300; } .led.hp { background:#6b5a2a; }
+      .led.hc { background:#ffb300; box-shadow:0 0 8px #ffb300; } .led.hp { background:#f4511e; box-shadow:0 0 8px #f4511e; }
+      .led.prod { background:#2a4a2a; } .led.prod.on { background:#43a047; box-shadow:0 0 8px #43a047; }
       .gauge { flex:1; min-width:170px; max-width:260px; }
-      .gauge svg { width:100%; display:block; }
+      .gauge svg { width:100%; display:block; transform:scale(0.8); transform-origin:top center; }
       .arc-bg { fill:none; stroke:rgba(127,127,127,.25); stroke-width:12; stroke-linecap:round; }
       .arc { fill:none; stroke:var(--gc,#43a047); stroke-width:12; stroke-linecap:round; transition:stroke-dashoffset 1s ease, stroke .6s; }
       .needle { transform-origin:100px 100px; transition:transform 1s cubic-bezier(.3,1.4,.5,1); stroke:var(--primary-text-color,#223); stroke-width:3; stroke-linecap:round; }
       .gtxt { text-anchor:middle; font-size:15px; font-weight:700; fill:var(--primary-text-color,#223); }
       .gsub { text-align:center; font-size:.7em; opacity:.65; }
+      .gact { text-align:center; font-size:.8em; font-weight:600; margin-top:2px; }
+      /* Triphasé : une barre par phase, pleine à 1/3 de la puissance souscrite */
+      .phases { margin-top:6px; display:grid; grid-template-columns:auto 1fr auto; gap:3px 6px; align-items:center; font-size:.7em; }
+      .phases .bar { height:6px; border-radius:3px; background:rgba(127,127,127,.25); overflow:hidden; }
+      .phases .bar i { display:block; height:100%; width:0; border-radius:3px; background:#43a047; transition:width 1s ease, background .6s; }
+      .phases .pv { text-align:right; font-variant-numeric:tabular-nums; opacity:.8; }
+      .phases .cur { font-weight:700; }
+      .needle.pn { stroke-width:2.5; }
       .over .arc { animation:pulse .6s infinite; }
       .badge { text-align:center; font-size:.8em; font-weight:700; margin-top:4px; color:#e53935; display:none; }
       .over .badge { display:block; animation:pulse .6s infinite; }
@@ -3257,7 +4294,7 @@ class ApplianceLinkyCard extends HTMLElement {
       @keyframes fadein { from { opacity:0; transform:translateY(5px) } to { opacity:1; transform:none } }
     </style>
     <ha-card id="meter">
-      <div class="title" id="name">${this._config.name || this._t('name')}</div>
+      <div class="title" id="name">${esc(this._config.name || this._t('name'))}</div>
       <div class="wrap">
         <div class="box">
           <div class="eye"></div>
@@ -3266,7 +4303,7 @@ class ApplianceLinkyCard extends HTMLElement {
             <div class="btns"><button class="btn" id="b1" aria-label="-"></button><button class="btn" id="b2" aria-label="+"></button></div>
           </div>
           <div class="plus">+</div>
-          <div class="leds"><div><div class="led conso" id="ledc"></div>${this._t('conso')}</div><div><div class="led hp" id="ledt"></div><span id="ledtl">HP</span></div></div>
+          <div class="leds"><div><div class="led conso" id="ledc"></div>${this._t('conso')}</div><div><div class="led hp" id="ledt"></div><span id="ledtl">HP</span></div><div id="ledpw" style="display:none"><div class="led prod" id="ledp"></div>${this._t('prod')}</div></div>
         </div>
         <div class="gauge" id="gaugebox">
           <svg viewBox="0 0 200 120">
@@ -3274,10 +4311,14 @@ class ApplianceLinkyCard extends HTMLElement {
             <path class="arc" id="arc" d="M20 100 A80 80 0 0 1 180 100" stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
             ${ticks}
             <line class="needle" id="needle" x1="100" y1="100" x2="100" y2="32" style="transform:rotate(-90deg)"/>
+            ${PHASE_COLORS.map((col, i) => `<line class="needle pn" id="n${i + 1}" x1="100" y1="100" x2="100" y2="${32 + i * 8}" style="stroke:${col};transform:rotate(-90deg);display:none"/>`).join('')}
             <circle cx="100" cy="100" r="6" fill="var(--primary-text-color,#223)"/>
             <text class="gtxt" x="100" y="118" id="gtxt"></text>
           </svg>
           <div class="gsub" id="gsub"></div>
+          <div class="gact" id="gact"></div>
+          <div class="phases" id="phases">${[1, 2, 3].map((i) =>
+            `<span id="phl${i}">L${i}</span><div class="bar"><i id="ph${i}"></i></div><span class="pv" id="phv${i}"></span>`).join('')}</div>
           <div class="badge">${this._t('alert')}</div>
         </div>
       </div>
@@ -3294,6 +4335,35 @@ class ApplianceLinkyCard extends HTMLElement {
     if (!s || ['unavailable', 'unknown'].includes(s.state)) return null;
     const n = parseFloat(s.state);
     return Number.isFinite(n) ? n : null;
+  }
+
+  // Puissance en W ou VA (kW / kVA convertis), avec l'unité du capteur
+  _power(id) {
+    const v = this._num(id);
+    if (v === null) return null;
+    const u = this._hass.states[id].attributes.unit_of_measurement || 'W';
+    return { v: /^k/i.test(u) ? v * 1000 : v, unit: /va/i.test(u) ? 'VA' : 'W' };
+  }
+
+  // Index en kWh (Wh / MWh convertis) : les modules TIC remontent souvent les index en Wh
+  _kwh(id) {
+    const v = this._num(id);
+    if (v === null) return null;
+    const u = this._hass.states[id].attributes.unit_of_measurement || 'kWh';
+    return /^wh$/i.test(u) ? v / 1000 : /^mwh$/i.test(u) ? v * 1000 : v;
+  }
+
+  // Index de soutirage : liste « indexes » ([{ entity, name }] ou identifiants seuls), sinon HP / HC
+  _indexes() {
+    const c = this._config;
+    if (Array.isArray(c.indexes) && c.indexes.length) {
+      return c.indexes.map((it) => {
+        const id = typeof it === 'string' ? it : it && it.entity, st = id && this._hass.states[id];
+        const name = (it && it.name) || (st && st.attributes.friendly_name) || id || '';
+        return [String(name).toUpperCase(), this._kwh(id)];
+      });
+    }
+    return [[this._t('hp'), this._kwh(c.entity_hp)], [this._t('hc'), this._kwh(c.entity_hc)]];
   }
 
   // Heures creuses : entité tarif si fournie, sinon plages "HH:MM-HH:MM,..."
@@ -3315,11 +4385,14 @@ class ApplianceLinkyCard extends HTMLElement {
     if (!this._built || !this._data) return;
     const d = this._data, c = this._config, pages = [];
     pages.push([this._t('power'), d.power === null ? '—' : `${Math.round(d.power)} ${d.unit}`]);
-    if (c.show_index) {
-      pages.push([this._t('hp'), d.hp === null ? '—' : `${Math.round(d.hp)} kWh`]);
-      pages.push([this._t('hc'), d.hc === null ? '—' : `${Math.round(d.hc)} kWh`]);
+    if (c.entity_active_power) pages.push([this._t('active'), d.active === null ? '—' : `${Math.round(d.active.v)} ${d.active.unit}`]);
+    const kwh = (v) => (v === null ? '—' : `${Math.round(v)} kWh`);
+    if (c.show_index) d.indexes.forEach(([lab, v]) => pages.push([lab, kwh(v)]));
+    if (c.show_injection) {
+      if (c.entity_power_injection) pages.push([this._t('injection_power'), d.injPower === null ? '—' : `${Math.round(d.injPower.v)} ${d.injPower.unit}`]);
+      if (c.entity_injection) pages.push([this._t('injection'), kwh(d.injection)]);
     }
-    if (c.show_tariff) pages.push([this._t('tariff'), d.hcNow ? 'HEURES CREUSES' : 'HEURES PLEINES']);
+    if (c.show_tariff) pages.push([this._t('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak')]);
     if (c.show_cost && d.cost !== null) pages.push([this._t('cost'), `${d.cost.toFixed(2)} €`]);
     const p = pages[(this._page || 0) % pages.length];
     const lab = this.shadowRoot.getElementById('lab'), val = this.shadowRoot.getElementById('val');
@@ -3334,31 +4407,77 @@ class ApplianceLinkyCard extends HTMLElement {
     if (!this._built || !this._hass) return;
     const c = this._config, root = this.shadowRoot;
     const pState = c.entity_power && this._hass.states[c.entity_power];
-    const unit = (pState && pState.attributes.unit_of_measurement) || 'W';
+    let unit = (pState && pState.attributes.unit_of_measurement) || 'W';
     let power = this._num(c.entity_power);
-    const hp = this._num(c.entity_hp), hc = this._num(c.entity_hc);
+    const indexes = this._indexes();
     const hcNow = this._isHC();
     let cost = this._num(c.entity_cost);
-    this._data = { power, unit, hp, hc, hcNow, cost };
+    const active = this._power(c.entity_active_power);
+    const injPower = this._power(c.entity_power_injection), injection = this._kwh(c.entity_injection);
 
-    // Jauge : puissance (W ou VA) / puissance souscrite (kVA × 1000)
-    const max = c.subscribed_power * 1000;
-    const watts = power === null ? 0 : (unit === 'kW' ? power * 1000 : power);
-    const ratio = Math.min(watts / max, 1);
+    // Jauge : puissance (W ou VA, kW ou kVA) / puissance souscrite (kVA × 1000).
+    // Le Linky donne la puissance apparente en VA : on garde l'unité du capteur.
+    // En triphasé, il coupe phase par phase à 1/3 de la souscription. Selon phase_gauge :
+    // « needles » une aiguille par phase, « cycle » L1 → L2 → L3 toutes les 3 s,
+    // « max » la phase la plus chargée. L'alerte suit toujours la phase la plus chargée.
+    const max = c.subscribed_power * 1000, phaseMax = max / 3;
+    const phases = [c.entity_power_l1, c.entity_power_l2, c.entity_power_l3].map((id) => this._power(id));
+    const tri = phases.some(Boolean), mode = ['cycle', 'max'].includes(c.phase_gauge) ? c.phase_gauge : 'needles';
+    const pr = (p) => (p ? Math.min(p.v / phaseMax, 1) : 0);
+    this._tri = tri;
+    let ratio, alertRatio, gtxt, shown = -1;
+    if (tri) {
+      const worst = phases.reduce((w, p, i) => (p && (w < 0 || p.v > phases[w].v) ? i : w), -1);
+      const avail = phases.map((p, i) => (p ? i : -1)).filter((i) => i >= 0);
+      shown = mode === 'cycle' ? avail[(this._cycle || 0) % avail.length] : worst;
+      ratio = pr(phases[shown]); alertRatio = pr(phases[worst]);
+      gtxt = `L${shown + 1} · ${Math.round(phases[shown].v)} ${phases[shown].unit}`;
+      if (power === null) { power = phases.reduce((s, p) => s + (p ? p.v : 0), 0); unit = phases[worst].unit; }
+    } else {
+      const gaugeUnit = /va/i.test(unit) ? 'VA' : 'W';
+      const base = power === null ? 0 : (/^k/i.test(unit) ? power * 1000 : power);
+      ratio = alertRatio = Math.min(base / max, 1);
+      gtxt = power === null ? '—' : `${Math.round(base)} ${gaugeUnit}`;
+    }
+    this._data = { power, unit, active, indexes, hcNow, cost, injPower, injection };
+    const colorOf = (r) => (r > 0.9 ? '#e53935' : r > 0.65 ? '#fb8c00' : '#43a047');
+    const needles = tri && mode === 'needles';
     root.getElementById('arc').style.strokeDashoffset = 251.3 * (1 - ratio);
     root.getElementById('needle').style.transform = `rotate(${-90 + ratio * 180}deg)`;
-    const color = ratio > 0.9 ? '#e53935' : ratio > 0.65 ? '#fb8c00' : '#43a047';
-    root.getElementById('gaugebox').style.setProperty('--gc', color);
-    root.getElementById('gtxt').textContent = power === null ? '—' : `${Math.round(watts)} W`;
-    root.getElementById('gsub').textContent = `${this._t('subscribed')} : ${c.subscribed_power} kVA`;
+    root.getElementById('needle').style.display = needles ? 'none' : '';
+    phases.forEach((p, i) => {
+      const n = root.getElementById(`n${i + 1}`);
+      n.style.display = needles && p ? '' : 'none';
+      n.style.transform = `rotate(${-90 + pr(p) * 180}deg)`;
+      const lab = root.getElementById(`phl${i + 1}`);
+      lab.style.color = needles ? PHASE_COLORS[i] : '';
+      lab.classList.toggle('cur', tri && mode === 'cycle' && i === shown);
+    });
+    root.getElementById('gaugebox').style.setProperty('--gc', colorOf(ratio));
+    root.getElementById('gtxt').textContent = gtxt;
+    root.getElementById('gsub').textContent = `${this._t('subscribed')} : ${c.subscribed_power} kVA`
+      + (tri ? ` · ${+(c.subscribed_power / 3).toFixed(1)} kVA ${this._t('per_phase')}` : '');
+    const gact = root.getElementById('gact');
+    gact.textContent = active ? `${this._t('active_short')} : ${Math.round(active.v)} ${active.unit}` : '';
+    gact.style.display = active ? '' : 'none';
+    root.getElementById('phases').style.display = tri && c.show_phases ? '' : 'none';
+    phases.forEach((p, i) => {
+      const r = p ? Math.min(p.v / phaseMax, 1) : 0, bar = root.getElementById(`ph${i + 1}`);
+      bar.style.width = `${(r * 100).toFixed(1)}%`;
+      bar.style.background = colorOf(r);
+      root.getElementById(`phv${i + 1}`).textContent = p ? `${Math.round(p.v)} ${p.unit}` : '—';
+    });
     root.getElementById('gaugebox').style.display = c.show_gauge ? '' : 'none';
-    root.getElementById('meter').classList.toggle('over', ratio > 0.95);
+    root.getElementById('meter').classList.toggle('over', alertRatio > 0.95);
 
     // LED conso : clignote plus vite quand la puissance monte (2 s → 0.25 s)
-    root.getElementById('ledc').style.setProperty('--pulse', `${(2 - ratio * 1.75).toFixed(2)}s`);
+    root.getElementById('ledc').style.setProperty('--pulse', `${(2 - alertRatio * 1.75).toFixed(2)}s`);
     const ledt = root.getElementById('ledt');
     ledt.className = `led ${hcNow ? 'hc' : 'hp'}`;
     root.getElementById('ledtl').textContent = hcNow ? 'HC' : 'HP';
+    // LED prod : allumée quand le compteur voit de l'énergie partir vers le réseau
+    root.getElementById('ledpw').style.display = c.entity_power_injection && c.show_injection ? '' : 'none';
+    root.getElementById('ledp').classList.toggle('on', !!injPower && injPower.v > 0);
     this._renderLcd();
   }
 }
@@ -3373,16 +4492,20 @@ window.customCards.push({ type: 'appliance-linky-card', name: 'Linky Card', desc
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-battery-card — batterie de stockage solaire animée (niveau liquide, flux charge/décharge)
  * type: custom:appliance-battery-card
  */
 const I18N_BAT = {
-  fr: { name: 'Batterie solaire', soc: 'Charge', power: 'Puissance', energy: 'Énergie', temp: 'Température', charging: 'En charge', discharging: 'En décharge', idle: 'Repos', full: 'Plein dans', empty: 'Vide dans', low: 'Batterie faible' },
+fr: { name: 'Batterie solaire', soc: 'Charge', power: 'Puissance', energy: 'Énergie', temp: 'Température', charging: 'En charge', discharging: 'En décharge', idle: 'Repos', full: 'Plein dans', empty: 'Vide dans', low: 'Batterie faible' },
   en: { name: 'Solar battery', soc: 'Charge', power: 'Power', energy: 'Energy', temp: 'Temperature', charging: 'Charging', discharging: 'Discharging', idle: 'Idle', full: 'Full in', empty: 'Empty in', low: 'Low battery' },
   it: { name: 'Batteria domestica', soc: 'Carica', power: 'Potenza', energy: 'Energia', temp: 'Temperatura', charging: 'In carica', discharging: 'In scarica', idle: 'Inattiva', full: 'Carica completa tra', empty: 'Scarica completa tra', low: 'Batteria scarica' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class ApplianceBatteryCard extends HTMLElement {
   static getStubConfig() { return { entity_soc: '', entity_power: '', entity_energy: '', entity_temperature: '', capacity_kwh: 10, max_power: 5000 }; }
@@ -3402,12 +4525,12 @@ class ApplianceBatteryCard extends HTMLElement {
           { name: 'low_threshold', selector: { number: { min: 0, max: 50, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ] },
         { type: 'grid', name: '', schema: [
-          { name: 'show_power', selector: { boolean: {} } },
-          { name: 'show_energy', selector: { boolean: {} } },
-          { name: 'show_temperature', selector: { boolean: {} } },
-          { name: 'show_time', selector: { boolean: {} } },
+          { name: 'show_power', selector: { boolean: {} }, default: true },
+          { name: 'show_energy', selector: { boolean: {} }, default: true },
+          { name: 'show_temperature', selector: { boolean: {} }, default: true },
+          { name: 'show_time', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_BAT) } } },
       ],
     };
   }
@@ -3415,12 +4538,19 @@ class ApplianceBatteryCard extends HTMLElement {
   setConfig(config) {
     // Convention : puissance > 0 = charge (inverser avec invert_power si ton capteur est l'inverse)
     this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true,
-      capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, language: 'fr', ...config };
+      capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, ...config };
     this._built = false; this._build();
   }
-  set hass(h) { this._hass = h; this._update(); }
+  set hass(h) {
+    this._hass = h;
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config.language || lang(h);
+    if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
+    this._update();
+  }
   getCardSize() { return 5; }
-  _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_BAT.fr)[k]; }
+_t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_BAT.fr)[k]; }
+
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
@@ -3457,7 +4587,7 @@ class ApplianceBatteryCard extends HTMLElement {
       .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; }
       .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
       .low .badge { display:inline-block; }
-      svg { width:100%; height:auto; display:block; overflow:visible; }
+      svg { width:100%; height:auto; display:block; overflow:visible; transform:scale(0.8); transform-origin:top center; }
       .liquid { fill:var(--lc,#43a047); opacity:.35; transition:y 1.2s ease, height 1.2s ease, fill .8s; }
       .wave { fill:var(--lc,#43a047); opacity:.45; animation:wave 2.6s ease-in-out infinite alternate; transition:fill .8s; }
       .led { fill:var(--lc,#43a047); animation:blink var(--bl,2s) infinite; filter:drop-shadow(0 0 3px var(--lc,#43a047)); }
@@ -3477,7 +4607,7 @@ class ApplianceBatteryCard extends HTMLElement {
       @keyframes wave { from { transform:translate(-12px, var(--wy,0px)); } to { transform:translate(8px, var(--wy,0px)); } }
     </style>
     <ha-card id="card">
-      <div class="title"><span>${this._config.name || this._t('name')}</span><span class="badge">${this._t('low')}</span></div>
+      <div class="title"><span>${esc(this._config.name || this._t('name'))}</span><span class="badge">${this._t('low')}</span></div>
       <svg viewBox="0 -6 320 176" id="svg">
         <defs>
           <linearGradient id="body" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f7f8f9"/><stop offset="1" stop-color="#e3e6e9"/></linearGradient>
@@ -3538,7 +4668,7 @@ class ApplianceBatteryCard extends HTMLElement {
     if (c.show_energy) it.push([this._t('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh')]);
     if (c.show_temperature) it.push([this._t('temp'), f(temp, 0, '°C')]);
     if (time) it.push(['⏱', time]);
-    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 define('appliance-battery-card', ApplianceBatteryCard);
@@ -3551,18 +4681,22 @@ window.customCards.push({ type: 'appliance-battery-card', name: 'Solar Battery C
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-ev-charger-card — wallbox murale + voiture branchée, animée
  * type: custom:appliance-ev-charger-card
  */
 const I18N_EV = {
-  fr: { name: 'Borne de recharge', power: 'Puissance', energy: 'Session', soc: 'Batterie', status: 'Statut', duration: 'Durée', cost: 'Coût',
+fr: { name: 'Borne de recharge', power: 'Puissance', energy: 'Session', soc: 'Batterie', status: 'Statut', duration: 'Durée', cost: 'Coût',
     charging: 'En charge', plugged: 'Branchée', done: 'Terminée', disconnected: 'Débranchée' },
   en: { name: 'EV charger', power: 'Power', energy: 'Session', soc: 'Battery', status: 'Status', duration: 'Duration', cost: 'Cost',
     charging: 'Charging', plugged: 'Plugged in', done: 'Complete', disconnected: 'Unplugged' },
   it: { name: 'Colonnina di ricarica', power: 'Potenza', energy: 'Sessione', soc: 'Batteria', status: 'Stato', duration: 'Durata', cost: 'Costo', charging: 'In carica', plugged: 'Collegata', done: 'Completata', disconnected: 'Scollegata' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class ApplianceEvChargerCard extends HTMLElement {
   static getStubConfig() { return { entity_power: '', entity_session_energy: '', entity_car_soc: '', entity_status: '', max_power: 7400, price_per_kwh: 0.2 }; }
@@ -3582,32 +4716,39 @@ class ApplianceEvChargerCard extends HTMLElement {
           { name: 'car_color', selector: { text: {} } },
         ] },
         { type: 'grid', name: '', schema: [
-          { name: 'show_power', selector: { boolean: {} } },
-          { name: 'show_energy', selector: { boolean: {} } },
-          { name: 'show_soc', selector: { boolean: {} } },
-          { name: 'show_status', selector: { boolean: {} } },
-          { name: 'show_duration', selector: { boolean: {} } },
-          { name: 'show_cost', selector: { boolean: {} } },
+          { name: 'show_power', selector: { boolean: {} }, default: true },
+          { name: 'show_energy', selector: { boolean: {} }, default: true },
+          { name: 'show_soc', selector: { boolean: {} }, default: true },
+          { name: 'show_status', selector: { boolean: {} }, default: true },
+          { name: 'show_duration', selector: { boolean: {} }, default: true },
+          { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_EV) } } },
       ],
     };
   }
 
   setConfig(config) {
     this._config = { show_power: true, show_energy: true, show_soc: true, show_status: true, show_duration: true, show_cost: true,
-      max_power: 7400, price_per_kwh: 0.2, car_color: '#3d6fb6', language: 'fr', ...config };
+      max_power: 7400, price_per_kwh: 0.2, car_color: '#3d6fb6', ...config };
     this._built = false; this._build();
   }
-  set hass(h) { this._hass = h; this._update(); }
+  set hass(h) {
+    this._hass = h;
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config.language || lang(h);
+    if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
+    this._update();
+  }
   getCardSize() { return 5; }
   connectedCallback() { this._timer = setInterval(() => this._update(), 30000); } // rafraîchit la durée
   disconnectedCallback() { clearInterval(this._timer); }
-  _t(k) { return (I18N_EV[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_EV.fr)[k]; }
+_t(k) { return (I18N_EV[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_EV.fr)[k]; }
+
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
-    const car = this._config.car_color;
+    const car = esc(this._config.car_color);
     const cable = 'M44 112 C 44 168, 112 170, 134 118';
     this.shadowRoot.innerHTML = `
     <style>
@@ -3635,7 +4776,7 @@ class ApplianceEvChargerCard extends HTMLElement {
       @keyframes spark { 0%,100% { opacity:0; transform:scale(.6); } 50% { opacity:1; transform:scale(1.1); } }
     </style>
     <ha-card>
-      <div class="title">${this._config.name || this._t('name')}</div>
+      <div class="title">${esc(this._config.name || this._t('name'))}</div>
       <svg viewBox="0 0 340 172" id="svg">
         <defs>
           <linearGradient id="wb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#40454d"/><stop offset="1" stop-color="#16191d"/></linearGradient>
@@ -3752,7 +4893,7 @@ class ApplianceEvChargerCard extends HTMLElement {
     if (c.show_cost) it.push([this._t('cost'), f(cost, 2, '€')]);
     // 5-6 valeurs → 2 lignes équilibrées
     r.getElementById('stats').style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 define('appliance-ev-charger-card', ApplianceEvChargerCard);
@@ -3765,20 +4906,24 @@ window.customCards.push({ type: 'appliance-ev-charger-card', name: 'EV Charger C
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-robot-vacuum-card — robot aspirateur + station de vidage, animé, avec commandes
  * type: custom:appliance-robot-vacuum-card
  */
 const I18N_VAC = {
-  fr: { name: 'Robot aspirateur', battery: 'Batterie', area: 'Surface', time: 'Durée', fan: 'Aspiration', status: 'Statut', filter: 'Filtre', brush: 'Brosse',
+fr: { name: 'Robot aspirateur', battery: 'Batterie', area: 'Surface', time: 'Durée', fan: 'Aspiration', status: 'Statut', filter: 'Filtre', brush: 'Brosse',
     start: 'Démarrer', pause: 'Pause', dock: 'Base',
     cleaning: 'Nettoyage', docked: 'À la base', charging: 'En charge', returning: 'Retour base', paused: 'En pause', idle: 'Inactif', error: 'Erreur', emptying: 'Vidage' },
   en: { name: 'Robot vacuum', battery: 'Battery', area: 'Area', time: 'Time', fan: 'Suction', status: 'Status', filter: 'Filter', brush: 'Brush',
     start: 'Start', pause: 'Pause', dock: 'Dock',
     cleaning: 'Cleaning', docked: 'Docked', charging: 'Charging', returning: 'Returning', paused: 'Paused', idle: 'Idle', error: 'Error', emptying: 'Emptying' },
   it: { name: 'Robot aspirapolvere', battery: 'Batteria', area: 'Superficie', time: 'Durata', fan: 'Aspirazione', status: 'Stato', filter: 'Filtro', brush: 'Spazzola', start: 'Avvia', pause: 'Pausa', dock: 'Base', cleaning: 'Pulizia', docked: 'Alla base', charging: 'In carica', returning: 'Ritorno alla base', paused: 'In pausa', idle: 'Inattivo', error: 'Errore', emptying: 'Svuotamento' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 const ICONS_VAC = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
@@ -3801,15 +4946,15 @@ class ApplianceRobotVacuumCard extends HTMLElement {
         { name: 'entity_filter', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_brush', selector: { entity: { domain: 'sensor' } } },
         { type: 'grid', name: '', schema: [
-          { name: 'show_battery', selector: { boolean: {} } },
-          { name: 'show_area', selector: { boolean: {} } },
-          { name: 'show_time', selector: { boolean: {} } },
-          { name: 'show_fan', selector: { boolean: {} } },
-          { name: 'show_status', selector: { boolean: {} } },
-          { name: 'show_consumables', selector: { boolean: {} } },
-          { name: 'show_buttons', selector: { boolean: {} } },
+          { name: 'show_battery', selector: { boolean: {} }, default: true },
+          { name: 'show_area', selector: { boolean: {} }, default: true },
+          { name: 'show_time', selector: { boolean: {} }, default: true },
+          { name: 'show_fan', selector: { boolean: {} }, default: true },
+          { name: 'show_status', selector: { boolean: {} }, default: true },
+          { name: 'show_consumables', selector: { boolean: {} }, default: true },
+          { name: 'show_buttons', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_VAC) } } },
       ],
     };
   }
@@ -3817,12 +4962,17 @@ class ApplianceRobotVacuumCard extends HTMLElement {
   setConfig(config) {
     if (!config.entity) throw new Error('entity (vacuum.xxx) requise');
     this._config = { show_battery: true, show_area: true, show_time: true, show_fan: true, show_status: true,
-      show_consumables: true, show_buttons: true, language: 'fr', ...config };
+      show_consumables: true, show_buttons: true, ...config };
     this._built = false; this._build();
   }
-  set hass(h) { this._hass = h; this._update(); }
+  set hass(h) {
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config && (this._config.language || lang(h));
+    if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
+    this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  _t(k) { return (I18N_VAC[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_VAC.fr)[k] || k; }
+_t(k) { return (I18N_VAC[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_VAC.fr)[k] || k; }
+
 
   _call(action) {
     if (!this._hass) return;
@@ -3873,7 +5023,7 @@ class ApplianceRobotVacuumCard extends HTMLElement {
     }
     const stats = r.getElementById('stats');
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 window.customCards = window.customCards || [];
@@ -3933,7 +5083,7 @@ class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
       @keyframes hop { 50% { transform:translateY(-4px) } }
     </style>
     <ha-card id="card">
-      <div class="title"><span>${this._config.name || this._t('name')}</span><span class="badge" id="err"></span></div>
+      <div class="title"><span>${esc(this._config.name || this._t('name'))}</span><span class="badge" id="err"></span></div>
       <svg viewBox="0 0 240 142" id="svg">
         <defs>
           <linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d3d8dd"/></linearGradient>
@@ -3988,6 +5138,7 @@ window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Robot
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-robot-mower-card — robot tondeuse + station sur bande de pelouse, animé, avec commandes
@@ -3995,14 +5146,17 @@ window.customCards = window.customCards || [];
  * Compatible lawn_mower.* (recommandé) et vacuum.* (certaines intégrations de tondeuses)
  */
 const I18N_MOW = {
-  fr: { name: 'Robot tondeuse', battery: 'Batterie', area: 'Surface', time: 'Tonte', next: 'Prochain départ', status: 'Statut', blade: 'Lame', rain: 'Pluie',
+fr: { name: 'Robot tondeuse', battery: 'Batterie', area: 'Surface', time: 'Tonte', next: 'Prochain départ', status: 'Statut', blade: 'Lame', rain: 'Pluie',
     start: 'Tondre', pause: 'Pause', dock: 'Base',
     mowing: 'Tonte', docked: 'À la base', charging: 'En charge', returning: 'Retour base', paused: 'En pause', idle: 'Inactif', error: 'Erreur' },
   en: { name: 'Robot mower', battery: 'Battery', area: 'Area', time: 'Mowing', next: 'Next start', status: 'Status', blade: 'Blade', rain: 'Rain',
     start: 'Mow', pause: 'Pause', dock: 'Dock',
     mowing: 'Mowing', docked: 'Docked', charging: 'Charging', returning: 'Returning', paused: 'Paused', idle: 'Idle', error: 'Error' },
   it: { name: 'Robot tagliaerba', battery: 'Batteria', area: 'Superficie', time: 'Taglio', next: 'Prossimo avvio', status: 'Stato', blade: 'Lama', rain: 'Pioggia', start: 'Taglia', pause: 'Pausa', dock: 'Base', mowing: 'Taglio in corso', docked: 'Alla base', charging: 'In carica', returning: 'Ritorno alla base', paused: 'In pausa', idle: 'Inattivo', error: 'Errore' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 const ICONS_MOW = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
@@ -4026,15 +5180,15 @@ class ApplianceRobotMowerCard extends HTMLElement {
         { name: 'entity_rain', selector: { entity: { domain: ['binary_sensor', 'sensor'] } } },
         { name: 'entity_status', selector: { entity: { domain: 'sensor' } } },
         { type: 'grid', name: '', schema: [
-          { name: 'show_battery', selector: { boolean: {} } },
-          { name: 'show_area', selector: { boolean: {} } },
-          { name: 'show_time', selector: { boolean: {} } },
-          { name: 'show_next', selector: { boolean: {} } },
-          { name: 'show_status', selector: { boolean: {} } },
-          { name: 'show_blade', selector: { boolean: {} } },
-          { name: 'show_buttons', selector: { boolean: {} } },
+          { name: 'show_battery', selector: { boolean: {} }, default: true },
+          { name: 'show_area', selector: { boolean: {} }, default: true },
+          { name: 'show_time', selector: { boolean: {} }, default: true },
+          { name: 'show_next', selector: { boolean: {} }, default: true },
+          { name: 'show_status', selector: { boolean: {} }, default: true },
+          { name: 'show_blade', selector: { boolean: {} }, default: true },
+          { name: 'show_buttons', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_MOW) } } },
       ],
     };
   }
@@ -4042,12 +5196,17 @@ class ApplianceRobotMowerCard extends HTMLElement {
   setConfig(config) {
     if (!config.entity) throw new Error('entity (lawn_mower.xxx) requise');
     this._config = { show_battery: true, show_area: true, show_time: true, show_next: true, show_status: true,
-      show_blade: true, show_buttons: true, language: 'fr', ...config };
+      show_blade: true, show_buttons: true, ...config };
     this._built = false; this._build();
   }
-  set hass(h) { this._hass = h; this._update(); }
+  set hass(h) {
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config && (this._config.language || lang(h));
+    if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
+    this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  _t(k) { return (I18N_MOW[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_MOW.fr)[k] || k; }
+_t(k) { return (I18N_MOW[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_MOW.fr)[k] || k; }
+
 
   _call(action) {
     if (!this._hass) return;
@@ -4101,7 +5260,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     if (c.show_blade && blade !== null) it.push([this._t('blade'), `${Math.round(blade)} %`]);
     const stats = r.getElementById('stats');
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 window.customCards = window.customCards || [];
@@ -4148,7 +5307,7 @@ class ApplianceRobotMowerSoloCard extends ApplianceRobotMowerCard {
       @keyframes hop { 50% { transform:translateY(-4px) } }
     </style>
     <ha-card id="card">
-      <div class="title"><span>${this._config.name || this._t('name')}</span><span class="badge" id="err"></span></div>
+      <div class="title"><span>${esc(this._config.name || this._t('name'))}</span><span class="badge" id="err"></span></div>
       <svg viewBox="0 0 240 132" id="svg">
         <defs><linearGradient id="shell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f7f8"/><stop offset="1" stop-color="#b8bec4"/></linearGradient></defs>
         <g class="rain">${rain}</g>
@@ -4206,18 +5365,22 @@ window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Robot 
 /* ================================================================== */
 (() => {
 "use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-pellet-boiler-card — chaudière à granulés + trémie + vis sans fin, sans fond, animée
  * type: custom:appliance-pellet-boiler-card
  */
 const I18N_PB = {
-  fr: { name: 'Chaudière à granulés', power: 'Puissance', energy: 'Énergie', cost: 'Coût', flow: 'Départ', ret: 'Retour', pellets: 'Granulés', status: 'Statut',
+fr: { name: 'Chaudière à granulés', power: 'Puissance', energy: 'Énergie', cost: 'Coût', flow: 'Départ', ret: 'Retour', pellets: 'Granulés', status: 'Statut',
     off: 'Arrêt', ignition: 'Allumage', heating: 'Chauffe', extinguishing: 'Extinction', alarm: 'Alarme', low: 'Granulés bas' },
   en: { name: 'Pellet boiler', power: 'Power', energy: 'Energy', cost: 'Cost', flow: 'Flow', ret: 'Return', pellets: 'Pellets', status: 'Status',
     off: 'Off', ignition: 'Igniting', heating: 'Heating', extinguishing: 'Shutting down', alarm: 'Alarm', low: 'Low pellets' },
   it: { name: 'Caldaia a pellet', power: 'Potenza', energy: 'Energia', cost: 'Costo', flow: 'Mandata', ret: 'Ritorno', pellets: 'Pellet', status: 'Stato', off: 'Spenta', ignition: 'Accensione', heating: 'Riscaldamento', extinguishing: 'Spegnimento', alarm: 'Allarme', low: 'Pellet in esaurimento' }
+
 };
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class AppliancePelletBoilerCard extends HTMLElement {
   static getStubConfig() { return { entity_power: '', entity_flow_temp: '', entity_return_temp: '', entity_pellet_level: '' }; }
@@ -4241,26 +5404,31 @@ class AppliancePelletBoilerCard extends HTMLElement {
           { name: 'flow_temp_max', selector: { number: { min: 40, max: 95, step: 1, mode: 'box', unit_of_measurement: '°C' } } },
         ] },
         { type: 'grid', name: '', schema: [
-          { name: 'show_power', selector: { boolean: {} } },
-          { name: 'show_energy', selector: { boolean: {} } },
-          { name: 'show_cost', selector: { boolean: {} } },
-          { name: 'show_temps', selector: { boolean: {} } },
-          { name: 'show_pellets', selector: { boolean: {} } },
-          { name: 'show_status', selector: { boolean: {} } },
+          { name: 'show_power', selector: { boolean: {} }, default: true },
+          { name: 'show_energy', selector: { boolean: {} }, default: true },
+          { name: 'show_cost', selector: { boolean: {} }, default: true },
+          { name: 'show_temps', selector: { boolean: {} }, default: true },
+          { name: 'show_pellets', selector: { boolean: {} }, default: true },
+          { name: 'show_status', selector: { boolean: {} }, default: true },
         ] },
-        { name: 'language', selector: { select: { options: ['fr', 'en'] } } },
+        { name: 'language', selector: { select: { options: Object.keys(I18N_PB) } } },
       ],
     };
   }
 
   setConfig(config) {
     this._config = { show_power: true, show_energy: true, show_cost: true, show_temps: true, show_pellets: true, show_status: true,
-      price_per_kwh: 0, threshold: 30, ignition_threshold: 300, pellet_alert: 15, flow_temp_max: 80, language: 'fr', ...config };
+      price_per_kwh: 0, threshold: 30, ignition_threshold: 300, pellet_alert: 15, flow_temp_max: 80, ...config };
     this._built = false; this._build();
   }
-  set hass(h) { this._hass = h; this._update(); }
+  set hass(h) {
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config && (this._config.language || lang(h));
+    if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
+    this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  _t(k) { return (I18N_PB[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_PB.fr)[k] || k; }
+_t(k) { return (I18N_PB[this._config.language || ((this._hass?.locale?.language || this._hass?.language || '').toLowerCase().startsWith('it') ? 'it' : 'fr')] || I18N_PB.fr)[k] || k; }
+
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
@@ -4317,7 +5485,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
       @keyframes blink { 50% { opacity:.35 } } @keyframes breathe { 50% { opacity:.3 } }
     </style>
     <ha-card id="card">
-      <div class="title"><span>${this._config.name || this._t('name')}</span><span><span class="badge lo">${this._t('low')}</span> <span class="badge al">${this._t('alarm')}</span></span></div>
+      <div class="title"><span>${esc(this._config.name || this._t('name'))}</span><span><span class="badge lo">${this._t('low')}</span> <span class="badge al">${this._t('alarm')}</span></span></div>
       <svg viewBox="0 0 280 214" id="svg">
         <defs>
           <linearGradient id="pbf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9ebed"/><stop offset="1" stop-color="#cfd3d7"/></linearGradient>
@@ -4458,7 +5626,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (c.show_cost && cost !== null) it.push([this._t('cost'), f(cost, 2, '€')]);
     const stats = r.getElementById('stats');
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 define('appliance-pellet-boiler-card', AppliancePelletBoilerCard);
@@ -4475,19 +5643,128 @@ window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Pellet Bo
   if (customElements.get(TAG)) return;
 
   const T = {
-    fr: {
-      name: 'Chaudière gaz', off: 'Éteinte', standby: 'Veille', heating: 'Chauffage', dhw: 'Eau chaude',
-      alarm: 'Défaut', power: 'Électrique', energy: 'Énergie élec.', gas: 'Gaz', cost: 'Coût',
-      flow: 'Départ', ret: 'Retour', pressure: 'Pression', mod: 'Modulation', delta: 'ΔT',
-      lowp: 'Pression basse', highp: 'Pression haute', hotf: 'Départ trop chaud',
+    "en": {
+      "name": "Gas boiler",
+      "off": "Off",
+      "standby": "Standby",
+      "heating": "Heating",
+      "dhw": "Hot water",
+      "alarm": "Fault",
+      "power": "Electric",
+      "energy": "Elec. energy",
+      "gas": "Gas",
+      "cost": "Cost",
+      "flow": "Flow",
+      "ret": "Return",
+      "pressure": "Pressure",
+      "mod": "Modulation",
+      "delta": "ΔT",
+      "lowp": "Low pressure",
+      "highp": "High pressure",
+      "hotf": "Flow too hot"
     },
-    en: {
-      name: 'Gas boiler', off: 'Off', standby: 'Standby', heating: 'Heating', dhw: 'Hot water',
-      alarm: 'Fault', power: 'Electric', energy: 'Elec. energy', gas: 'Gas', cost: 'Cost',
-      flow: 'Flow', ret: 'Return', pressure: 'Pressure', mod: 'Modulation', delta: 'ΔT',
-      lowp: 'Low pressure', highp: 'High pressure', hotf: 'Flow too hot',
+    "de": {
+      "name": "Gastherme",
+      "off": "Aus",
+      "standby": "Standby",
+      "heating": "Heizen",
+      "dhw": "Warmwasser",
+      "alarm": "Störung",
+      "power": "Elektrisch",
+      "energy": "Elektr. Energie",
+      "gas": "Gas",
+      "cost": "Kosten",
+      "flow": "Vorlauf",
+      "ret": "Rücklauf",
+      "pressure": "Druck",
+      "mod": "Modulation",
+      "delta": "ΔT",
+      "lowp": "Druck zu niedrig",
+      "highp": "Druck zu hoch",
+      "hotf": "Vorlauf zu heiß"
     },
+    "fr": {
+      "name": "Chaudière gaz",
+      "off": "Éteinte",
+      "standby": "Veille",
+      "heating": "Chauffage",
+      "dhw": "Eau chaude",
+      "alarm": "Défaut",
+      "power": "Électrique",
+      "energy": "Énergie élec.",
+      "gas": "Gaz",
+      "cost": "Coût",
+      "flow": "Départ",
+      "ret": "Retour",
+      "pressure": "Pression",
+      "mod": "Modulation",
+      "delta": "ΔT",
+      "lowp": "Pression basse",
+      "highp": "Pression haute",
+      "hotf": "Départ trop chaud"
+    },
+    "nb": {
+      "name": "Gasskjel",
+      "off": "Av",
+      "standby": "Hvilemodus",
+      "heating": "Varmer",
+      "dhw": "Varmtvann",
+      "alarm": "Feil",
+      "power": "Elektrisk",
+      "energy": "Elektr. energi",
+      "gas": "Gass",
+      "cost": "Kostnad",
+      "flow": "Tur",
+      "ret": "Retur",
+      "pressure": "Trykk",
+      "mod": "Modulering",
+      "delta": "ΔT",
+      "lowp": "Lavt trykk",
+      "highp": "Høyt trykk",
+      "hotf": "For varm tur"
+    },
+    "nl": {
+      "name": "Gasketel",
+      "off": "Uit",
+      "standby": "Stand-by",
+      "heating": "Verwarmen",
+      "dhw": "Warm water",
+      "alarm": "Storing",
+      "power": "Elektrisch",
+      "energy": "Elek. energie",
+      "gas": "Gas",
+      "cost": "Kost",
+      "flow": "Aanvoer",
+      "ret": "Retour",
+      "pressure": "Druk",
+      "mod": "Modulatie",
+      "delta": "ΔT",
+      "lowp": "Lage druk",
+      "highp": "Hoge druk",
+      "hotf": "Aanvoer te heet"
+    },
+    "ro": {
+      "name": "Centrală pe gaz",
+      "off": "Oprită",
+      "standby": "Standby",
+      "heating": "Încălzire",
+      "dhw": "Apă caldă",
+      "alarm": "Defecțiune",
+      "power": "Electric",
+      "energy": "Energie el.",
+      "gas": "Gaz",
+      "cost": "Cost",
+      "flow": "Tur",
+      "ret": "Retur",
+      "pressure": "Presiune",
+      "mod": "Modulare",
+      "delta": "ΔT",
+      "lowp": "Presiune scăzută",
+      "highp": "Presiune ridicată",
+      "hotf": "Tur prea cald"
+    }
   };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
 :host{display:block}
@@ -4625,7 +5902,7 @@ svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration
     setConfig(c) {
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_power: true, show_energy: true, show_gas: true, show_cost: true, show_temps: true,
-        show_pressure: true, show_modulation: true, show_status: true, threshold: 15,
+        show_pressure: true, show_modulation: true, show_status: true, threshold: 15, off_threshold: 0.5,
         pressure_min: 1, pressure_max: 2.5, flow_temp_max: 80, ...c };
       this._built = false;
       if (this._hass) this._render();
@@ -4634,8 +5911,8 @@ svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
-    _t(k) { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2) === 'fr' ? 'fr' : 'en'; return T[l][k]; }
-    _lang() { return ((this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2) === 'fr') ? 'fr' : 'en'; }
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
@@ -4689,7 +5966,7 @@ svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration
       else if (/heat|chauff|ignit|allum|burn|brûl|brul|running|^on/.test(txt) || flame === true) st = 'heating';
       else if (txt) st = 'standby';
       else if (flame === false) st = 'standby';
-      else if (!isNaN(pw)) st = pw > c.threshold ? 'heating' : (pw > 0.5 ? 'standby' : 'off');
+      else if (!isNaN(pw)) st = pw > c.threshold ? 'heating' : (pw > c.off_threshold ? 'standby' : 'off');
       else st = 'standby';
       if (flame === false && (st === 'heating' || st === 'dhw') && /standby|idle|veille/.test(txt)) st = 'standby';
       const burning = st === 'heating' || st === 'dhw';
@@ -4747,7 +6024,9 @@ svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [ent, val, unit] = V[k];
         el.classList.toggle('hide', !ent || c[opt] === false);
         el.querySelector('.lbl').textContent = this._t(k);
-        el.querySelector('.v').innerHTML = `${val}<small>${unit}</small>`;
+        // valeur + unité en texte (l'unité vient de l'entité ou de la config)
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
         el.onclick = () => { const id = k === 'cost' ? c.entity_cost : c['entity_' + (k === 'ret' ? 'return_temp' : k === 'flow' ? 'flow_temp' : k === 'mod' ? 'modulation' : k)]; if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); };
       });
     }
@@ -4775,13 +6054,17 @@ svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration
         ent('entity_status'), ent('entity_flame', 'binary_sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         ent('entity_gas', 'sensor'), ent('entity_cost', 'sensor'), { name: 'price_per_unit', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         ent('entity_flow_temp', 'sensor'), ent('entity_return_temp', 'sensor'), ent('entity_pressure', 'sensor'), ent('entity_modulation', 'sensor'),
-        { name: 'language', selector: { select: { options: [{ value: 'fr', label: 'Français' }, { value: 'en', label: 'English' }] } } },
         { type: 'grid', name: '', schema: [
-          { name: 'show_status', selector: { boolean: {} } }, { name: 'show_power', selector: { boolean: {} } },
-          { name: 'show_energy', selector: { boolean: {} } }, { name: 'show_gas', selector: { boolean: {} } },
-          { name: 'show_cost', selector: { boolean: {} } }, { name: 'show_temps', selector: { boolean: {} } },
-          { name: 'show_pressure', selector: { boolean: {} } }, { name: 'show_modulation', selector: { boolean: {} } },
-          { name: 'animations', selector: { boolean: {} } },
+          { name: 'threshold', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box', unit_of_measurement: 'W' } } },
+          { name: 'off_threshold', selector: { number: { min: 0, max: 500, step: 0.1, mode: 'box', unit_of_measurement: 'W' } } },
+        ] },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [
+          { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
+          { name: 'show_energy', selector: { boolean: {} }, default: true }, { name: 'show_gas', selector: { boolean: {} }, default: true },
+          { name: 'show_cost', selector: { boolean: {} }, default: true }, { name: 'show_temps', selector: { boolean: {} }, default: true },
+          { name: 'show_pressure', selector: { boolean: {} }, default: true }, { name: 'show_modulation', selector: { boolean: {} }, default: true },
+          { name: 'animations', selector: { boolean: {} }, default: true },
         ] },
       ];
       this._form.computeLabel = (s) => s.name;
@@ -4793,5 +6076,485 @@ svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration
   window.customCards.push({
     type: TAG, name: 'Appliance – Chaudière gaz / Gas boiler',
     description: 'Chaudière gaz animée : flamme, départ/retour, ECS, pression, conso élec et gaz.', preview: true,
+  });
+})();
+
+/* Carte « PAC eau/eau » — custom:appliance-water-heat-pump-card
+ * Pompe à chaleur eau/eau ou sol/eau (géothermie, nappe) : compresseur qui vibre entre
+ * l'évaporateur (boucle de captage, à gauche) et le condenseur (boucle de chauffage, à droite),
+ * départ/retour qui changent de couleur avec la température, COP instantané.
+ */
+(() => {
+  const TAG = 'appliance-water-heat-pump-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Water heat pump",
+      "off": "Off",
+      "standby": "Standby",
+      "heating": "Heating",
+      "dhw": "Hot water",
+      "cooling": "Cooling",
+      "alarm": "Fault",
+      "power": "Electric",
+      "heat": "Heat output",
+      "cop": "COP",
+      "flow": "Flow",
+      "ret": "Return",
+      "delta": "ΔT",
+      "src_in": "Source in",
+      "src_out": "Source out",
+      "rate": "Flow rate",
+      "energy": "Elec. energy",
+      "heat_energy": "Heat energy",
+      "scop": "SCOP",
+      "buffer": "Buffer tank"
+    },
+    "de": {
+      "name": "Wasser/Wasser-Wärmepumpe",
+      "off": "Aus",
+      "standby": "Standby",
+      "heating": "Heizen",
+      "dhw": "Warmwasser",
+      "cooling": "Kühlen",
+      "alarm": "Störung",
+      "power": "Elektrisch",
+      "heat": "Wärmeleistung",
+      "cop": "COP",
+      "flow": "Vorlauf",
+      "ret": "Rücklauf",
+      "delta": "ΔT",
+      "src_in": "Quelle ein",
+      "src_out": "Quelle aus",
+      "rate": "Durchfluss",
+      "energy": "Elektr. Energie",
+      "heat_energy": "Wärmeenergie",
+      "scop": "SCOP",
+      "buffer": "Pufferspeicher"
+    },
+    "fr": {
+      "name": "PAC eau/eau",
+      "off": "Arrêt",
+      "standby": "Veille",
+      "heating": "Chauffage",
+      "dhw": "Eau chaude",
+      "cooling": "Rafraîchissement",
+      "alarm": "Défaut",
+      "power": "Électrique",
+      "heat": "Thermique",
+      "cop": "COP",
+      "flow": "Départ",
+      "ret": "Retour",
+      "delta": "ΔT",
+      "src_in": "Captage entrée",
+      "src_out": "Captage sortie",
+      "rate": "Débit",
+      "energy": "Énergie élec.",
+      "heat_energy": "Énergie chaleur",
+      "scop": "SCOP",
+      "buffer": "Ballon tampon"
+    },
+    "nb": {
+      "name": "Vann-til-vann-varmepumpe",
+      "off": "Av",
+      "standby": "Hvilemodus",
+      "heating": "Varmer",
+      "dhw": "Varmtvann",
+      "cooling": "Kjøler",
+      "alarm": "Feil",
+      "power": "Elektrisk",
+      "heat": "Varmeeffekt",
+      "cop": "COP",
+      "flow": "Tur",
+      "ret": "Retur",
+      "delta": "ΔT",
+      "src_in": "Kilde inn",
+      "src_out": "Kilde ut",
+      "rate": "Gjennomstrømning",
+      "energy": "Elektr. energi",
+      "heat_energy": "Varmeenergi",
+      "scop": "SCOP",
+      "buffer": "Buffertank"
+    },
+    "nl": {
+      "name": "Water-waterwarmtepomp",
+      "off": "Uit",
+      "standby": "Stand-by",
+      "heating": "Verwarmen",
+      "dhw": "Warm water",
+      "cooling": "Koelen",
+      "alarm": "Storing",
+      "power": "Elektrisch",
+      "heat": "Warmteafgifte",
+      "cop": "COP",
+      "flow": "Aanvoer",
+      "ret": "Retour",
+      "delta": "ΔT",
+      "src_in": "Bron in",
+      "src_out": "Bron uit",
+      "rate": "Debiet",
+      "energy": "Elek. energie",
+      "heat_energy": "Warmte-energie",
+      "scop": "SCOP",
+      "buffer": "Buffervat"
+    },
+    "ro": {
+      "name": "Pompă de căldură apă-apă",
+      "off": "Oprită",
+      "standby": "Standby",
+      "heating": "Încălzire",
+      "dhw": "Apă caldă",
+      "cooling": "Răcire",
+      "alarm": "Defecțiune",
+      "power": "Electric",
+      "heat": "Putere termică",
+      "cop": "COP",
+      "flow": "Tur",
+      "ret": "Retur",
+      "delta": "ΔT",
+      "src_in": "Intrare sursă",
+      "src_out": "Ieșire sursă",
+      "rate": "Debit",
+      "energy": "Energie el.",
+      "heat_energy": "Energie termică",
+      "scop": "SCOP",
+      "buffer": "Rezervor tampon"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+
+  const CSS = `
+:host{display:block}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--wp-heat:var(--appliance-heat-color,#ff8a3d);--wp-cold:var(--appliance-cold-color,#2b9af9);
+  --wp-alert:var(--appliance-alert-color,#db4437)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.heating .badge{background:color-mix(in srgb,var(--wp-heat) 22%,transparent);color:var(--wp-heat)}
+.dhw .badge,.cooling .badge{background:color-mix(in srgb,var(--wp-cold) 22%,transparent);color:var(--wp-cold)}
+.alarm .badge{background:color-mix(in srgb,var(--wp-alert) 22%,transparent);color:var(--wp-alert)}
+svg{display:block;width:100%;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}
+
+/* ---- illustration ---- */
+.comp{transform-box:fill-box;transform-origin:50% 100%}
+.run .comp{animation:vib .11s linear infinite alternate}
+@keyframes vib{0%{transform:translate(-.5px,0)}100%{transform:translate(.5px,-.4px)}}
+.dash{stroke-dasharray:3 8;opacity:0}
+.src .dash.src,.run .dash.ref,.circ .dash.ch,.chg .dash.chg{opacity:.9;animation:flow 1s linear infinite}
+.run .dash.ref{opacity:.55;animation-duration:1.6s}
+@keyframes flow{to{stroke-dashoffset:-11}}
+.rad{fill:#e9edf1;transition:fill .8s}
+.heating .rad{fill:color-mix(in srgb,var(--wp-flowc,#e5533d) 35%,#f4f6f8)}
+.cooling .rad{fill:color-mix(in srgb,#3b8fe8 22%,#f4f6f8)}
+.led{fill:#6b7480}
+.heating .led{fill:#ff8a3d}.dhw .led{fill:#3fa3ff}.cooling .led{fill:#4dd0e1}.standby .led{fill:#43a047}.alarm .led{fill:#db4437;animation:blink .8s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+.dsp{fill:#7fe3ff;font:700 13px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
+.alarm .dsp{fill:#ffb74d}.off .dsp{fill:#3b4a5c}
+.off .body-shade{opacity:.55}
+.buf{display:none}.buffer .buf{display:inline}.buffer .direct{display:none}
+.noanim *{animation:none!important}
+`;
+
+  const SVG = `
+<svg viewBox="0 0 290 204" role="img" aria-label="water heat pump">
+ <defs>
+  <linearGradient id="wp-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9dfe6"/></linearGradient>
+  <linearGradient id="wp-comp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5b6570"/><stop offset=".45" stop-color="#3a434d"/><stop offset="1" stop-color="#22292f"/></linearGradient>
+  <linearGradient id="wp-tank" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--wp-tankc,#e5533d)"/><stop offset="1" style="stop-color:var(--wp-retc,#3b8fe8)"/></linearGradient>
+  <linearGradient id="wp-soil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a1856a"/><stop offset="1" stop-color="#6f5641"/></linearGradient>
+ </defs>
+ <!-- sol et sonde de captage -->
+ <rect x="0" y="158" width="66" height="46" rx="3" fill="url(#wp-soil)" opacity=".85"/>
+ <path d="M0 158 H66" stroke="#6aa84f" stroke-width="3"/>
+ <!-- radiateur -->
+ <g transform="translate(40 0)">
+ <rect x="184" y="14" width="52" height="50" rx="5" fill="#000" opacity=".1" transform="translate(1.5 2)"/>
+ <g class="rad" stroke="#aab3bd" stroke-width="1">
+  <rect x="184" y="14" width="52" height="8" rx="3"/><rect x="184" y="56" width="52" height="8" rx="3"/>
+  <rect x="187" y="18" width="7" height="42" rx="3"/><rect x="198" y="18" width="7" height="42" rx="3"/>
+  <rect x="209" y="18" width="7" height="42" rx="3"/><rect x="220" y="18" width="7" height="42" rx="3"/>
+ </g>
+ </g>
+ <!-- caisson -->
+ <rect x="76" y="26" width="96" height="128" rx="9" fill="#000" opacity=".12" transform="translate(2 3)"/>
+ <rect class="body-shade" x="72" y="24" width="96" height="128" rx="9" fill="url(#wp-body)" stroke="#aeb6c0" stroke-width="1.2"/>
+ <rect x="82" y="31" width="58" height="21" rx="4" fill="#0e1b2c" stroke="#27394f"/>
+ <text class="dsp" id="dsp" x="111" y="46">--</text>
+ <circle class="led" cx="152" cy="37" r="3.2"/>
+ <circle cx="152" cy="47" r="3.6" fill="#c8cfd7" stroke="#9aa3ad"/>
+ <rect x="80" y="58" width="80" height="88" rx="6" fill="#18212c" stroke="#2a3340" stroke-width="1.4"/>
+ <!-- boucles d'eau : captage (gauche) et chauffage (droite), jusqu'aux échangeurs -->
+ <g fill="none" stroke-width="6" stroke-linecap="round">
+  <path d="M92 80 H30 V188" stroke="#4aa3df"/>
+  <path d="M30 188 Q38 199 46 188" stroke="#3d8fd0"/>
+  <path d="M46 188 V104 H92" stroke="#2b6cb0"/>
+ </g>
+ <g class="direct" fill="none" stroke-width="6" stroke-linecap="round">
+  <path d="M148 80 H236 V64" style="stroke:var(--wp-flowc,#e5533d)"/>
+  <path d="M264 64 V104 H148" style="stroke:var(--wp-retc,#3b8fe8)"/>
+ </g>
+ <!-- ballon tampon : boucle de charge (PAC ↔ ballon) et boucle de distribution (ballon ↔ émetteurs) -->
+ <g class="buf">
+  <g fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+   <path d="M148 80 H204 V128 H232" style="stroke:var(--wp-flowc,#e5533d)"/>
+   <path d="M232 186 H190 V104 H148" style="stroke:var(--wp-retc,#3b8fe8)"/>
+   <path d="M251 118 V84 H236 V64" style="stroke:var(--wp-tankc,#e5533d)"/>
+   <path d="M264 64 V96 H280 V180 H270" style="stroke:var(--wp-retc,#3b8fe8)"/>
+  </g>
+  <rect x="234" y="120" width="38" height="78" rx="12" fill="#000" opacity=".12"/>
+  <rect x="232" y="118" width="38" height="78" rx="12" fill="url(#wp-tank)" stroke="#8f99a4" stroke-width="1.2"/>
+  <rect x="237" y="124" width="6" height="66" rx="3" fill="#fff" opacity=".28"/>
+ </g>
+ <!-- évaporateur (captage) et condenseur (chauffage) : échangeurs à plaques -->
+ <g fill="#5fa8e8" stroke="#2f6ea8" stroke-width=".5">
+  <rect x="86" y="70" width="2.6" height="42" rx=".8"/><rect x="89.6" y="70" width="2.6" height="42" rx=".8"/><rect x="93.2" y="70" width="2.6" height="42" rx=".8"/>
+  <rect x="96.8" y="70" width="2.6" height="42" rx=".8"/><rect x="100.4" y="70" width="2.6" height="42" rx=".8"/>
+ </g>
+ <g fill="#f0883e" stroke="#a8541c" stroke-width=".5">
+  <rect x="137" y="70" width="2.6" height="42" rx=".8"/><rect x="140.6" y="70" width="2.6" height="42" rx=".8"/><rect x="144.2" y="70" width="2.6" height="42" rx=".8"/>
+  <rect x="147.8" y="70" width="2.6" height="42" rx=".8"/><rect x="151.4" y="70" width="2.6" height="42" rx=".8"/>
+ </g>
+ <!-- circuit frigorifique : aspiration, refoulement, détendeur -->
+ <g fill="none" stroke="#c98a55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M94 70 V64 H114 V92"/><path d="M126 92 V64 H146 V70"/><path d="M146 112 V136 H94 V112"/>
+ </g>
+ <circle cx="120" cy="136" r="3" fill="#8c95a0" stroke="#5c6570"/>
+ <g stroke="#fff" stroke-width="1.2" stroke-linecap="round" fill="none">
+  <path class="dash ref" d="M94 70 V64 H114 V92"/><path class="dash ref" d="M126 92 V64 H146 V70"/><path class="dash ref" d="M146 112 V136 H94 V112"/>
+ </g>
+ <!-- compresseur -->
+ <g class="comp">
+  <rect x="107" y="88" width="26" height="40" rx="11" fill="url(#wp-comp)" stroke="#1b2127"/>
+  <ellipse cx="120" cy="92" rx="11" ry="4" fill="#6b7580" opacity=".55"/>
+  <rect x="103" y="127" width="34" height="6" rx="2" fill="#4a535e"/>
+ </g>
+ <!-- circulation de l'eau -->
+ <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none">
+  <path class="dash src" d="M30 188 V80 H72"/><path class="dash src" d="M72 104 H46 V188"/>
+  <g class="direct"><path class="dash ch" d="M172 80 H236 V64"/><path class="dash ch" d="M264 64 V104 H172"/></g>
+  <g class="buf"><path class="dash chg" d="M168 80 H204 V128 H232"/><path class="dash chg" d="M232 186 H190 V104 H168"/>
+   <path class="dash ch" d="M251 118 V84 H236 V64"/><path class="dash ch" d="M264 64 V96 H280 V180 H270"/></g>
+ </g>
+</svg>`;
+
+  const TILES = [
+    ['power', 'mdi:flash', 'show_power', 'entity_power'],
+    ['heat', 'mdi:heat-wave', 'show_heat', 'entity_heat_power'],
+    ['cop', 'mdi:speedometer', 'show_cop', 'entity_cop'],
+    ['flow', 'mdi:thermometer-chevron-up', 'show_temps', 'entity_flow_temp'],
+    ['ret', 'mdi:thermometer-chevron-down', 'show_temps', 'entity_return_temp'],
+    ['delta', 'mdi:delta', 'show_temps', 'entity_flow_temp'],
+    ['buffer', 'mdi:storage-tank', 'show_temps', 'entity_buffer_temp'],
+    ['src_in', 'mdi:thermometer-water', 'show_source', 'entity_source_in_temp'],
+    ['src_out', 'mdi:thermometer-low', 'show_source', 'entity_source_out_temp'],
+    ['rate', 'mdi:pump', 'show_flow_rate', 'entity_flow_rate'],
+    ['energy', 'mdi:lightning-bolt-circle', 'show_energy', 'entity_energy'],
+    ['heat_energy', 'mdi:fire-circle', 'show_energy', 'entity_heat_energy'],
+    ['scop', 'mdi:chart-line', 'show_scop', 'entity_scop'],
+  ];
+  const SHOW = ['show_status', 'show_power', 'show_heat', 'show_cop', 'show_temps', 'show_source', 'show_flow_rate', 'show_energy', 'show_scop', 'animations'];
+
+  class ApplianceWaterHeatPumpCard extends HTMLElement {
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      const f = (re, dom) => ids.find((i) => (!dom || i.startsWith(dom + '.')) && re.test(i)) || '';
+      return {
+        entity_status: f(/pac|heat_?pump|pompe_a_chaleur|geotherm/i, 'climate'),
+        entity_power: f(/(pac|heat_?pump|pompe_a_chaleur|geotherm).*(power|puissance)/i, 'sensor'),
+        entity_heat_power: f(/(chaleur|heat_meter|thermi|multical|kamstrup).*(power|puissance)/i, 'sensor'),
+      };
+    }
+    static getConfigForm() {
+      const ent = (name, domain, extra = {}) => ({ name, selector: { entity: { domain, ...extra } } });
+      const RELAY = ['binary_sensor', 'switch', 'input_boolean', 'sensor'];
+      return {
+        schema: [
+          { name: 'name', selector: { text: {} } },
+          ent('entity_status', ['climate', 'sensor', 'select', 'input_select', 'water_heater']),
+          { type: 'grid', name: '', schema: [ent('entity_power', 'sensor'), ent('entity_heat_power', 'sensor'), ent('entity_cop', 'sensor')] },
+          { type: 'grid', name: '', schema: [ent('entity_flow_temp', 'sensor'), ent('entity_return_temp', 'sensor'), ent('entity_flow_rate', 'sensor')] },
+          { type: 'grid', name: '', schema: [ent('entity_source_in_temp', 'sensor'), ent('entity_source_out_temp', 'sensor')] },
+          { type: 'grid', name: '', schema: [{ name: 'buffer_tank', selector: { boolean: {} } }, ent('entity_buffer_temp', 'sensor')] },
+          { type: 'grid', name: '', schema: [ent('entity_energy', 'sensor'), ent('entity_heat_energy', 'sensor'), ent('entity_scop', 'sensor')] },
+          { type: 'grid', name: '', schema: [ent('entity_compressor', RELAY), ent('entity_source_pump', RELAY)] },
+          { type: 'grid', name: '', schema: [
+            { name: 'threshold', selector: { number: { min: 0, max: 2000, step: 5, mode: 'box', unit_of_measurement: 'W' } } },
+            { name: 'off_threshold', selector: { number: { min: 0, max: 500, step: 0.1, mode: 'box', unit_of_measurement: 'W' } } },
+            { name: 'source_threshold', selector: { number: { min: 0, max: 5000, step: 5, mode: 'box', unit_of_measurement: 'W' } } },
+            { name: 'compressor_threshold', selector: { number: { min: 0, max: 5000, step: 5, mode: 'box', unit_of_measurement: 'W' } } },
+            { name: 'heating_delay', selector: { number: { min: 0, max: 600, step: 1, mode: 'box', unit_of_measurement: 's' } } },
+          ] },
+          { type: 'grid', name: '', schema: SHOW.map((name) => ({ name, selector: { boolean: {} }, default: true })) },
+          { name: 'language', selector: { select: { options: Object.keys(T) } } },
+        ],
+      };
+    }
+    setConfig(c) {
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { ...Object.fromEntries(SHOW.map((k) => [k, true])), threshold: 100, off_threshold: 0.5, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 5; }
+    disconnectedCallback() { clearTimeout(this._dt); this._dt = null; }
+    // Chauffage seulement si la puissance reste au-dessus du seuil pendant heating_delay secondes
+    // (ex. pompes de puits et du primaire qui tournent ~20 s par jour pendant la veille).
+    _sustained(above) {
+      const d = (+this._c.heating_delay || 0) * 1000;
+      if (!above) { this._since = null; clearTimeout(this._dt); this._dt = null; return false; }
+      if (!d) return true;
+      const now = Date.now();
+      if (this._since == null) this._since = Math.min(now, Date.parse((this._st(this._c.entity_power) || {}).last_changed) || now);
+      const left = this._since + d - now;
+      if (left <= 0) return true;
+      if (!this._dt) this._dt = setTimeout(() => { this._dt = null; if (this._hass) this._render(); }, left + 50);
+      return false;
+    }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) {
+      const s = this._st(id); if (!s) return NaN;
+      const v = parseFloat(String(s.state).replace(',', '.'));
+      return isFinite(v) ? v : NaN;
+    }
+    _watts(id) {
+      const v = this._num(id); if (isNaN(v)) return NaN;
+      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
+      return u === 'kw' ? v * 1000 : u === 'mw' ? v * 1e6 : v;
+    }
+    // relais (binary_sensor, switch…) : on / off ; capteur numérique : marche au-dessus de 0
+    _on(id) {
+      const s = this._st(id); if (!s) return false;
+      const v = this._num(id);
+      return isNaN(v) ? /^(on|true|running|marche|heat|cool)/i.test(String(s.state)) : v > 0;
+    }
+    _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'en' ? 'en-US' : this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _kw(w) { return isNaN(w) ? ['--', ''] : w >= 1000 ? [this._fmt(w / 1000, 2), 'kW'] : [this._fmt(w, 0), 'W']; }
+    // Compteurs d'énergie toujours en kWh (Wh et MWh convertis), sans décimale au-delà de 1000 kWh
+    _kwh(id) {
+      const v = this._num(id), u = String(this._unit(id, 'kWh'));
+      const k = isNaN(v) ? NaN : /^wh$/i.test(u) ? v / 1000 : /^mwh$/i.test(u) ? v * 1000 : /^gwh$/i.test(u) ? v * 1e6 : v;
+      return [this._fmt(k, Math.abs(k) >= 1000 ? 0 : 1), 'kWh'];
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card><div class="wrap">
+        <div class="head"><div class="title" id="title"></div><div class="badge" id="badge"></div></div>
+        ${SVG}
+        <div class="tiles" id="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </div></ha-card>`;
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    // État : entité climate / texte si fournie, sinon puissance électrique (compresseur au-dessus du seuil)
+    _compute() {
+      const c = this._c, pw = this._watts(c.entity_power), heat = this._watts(c.entity_heat_power);
+      const s = this._st(c.entity_status);
+      const state = s ? String(s.state).toLowerCase() : '';
+      const action = s ? String((s.attributes || {}).hvac_action || '').toLowerCase() : '';
+      const txt = `${state} ${action}`, key = action || state;
+      let st;
+      if (/alarm|alarme|error|erreur|fault|défaut|defaut|lock|verrou/.test(txt)) st = 'alarm';
+      else if (s && /^(unavailable|unknown|off|arr[eê]t|eteint|éteint)$/.test(state)) st = 'off';
+      else if (/idle|standby|veille|attente/.test(action)) st = 'standby';
+      else if (/dhw|ecs|hot.?water|eau.?chaude|sanitaire/.test(txt) || (s && String(c.entity_status).startsWith('water_heater.'))) st = 'dhw';
+      else if (/cool|rafra|froid/.test(key) && key !== 'heat_cool') st = 'cooling';
+      else if (/heat|chauff|compress|running|marche|^on/.test(key)) st = 'heating';
+      else if (s) st = 'standby';
+      else if (!isNaN(pw)) st = this._sustained(pw > c.threshold) ? 'heating' : pw > c.off_threshold ? 'standby' : 'off';
+      else if (!isNaN(heat)) st = heat > 0 ? 'heating' : 'standby';
+      else st = 'standby';
+      const active = st === 'heating' || st === 'dhw' || st === 'cooling';
+      // Trois animations séparées, par paliers de puissance ou par entité (relais) :
+      // - circuit de chauffage au-dessus de threshold (une PAC tout-ou-rien chauffe souvent
+      //   avec le seul circulateur, ~40 W, compresseur à l'arrêt) ;
+      // - captage (pompes de puits / primaire) au-dessus de source_threshold : elles démarrent
+      //   avant le compresseur et s'arrêtent après ; sans réglage, captage = compresseur ;
+      // - compresseur et circuit frigorifique au-dessus de compressor_threshold (sinon threshold).
+      const pump = active && (isNaN(pw) || pw > c.threshold);
+      const run = c.entity_compressor ? this._on(c.entity_compressor) : active && (isNaN(pw) || pw > (c.compressor_threshold ?? c.threshold));
+      const src = c.entity_source_pump ? this._on(c.entity_source_pump)
+        : c.source_threshold != null && !isNaN(pw) ? pw > c.source_threshold || run : run;
+      const rate = this._num(c.entity_flow_rate);
+      // ballon tampon : la PAC charge le ballon (compresseur, ou débit côté PAC s'il est mesuré)
+      // et le circulateur distribue l'eau du ballon vers les émetteurs, compresseur arrêté ou non
+      if (c.buffer_tank) {
+        const chg = c.entity_flow_rate ? rate > 0 : run;
+        return { st, run, src, chg, circ: pump, pw, heat, rate };
+      }
+      const circ = c.entity_flow_rate ? rate > 0 : pump || heat > 0;
+      return { st, run, src, chg: false, circ, pw, heat, rate };
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, card = this._card, r = this._root;
+      const { st, run, src, chg, circ, pw, heat, rate } = this._compute();
+      const flow = this._num(c.entity_flow_temp), ret = this._num(c.entity_return_temp);
+      card.className = `${st} ${run ? 'run' : ''} ${src ? 'src' : ''} ${chg ? 'chg' : ''} ${circ ? 'circ' : ''} ${c.buffer_tank ? 'buffer' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      // départ / retour : bleu à 20 °C, rouge à 55 °C (températures de PAC, plus basses qu'une chaudière)
+      const tc = (t, d) => isNaN(t) ? d : `color-mix(in srgb, #e5392b ${Math.round(Math.max(0, Math.min(1, (t - 20) / 35)) * 100)}%, #3b8fe8)`;
+      card.style.setProperty('--wp-flowc', tc(flow, '#e5533d'));
+      card.style.setProperty('--wp-retc', tc(ret, '#3b8fe8'));
+      const buf = this._num(c.entity_buffer_temp);
+      card.style.setProperty('--wp-tankc', tc(isNaN(buf) ? flow : buf, '#e5533d'));
+
+      r.getElementById('title').textContent = c.name || this._t('name');
+      const badge = r.getElementById('badge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+      r.getElementById('dsp').textContent = st === 'off' ? 'OFF' : st === 'alarm' ? 'Err' : isNaN(flow) ? '--' : `${Math.round(flow)}°`;
+
+      // COP : capteur si fourni, sinon puissance thermique / puissance électrique quand le compresseur tourne
+      let cop = this._num(c.entity_cop);
+      if (!c.entity_cop && run && heat > 0 && pw > 0) cop = heat / pw;
+      const hasCop = c.entity_cop || (c.entity_heat_power && c.entity_power);
+      const V = {
+        power: [c.entity_power, ...this._kw(pw)],
+        heat: [c.entity_heat_power, ...this._kw(heat)],
+        cop: [hasCop, this._fmt(cop, 1), ''],
+        flow: [c.entity_flow_temp, this._fmt(flow, 1), '°C'],
+        ret: [c.entity_return_temp, this._fmt(ret, 1), '°C'],
+        delta: [c.entity_flow_temp && c.entity_return_temp, this._fmt(flow - ret, 1), 'K'],
+        buffer: [c.entity_buffer_temp, this._fmt(buf, 1), '°C'],
+        src_in: [c.entity_source_in_temp, this._fmt(this._num(c.entity_source_in_temp), 1), '°C'],
+        src_out: [c.entity_source_out_temp, this._fmt(this._num(c.entity_source_out_temp), 1), '°C'],
+        rate: [c.entity_flow_rate, this._fmt(rate, 2), this._unit(c.entity_flow_rate, 'l/h')],
+        energy: [c.entity_energy, ...this._kwh(c.entity_energy)],
+        heat_energy: [c.entity_heat_energy, ...this._kwh(c.entity_heat_energy)],
+        scop: [c.entity_scop, this._fmt(this._num(c.entity_scop), 2), ''],
+      };
+      TILES.forEach(([k, , opt, more]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [shown, val, unit] = V[k];
+        el.classList.toggle('hide', !shown || c[opt] === false);
+        el.querySelector('.lbl').textContent = this._t(k);
+        // valeur + unité en texte (l'unité vient de l'entité ou de la config)
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+        const id = k === 'cop' && !c.entity_cop ? c.entity_heat_power : c[more];
+        el.onclick = () => { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); };
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceWaterHeatPumpCard);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: 'Appliance – PAC eau/eau / Water heat pump',
+    description: 'Pompe à chaleur eau/eau ou géothermique animée : compresseur, captage, départ/retour, COP.', preview: true,
   });
 })();

@@ -16,9 +16,14 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler'];
+const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
-ok('customCards = 27',window.customCards.length===27,window.customCards.length);
+// card picker: every core card and every self-contained card listed exactly once
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump'];
+solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
+const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
+ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
+  [...wanted.filter(t=>!picked.includes(t)).map(t=>`missing ${t}`),...picked.filter(t=>!wanted.includes(t)).map(t=>`extra ${t}`),`${picked.length} entries`].join(', '));
 // config validation
 try{document.createElement('appliance-washer-card').setConfig({});ok('empty config throws',false)}catch(e){ok('empty config throws',/entity|power/.test(e.message),e.message)}
 
@@ -52,6 +57,10 @@ let c=card('dryer',{entity:'binary_sensor.d'},[mk('binary_sensor.d','on')]); ok(
 c=card('dryer',{entity:'sensor.d'},[mk('sensor.d','Refroidissement')]); ok('dryer cooling phase',has(c,'ph-cool'),c.wrap.className);
 c=card('dishwasher',{entity:'sensor.d'},[mk('sensor.d','Séchage')]); ok('dishwasher drying phase',has(c,'ph-dry'),c.wrap.className);
 c=card('dishwasher',{entity:'sensor.d'},[mk('sensor.d','running')]); ok('dishwasher wash phase',has(c,'ph-wash'),c.wrap.className);
+// Home Connect: raw program keys start with "laundry_" (contains "dry"), the washer must stay in the wash phase
+c=card('washer',{entity:'sensor.s',program:'select.p'},[mk('sensor.s','run'),mk('select.p','laundry_care_washer_program_cotton')]); ok('washer Home Connect key -> wash, not dry',has(c,'ph-wash')&&c.lcd()==='WASH',c.wrap.className+' '+c.lcd());
+c=card('washer',{entity:'sensor.s'},[mk('sensor.s','Drying')]); ok('washer Drying -> dry',has(c,'ph-dry'),c.wrap.className);
+c=card('washer',{entity:'sensor.s',program:'select.p'},[mk('sensor.s','run'),mk('select.p','wash_and_dry_60')]); ok('washer program wash_and_dry -> dry',has(c,'ph-dry'),c.wrap.className);
 
 // water heater
 c=card('water-heater',{switch:'switch.h',power:'sensor.p',temperature:'sensor.t',target_temperature:'sensor.c'},[mk('switch.h','on'),mk('sensor.p',2400,W),mk('sensor.t',45,T),mk('sensor.c',60,T)]);
@@ -99,6 +108,12 @@ c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','off')]); ok('tv me
 // water heater: grid power + solar router power
 c=card('water-heater',{power:'sensor.g',power_solar:'sensor.s',energy:'sensor.eg',energy_solar:'sensor.es'},[mk('sensor.g',0,W),mk('sensor.s',1200,W),mk('sensor.eg',2,{unit_of_measurement:'kWh'}),mk('sensor.es',3,{unit_of_measurement:'kWh'})]); ok('water heater solar only -> heating + solar-heat',has(c,'st-heating')&&has(c,'solar-heat')&&/Surplus solaire/.test(c.txt()),c.wrap.className+' '+c.txt());
 ok('water heater dual tiles',/Réseau/.test(c.sr.getElementById('stats').textContent)&&/Énergie solaire/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
+// energy tiles always in kWh (Wh / MWh converted, no decimals from 1000 kWh)
+const stx=(c)=>c.sr.getElementById('stats').textContent.replace(/\s/g,'');
+c=card('water-heater',{power:'sensor.g',energy:'sensor.eg',energy_solar:'sensor.es'},[mk('sensor.g',0,W),mk('sensor.eg',2055340.88,{unit_of_measurement:'Wh',device_class:'energy'}),mk('sensor.es',12.724874,{unit_of_measurement:'MWh',device_class:'energy'})]);
+ok('water heater energy Wh and MWh shown in kWh',/2055kWh/.test(stx(c))&&/12725kWh/.test(stx(c))&&!/Wh(?<!kWh)/.test(stx(c).replace(/kWh/g,'')),stx(c));
+c=card('washer',{entity:'switch.w',energy:'sensor.e'},[mk('switch.w','off'),mk('sensor.e',1234,{unit_of_measurement:'Wh',device_class:'energy'})]); ok('washer energy 1234 Wh -> 1,23 kWh',/1,23kWh/.test(stx(c)),stx(c));
+c=card('washer',{entity:'switch.w',energy:'sensor.e'},[mk('switch.w','off'),mk('sensor.e',0.456,{unit_of_measurement:'kWh',device_class:'energy'})]); ok('washer energy kWh unchanged',/0,46kWh/.test(stx(c)),stx(c));
 c=card('water-heater',{power:'sensor.g',power_solar:'sensor.s'},[mk('sensor.g',2000,W),mk('sensor.s',0,W)]); ok('water heater grid only -> heating, no solar-heat',has(c,'st-heating')&&!has(c,'solar-heat'),c.wrap.className);
 c=card('water-heater',{power:'sensor.g',power_solar:'sensor.s'},[mk('sensor.g',0,W),mk('sensor.s',0,W)]); ok('water heater both 0 -> not heating',!has(c,'st-heating'),c.wrap.className);
 // modes: comfort / eco / frost / off (radiator + towel dryer)
@@ -154,6 +169,40 @@ c=card('heat-pump',{entity:'climate.c'},[CL('heat','heating')]); ok('pac heating
 c=card('heat-pump',{entity:'climate.c'},[CL('heat','defrosting')]); ok('pac defrost',has(c,'st-defrost')&&/Dégivrage/.test(c.txt()),c.txt());
 c=card('heat-pump',{power:'sensor.p'},[mk('sensor.p',5,W)]); ok('pac off',has(c,'st-off'),c.wrap.className);
 
+// beer tap
+c=card('beer-tap',{entity:'switch.b',power:'sensor.p',temperature:'sensor.t',keg_level:'sensor.k'},[mk('switch.b','on'),mk('sensor.p',70,W),mk('sensor.t',3.2,T),mk('sensor.k',64,{unit_of_measurement:'%'})]); ok('beer cooling + lcd temp',has(c,'st-cooling')&&c.lcd()==='3,2°',c.wrap.className+' '+c.lcd());
+c=card('beer-tap',{entity:'switch.b',power:'sensor.p'},[mk('switch.b','on'),mk('sensor.p',3,W)]); ok('beer ready',has(c,'st-ready'),c.wrap.className);
+c=card('beer-tap',{power:'sensor.p',pouring:'binary_sensor.pour'},[mk('sensor.p',3,W),mk('binary_sensor.pour','on')]); ok('beer pouring',has(c,'st-pouring')&&/Service en cours/.test(c.txt()),c.txt());
+c=card('beer-tap',{power:'sensor.p',keg_level:'sensor.k'},[mk('sensor.p',3,W),mk('sensor.k',5,{unit_of_measurement:'%'})]); ok('beer keg low alert',has(c,'alert')&&/Fût presque vide/.test(c.txt()),c.txt());
+c=card('beer-tap',{entity:'switch.b',power:'sensor.p'},[mk('switch.b','off'),mk('sensor.p',0,W)]); ok('beer off',has(c,'st-off'),c.wrap.className);
+// av receiver
+c=card('av-receiver',{entity:'media_player.avr'},[mk('media_player.avr','on',{volume_level:0.45,source:'TV'})]); ok('avr playing + source + vol',has(c,'st-playing')&&c.lcd()==='TV'&&/Vol 45 %/.test(c.txt()),c.lcd()+' '+c.txt());
+c=card('avr'==='x'?'':'av-receiver',{entity:'media_player.avr'},[mk('media_player.avr','on',{volume_level:0.3,is_volume_muted:true})]); ok('avr muted',has(c,'st-muted')&&c.lcd()==='MUTE',c.lcd());
+c=card('av-receiver',{entity:'media_player.avr'},[mk('media_player.avr','standby')]); ok('avr standby',has(c,'st-standby'),c.wrap.className);
+c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',120,W)]); ok('avr plug playing',has(c,'st-playing')&&/En lecture/.test(c.txt()),c.txt());
+c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('avr off',has(c,'st-off'),c.wrap.className);
+
+// fan
+c=card('fan',{power:'sensor.p'},[mk('sensor.p',22,W)]); ok('fan speed 1 + osc',has(c,'st-fan_1')&&has(c,'osc')&&/Vitesse 1/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('fan',{power:'sensor.p'},[mk('sensor.p',35,W)]); ok('fan speed 2',has(c,'st-fan_2'),c.wrap.className);
+c=card('fan',{power:'sensor.p',oscillating:false},[mk('sensor.p',45,W)]); ok('fan speed 3 no osc',has(c,'st-fan_3')&&!has(c,'osc'),c.wrap.className);
+c=card('fan',{entity:'fan.f'},[mk('fan.f','on',{percentage:66,oscillating:true})]); ok('fan entity 66 %',has(c,'st-fan_2')&&has(c,'osc')&&/66 %/.test(c.txt()),c.txt());
+c=card('fan',{entity:'fan.f'},[mk('fan.f','off',{percentage:0})]); ok('fan entity off',has(c,'st-off'),c.wrap.className);
+c=card('fan',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('fan plug off',has(c,'st-off'),c.wrap.className);
+// ceiling fan
+c=card('ceiling-fan',{power:'sensor.p'},[mk('sensor.p',22,W)]); ok('ceiling fan speed 1',has(c,'st-fan_1')&&!has(c,'osc')&&/Vitesse 1/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('ceiling-fan',{power:'sensor.p'},[mk('sensor.p',45,W)]); ok('ceiling fan speed 3 spins',has(c,'st-fan_3')&&getComputedStyle(c.sr.querySelector('.cf-blades')).animationName==='ac-rot',getComputedStyle(c.sr.querySelector('.cf-blades')).animationName);
+c=card('ceiling-fan',{entity:'fan.f',light:'light.l'},[mk('fan.f','on',{percentage:50}),mk('light.l','on')]); ok('ceiling fan entity 50 % + light',has(c,'st-fan_2')&&has(c,'lights-on')&&/50 %/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('ceiling-fan',{power:'sensor.p',light:'light.l'},[mk('sensor.p',0,W),mk('light.l','on')]); ok('ceiling fan light only',has(c,'st-lights')&&has(c,'lights-on'),c.wrap.className);
+c=card('ceiling-fan',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',0,W),mk('switch.s','off')]); ok('ceiling fan off',has(c,'st-off')&&!has(c,'lights-on'),c.wrap.className);
+// tool battery charger
+c=card('tool-charger',{power:'sensor.p'},[mk('sensor.p',45,W)]); ok('charger charging + gauge loop',has(c,'st-charging')&&has(c,'seq')&&/En charge/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('tool-charger',{power:'sensor.p'},[mk('sensor.p',1.8,W)]); ok('charger charged (maintenance)',has(c,'st-charged')&&c.sr.querySelectorAll('.tc-g.on').length===4,c.wrap.className);
+c=card('tool-charger',{power:'sensor.p'},[mk('sensor.p',0.3,W)]); ok('charger standby',has(c,'st-standby'),c.wrap.className);
+c=card('tool-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',45,W),mk('sensor.b',60,{unit_of_measurement:'%'})]); ok('charger level 60 %',!has(c,'seq')&&c.sr.querySelectorAll('.tc-g.on').length===2&&c.sr.querySelector('.tc-g3').classList.contains('next')&&/60%Batterie/.test(stx(c)),stx(c));
+c=card('tool-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',30,W),mk('sensor.b',100,{unit_of_measurement:'%'})]); ok('charger full at 100 %',has(c,'st-charged'),c.wrap.className);
+c=card('tool-charger',{power:'sensor.p',switch:'switch.s'},[mk('switch.s','off'),mk('sensor.p',0,W)]); ok('charger off',has(c,'st-off'),c.wrap.className);
+
 // fridge
 c=card('fridge',{power:'sensor.p',temperature:'sensor.t',freezer_temperature:'sensor.f'},[mk('sensor.p',90,W),mk('sensor.t',4,T),mk('sensor.f',-18,T)]);
 ok('fridge cooling',has(c,'st-cooling'),c.wrap.className); ok('fridge LCD 4°',c.lcd()==='4°',c.lcd()); ok('fridge no alert',!has(c,'alert'));
@@ -163,6 +212,22 @@ ok('fridge door transform applied',getComputedStyle(c.sr.querySelector('.fr-door
 c=card('fridge',{temperature:'sensor.t',freezer_temperature:'sensor.f',max_temperature:3},[mk('sensor.t',4,T),mk('sensor.f',-8,T)]);
 ok('fridge custom thresholds alert',has(c,'warm'),c.wrap.className);
 c=card('fridge',{power:'sensor.p',freezer_door:'binary_sensor.fz'},[mk('sensor.p',1,W),mk('binary_sensor.fz','on')]); ok('freezer door open',has(c,'fz-open'));
+// fridge layouts
+['top','bottom','french','american'].forEach(st=>{c=card('fridge',{style:st,power:'sensor.p',temperature:'sensor.t',door:'binary_sensor.d'},[mk('sensor.p',90,W),mk('sensor.t',4,T),mk('binary_sensor.d','on')]);
+  ok(`fridge ${st} cooling + LCD`,has(c,'st-cooling')&&c.lcd()==='4°',c.lcd()); ok(`fridge ${st} door opens`,[...c.sr.querySelectorAll('.fr-door')].every(d=>getComputedStyle(d).transform!=='none'));});
+c=card('fridge',{style:'bottom',power:'sensor.p',freezer_door:'binary_sensor.fz'},[mk('sensor.p',1,W),mk('binary_sensor.fz','on')]); ok('fridge bottom drawer pulled out',getComputedStyle(c.sr.querySelector('.fzd-pull')).transform!=='none');
+c=card('fridge',{style:'american',power:'sensor.p'},[mk('sensor.p',90,W)]); ok('fridge american dispenser',!!c.sr.querySelector('.ib-light')&&!!c.sr.querySelector('.fz-l'));
+c=card('fridge',{style:'nope',power:'sensor.p'},[mk('sensor.p',90,W)]); ok('fridge unknown style falls back to top',!c.sr.querySelector('.fzd')&&!!c.sr.querySelector('.fz-door'));
+// dual-zone wine cooler
+c=card('wine-cooler',{power:'sensor.p',temperature:'sensor.t',zone2_temperature:'sensor.t2'},[mk('sensor.p',70,W),mk('sensor.t',14,T),mk('sensor.t2',8,T)]);
+ok('wine dual LCDs',c.lcd()==='14°'&&c.sr.querySelector('.lcd2').textContent==='8°',c.sr.querySelector('.lcd2').textContent); ok('wine dual tiles',/Zonehaute/.test(stx(c))&&/Zonebasse/.test(stx(c)),stx(c));
+c=card('wine-cooler',{power:'sensor.p',temperature:'sensor.t',zone2_temperature:'sensor.t2',max_temperature_2:10},[mk('sensor.p',70,W),mk('sensor.t',14,T),mk('sensor.t2',12,T)]); ok('wine dual lower zone alert',has(c,'warm'),c.wrap.className);
+// several cards of the same kind stay independent
+{const a=card('washer',{power:'sensor.w1',remaining:'sensor.r1'},[mk('sensor.w1',500,W),mk('sensor.r1',30),mk('sensor.w2',0,W)]);
+ const b=card('washer',{power:'sensor.w2'},[mk('sensor.w1',500,W),mk('sensor.r1',30),mk('sensor.w2',0,W)]);
+ const ids=(x)=>[...x.sr.querySelectorAll('[id]')].map(e=>e.id).filter(i=>/^ac\d+-/.test(i));
+ ok('two washers independent',has(a,'st-running')&&!has(b,'st-running')&&!/Fin/.test(b.txt()),a.wrap.className+' / '+b.wrap.className);
+ ok('two washers unique SVG ids',ids(a).length>0&&ids(a).every(i=>!ids(b).includes(i)));}
 
 // language
 c=card('washer',{entity:'input_boolean.w'},[mk('input_boolean.w','on')],'en'); ok('English name',/Washing machine/.test(c.txt())&&/Washing/.test(c.txt()),c.txt());
@@ -325,6 +390,82 @@ c=rd({power:'sensor.p',window:'binary_sensor.w'},[mk('sensor.p',1200,W),mk('bina
 c=rd({power:'sensor.p'},[mk('sensor.p',1400,W)],'en'); ok('radiator English',/Electric radiator/.test(c.txt())&&/Heating/.test(c.txt()),c.txt());
 const s7=customElements.get('appliance-radiator-card').getStubConfig(hassOf([mk('climate.radiateur_salon','heat'),mk('sensor.radiateur_salon_power',0,W)]));
 ok('stub radiator uses climate',s7.entity==='climate.radiateur_salon'&&s7.power==='sensor.radiateur_salon_power',JSON.stringify(s7));
+// linky gauge: unit of the power sensor (W/VA, kW/kVA)
+const lk=(st,cfg={})=>card('linky',{entity_power:'sensor.p',...cfg},st);
+const gt=(c)=>c.sr.getElementById('gtxt').textContent, needle=(c)=>c.sr.getElementById('needle').style.transform;
+c=lk([mk('sensor.p',1220,{unit_of_measurement:'VA',device_class:'apparent_power'})]); ok('linky gauge VA keeps VA',gt(c)==='1220 VA',gt(c));
+c=lk([mk('sensor.p',4.5,{unit_of_measurement:'kVA',device_class:'apparent_power'})],{subscribed_power:9}); ok('linky gauge kVA converted to VA',gt(c)==='4500 VA'&&needle(c)==='rotate(0deg)',gt(c)+' '+needle(c));
+c=lk([mk('sensor.p',1.2,{unit_of_measurement:'kW',device_class:'power'})]); ok('linky gauge kW converted to W',gt(c)==='1200 W',gt(c));
+c=lk([mk('sensor.p',600,W)]); ok('linky gauge W',gt(c)==='600 W',gt(c));
+// linky three-phase: cut-off per phase at subscribed/3, gauge follows the most loaded phase
+const VA={unit_of_measurement:'VA',device_class:'apparent_power'}, L3={entity_power_l1:'sensor.l1',entity_power_l2:'sensor.l2',entity_power_l3:'sensor.l3',subscribed_power:15};
+const byId=(c,id)=>c.sr.getElementById(id), deg=(c)=>parseFloat(needle(c).slice(7));
+const ph=(a,b,d)=>[mk('sensor.l1',a,VA),mk('sensor.l2',b,VA),mk('sensor.l3',d,VA)];
+ok('linky single-phase: no phase bars, no active line',(c=lk([mk('sensor.p',600,W)]),byId(c,'phases').style.display==='none'&&byId(c,'gact').style.display==='none'),byId(c,'phases').style.display);
+c=lk([mk('sensor.p',1450,VA),...ph(250,500,700)],L3);
+ok('linky 3-phase gauge follows most loaded phase',gt(c)==='L3 · 700 VA'&&Math.abs(deg(c)+64.8)<0.01,gt(c)+' '+needle(c));
+ok('linky 3-phase bars',byId(c,'phases').style.display===''&&parseFloat(byId(c,'ph3').style.width)===14&&byId(c,'phv2').textContent==='500 VA',byId(c,'ph3').style.width+' '+byId(c,'phv2').textContent);
+ok('linky 3-phase subscribed per phase',/15 kVA · 5 kVA par phase/.test(byId(c,'gsub').textContent),byId(c,'gsub').textContent);
+c=lk([mk('sensor.p',5600,VA),...ph(300,4900,400)],L3);
+ok('linky 3-phase alert on one phase while total is low',byId(c,'meter').classList.contains('over')&&gt(c)==='L2 · 4900 VA',byId(c,'meter').className+' '+gt(c));
+c=lk([...ph(1.2,0.5,0.25).map((s)=>({...s,attributes:{unit_of_measurement:'kVA'}}))],{...L3,entity_power:''});
+ok('linky 3-phase kVA converted, total from phases',byId(c,'phv1').textContent==='1200 VA'&&byId(c,'val').textContent==='1950 VA',byId(c,'phv1').textContent+' '+byId(c,'val').textContent);
+c=lk([...ph(250,500,700)],{...L3,show_phases:false}); ok('linky show_phases:false hides the bars',byId(c,'phases').style.display==='none'&&gt(c)==='L3 · 700 VA',byId(c,'phases').style.display);
+// linky phase_gauge: needles (default) / cycle / max
+const ndeg=(c,i)=>parseFloat(byId(c,`n${i}`).style.transform.slice(7)), vis=(c,id)=>byId(c,id).style.display!=='none';
+c=lk([...ph(1250,2500,3750)],L3);
+ok('linky needles (default): one needle per phase',!vis(c,'needle')&&[1,2,3].every((i)=>vis(c,`n${i}`))&&Math.abs(ndeg(c,1)+45)<0.01&&Math.abs(ndeg(c,2))<0.01&&Math.abs(ndeg(c,3)-45)<0.01,[1,2,3].map((i)=>ndeg(c,i)).join(' '));
+ok('linky needles: bar labels in needle colours',byId(c,'phl1').style.color!==''&&byId(c,'phl1').style.color!==byId(c,'phl2').style.color,byId(c,'phl1').style.color);
+c=lk([...ph(4350,4350,4350)],{...L3,phase_gauge:'cycle'});
+const seen=[0,1,2,3].map((k)=>{c.el._cycle=k;c.el.hass=c.h;return gt(c).slice(0,2);});
+ok('linky cycle: L1 → L2 → L3 → L1 even when tied',seen.join(',')==='L1,L2,L3,L1'&&vis(c,'needle')&&!vis(c,'n1'),seen.join(','));
+ok('linky cycle: current phase label in bold',byId(c,'phl1').classList.contains('cur')&&!byId(c,'phl2').classList.contains('cur'),byId(c,'phl1').className);
+c=lk([mk('sensor.l1',800,VA),mk('sensor.l3',600,VA)],{...L3,phase_gauge:'cycle'}); c.el._cycle=1; c.el.hass=c.h;
+ok('linky cycle skips a missing phase',gt(c)==='L3 · 600 VA',gt(c));
+c=lk([...ph(300,4900,400)],{...L3,phase_gauge:'cycle'}); c.el._cycle=0; c.el.hass=c.h;
+ok('linky cycle: alert follows the most loaded phase',gt(c)==='L1 · 300 VA'&&byId(c,'meter').classList.contains('over'),gt(c)+' '+byId(c,'meter').className);
+c=lk([...ph(250,500,700)],{...L3,phase_gauge:'max'});
+ok('linky max: single needle on the most loaded phase',vis(c,'needle')&&!vis(c,'n3')&&gt(c)==='L3 · 700 VA'&&Math.abs(deg(c)+64.8)<0.01,gt(c)+' '+needle(c));
+// linky active power from a W sensor: line under the gauge + LCD page, gauge stays in VA
+c=lk([mk('sensor.p',1220,VA),mk('sensor.w',506,W)],{entity_active_power:'sensor.w'});
+byId(c,'b2').click();
+ok('linky active power line and LCD page',byId(c,'gact').textContent==='Active : 506 W'&&byId(c,'lab').textContent==='PUISS. ACTIVE'&&byId(c,'val').textContent==='506 W'&&gt(c)==='1220 VA',byId(c,'gact').textContent+' | '+byId(c,'lab').textContent+' '+byId(c,'val').textContent+' | '+gt(c));
+c=lk([mk('sensor.p',1220,VA),mk('sensor.w',0.506,{unit_of_measurement:'kW',device_class:'power'})],{entity_active_power:'sensor.w',language:'en'});
+ok('linky active power kW converted (en)',byId(c,'gact').textContent==='Active : 506 W',byId(c,'gact').textContent);
+// linky LCD pages: "LABEL=value" for one full turn of the screen
+const pages=(c)=>{c.el._page=0;c.el._renderLcd();const out=[];for(let i=0;i<20;i++){const p=`${byId(c,'lab').textContent}=${byId(c,'val').textContent}`;if(out[0]===p)break;out.push(p);byId(c,'b2').click();}return out;};
+const WH={unit_of_measurement:'Wh',device_class:'energy'}, KWH={unit_of_measurement:'kWh',device_class:'energy'};
+c=lk([mk('sensor.p',600,VA),mk('sensor.hp',4246.866,KWH),mk('sensor.hc',7038.648,KWH)],{entity_hp:'sensor.hp',entity_hc:'sensor.hc',hc_ranges:''});
+ok('linky HP/HC pages kept, period page renamed',pages(c).join('|')==='PUISSANCE=600 VA|INDEX HP=4247 kWh|INDEX HC=7039 kWh|PÉRIODE=HEURES PLEINES',pages(c).join('|'));
+c=lk([mk('sensor.p',600,VA),mk('sensor.hp',4246866,WH)],{entity_hp:'sensor.hp',show_tariff:false});
+ok('linky index in Wh converted to kWh',pages(c).includes('INDEX HP=4247 kWh'),pages(c).join('|'));
+const T6=['bleu_hp','bleu_hc','blanc_hp','blanc_hc','rouge_hp','rouge_hc'];
+c=lk([mk('sensor.p',600,VA),...T6.map((k,i)=>mk(`sensor.${k}`,(i+1)*1000000,WH)),mk('sensor.hp',1,KWH)],
+  {entity_hp:'sensor.hp',indexes:T6.map((k)=>({entity:`sensor.${k}`,name:k.replace('_',' ')})),show_tariff:false});
+ok('linky 6 Tempo indexes replace HP/HC',pages(c).join('|')==='PUISSANCE=600 VA|BLEU HP=1000 kWh|BLEU HC=2000 kWh|BLANC HP=3000 kWh|BLANC HC=4000 kWh|ROUGE HP=5000 kWh|ROUGE HC=6000 kWh',pages(c).join('|'));
+c=lk([mk('sensor.p',600,VA),mk('sensor.s1',12.5,{...KWH,friendly_name:'Semaine HP'}),mk('sensor.s2','unavailable',KWH)],{indexes:['sensor.s1','sensor.s2'],show_tariff:false});
+ok('linky indexes as ids: friendly name, unavailable shows —',pages(c).join('|')==='PUISSANCE=600 VA|SEMAINE HP=13 kWh|SENSOR.S2=—',pages(c).join('|'));
+const INJ={entity_injection:'sensor.eait',entity_power_injection:'sensor.sinsti',show_index:false,show_tariff:false};
+c=lk([mk('sensor.p',0,VA),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',1830,VA)],INJ);
+ok('linky injection pages',pages(c).join('|')==='PUISSANCE=0 VA|INJECTION=1830 VA|INDEX INJECTION=11256 kWh',pages(c).join('|'));
+ok('linky prod LED lit while injecting',vis(c,'ledpw')&&byId(c,'ledp').classList.contains('on'),byId(c,'ledp').className);
+c=lk([mk('sensor.p',900,VA),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',0,VA)],INJ);
+ok('linky prod LED off at 0',vis(c,'ledpw')&&!byId(c,'ledp').classList.contains('on'),byId(c,'ledp').className);
+c=lk([mk('sensor.p',900,VA),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',500,VA)],{...INJ,show_injection:false});
+ok('linky show_injection:false hides pages and LED',pages(c).join('|')==='PUISSANCE=900 VA'&&!vis(c,'ledpw'),pages(c).join('|'));
+c=lk([mk('sensor.p',900,VA)]); ok('linky no injection entity: no prod LED',!vis(c,'ledpw'),byId(c,'ledpw').style.display);
+c=lk([mk('sensor.p',900,VA),mk('sensor.eait',11256.179,KWH),mk('sensor.t','HC')],{entity_injection:'sensor.eait',show_index:false,entity_tariff:'sensor.t',language:'en'});
+ok('linky injection + period (en)',pages(c).join('|')==='POWER=900 VA|EXPORT INDEX=11256 kWh|PERIOD=OFF-PEAK HOURS',pages(c).join('|'));
+// linky three-phase Tempo + injection: indexes and injection live alongside the per-phase gauge
+c=lk([...ph(250,4900,700),...T6.map((k,i)=>mk(`sensor.${k}`,(i+1)*1000000,WH)),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',1830,VA)],
+  {...L3,entity_power:'',indexes:T6.map((k)=>({entity:`sensor.${k}`,name:k.replace('_',' ')})),entity_injection:'sensor.eait',entity_power_injection:'sensor.sinsti',show_tariff:false});
+ok('linky 3-phase + Tempo + injection: pages',pages(c).join('|')==='PUISSANCE=5850 VA|BLEU HP=1000 kWh|BLEU HC=2000 kWh|BLANC HP=3000 kWh|BLANC HC=4000 kWh|ROUGE HP=5000 kWh|ROUGE HC=6000 kWh|INJECTION=1830 VA|INDEX INJECTION=11256 kWh',pages(c).join('|'));
+ok('linky 3-phase + Tempo + injection: phase alert, bars and prod LED',byId(c,'meter').classList.contains('over')&&byId(c,'phases').style.display===''&&byId(c,'phv2').textContent==='4900 VA'&&vis(c,'ledpw')&&byId(c,'ledp').classList.contains('on'),byId(c,'meter').className+' '+byId(c,'phv2').textContent+' '+byId(c,'ledp').className);
+// linky HP/HC LED: lit in both periods (HP was drawn dimmed and looked off)
+const lit=(c)=>{const s=getComputedStyle(byId(c,'ledt'));return s.boxShadow!==''&&s.boxShadow!=='none';};
+c=lk([mk('sensor.p',600,VA),mk('sensor.t','HP')],{entity_tariff:'sensor.t'}); ok('linky HP LED lit',byId(c,'ledt').className==='led hp'&&byId(c,'ledtl').textContent==='HP'&&lit(c),byId(c,'ledt').className+' '+getComputedStyle(byId(c,'ledt')).boxShadow);
+c=lk([mk('sensor.p',600,VA),mk('sensor.t','HC')],{entity_tariff:'sensor.t'}); ok('linky HC LED lit',byId(c,'ledt').className==='led hc'&&byId(c,'ledtl').textContent==='HC'&&lit(c),byId(c,'ledt').className+' '+getComputedStyle(byId(c,'ledt')).boxShadow);
+document.querySelectorAll('appliance-linky-card').forEach((e)=>e.remove()); // keep the SVG id check about the core cards
 // live update
 c=card('washer',{entity:'input_boolean.w'},[mk('input_boolean.w','off')]); c.el.hass=hassOf([mk('input_boolean.w','on')]); ok('live update off->running',has(c,'st-running'),c.wrap.className);
 
@@ -332,6 +473,60 @@ c=card('washer',{entity:'input_boolean.w'},[mk('input_boolean.w','off')]); c.el.
 c=card('washer',{entity:'sensor.s'},[mk('sensor.s','spin')]); ok('spin drum animated',getComputedStyle(c.sr.querySelector('.drum')).animationName==='ac-rot',getComputedStyle(c.sr.querySelector('.drum')).animationName);
 c=card('washer',{entity:'sensor.s',animations:false},[mk('sensor.s','spin')]); ok('animations:false disables',getComputedStyle(c.sr.querySelector('.drum')).animationName==='none',getComputedStyle(c.sr.querySelector('.drum')).animationName);
 c=card('washer',{entity:'input_boolean.w'},[mk('input_boolean.w','off')]); ok('idle drum static',getComputedStyle(c.sr.querySelector('.drum')).animationName==='none');
+
+// water heat pump (self-contained card)
+{
+const wp=(st,cfg={})=>card('water-heat-pump',cfg,st), hc=(c)=>c.sr.querySelector('ha-card').className, badge=(c)=>c.sr.getElementById('badge').textContent;
+const tile=(c,k)=>c.sr.querySelector(`.tile[data-k="${k}"]`), tv=(c,k)=>tile(c,k).querySelector('.v').textContent, shown=(c,k)=>!tile(c,k).classList.contains('hide');
+const KW={unit_of_measurement:'kW',device_class:'power'}, P={entity_power:'sensor.p',entity_heat_power:'sensor.h'};
+ok('registered water-heat-pump',customElements.get('appliance-water-heat-pump-card'));
+c=wp([mk('sensor.p',1200,W)],{entity_power:'sensor.p'}); ok('water heat pump running from power',/\bheating\b/.test(hc(c))&&/\brun\b/.test(hc(c))&&badge(c)==='Chauffage',hc(c)+' '+badge(c));
+c=wp([mk('sensor.p',3,W)],{entity_power:'sensor.p'}); ok('water heat pump standby under threshold',/\bstandby\b/.test(hc(c))&&!/\brun\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',0.3,W)],{entity_power:'sensor.p'}); ok('water heat pump off under off_threshold (default 0.5 W)',/\boff\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',3,W)],{entity_power:'sensor.p',off_threshold:4.5}); ok('water heat pump off_threshold (float) sets off vs standby',/\boff\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',5,W)],{entity_power:'sensor.p',off_threshold:4.5}); ok('water heat pump standby above off_threshold',/\bstandby\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',36,W)],{entity_power:'sensor.p',threshold:25,compressor_threshold:300}); ok('water heat pump circulation pump only: heating, water flows, compressor still',/\bheating\b/.test(hc(c))&&/\bcirc\b/.test(hc(c))&&!/\brun\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',1800,W)],{entity_power:'sensor.p',threshold:25,compressor_threshold:300}); ok('water heat pump compressor above compressor_threshold',/\bheating\b/.test(hc(c))&&/\brun\b/.test(hc(c)),hc(c));
+{ // cycle of an on/off heat pump: circulation pump, then source pumps, then compressor, then source pumps again
+const CY={entity_power:'sensor.p',threshold:25,source_threshold:150,compressor_threshold:800}, on=(c,k)=>new RegExp(`\\b${k}\\b`).test(hc(c));
+const steps=[[36,'circulation only',[1,0,0]],[300,'source pumps first',[1,1,0]],[2600,'compressor',[1,1,1]],[300,'source pumps last',[1,1,0]]];
+steps.forEach(([w,name,[ci,sr,ru]])=>{c=wp([mk('sensor.p',w,W)],CY); ok(`water heat pump cycle: ${name} (${w} W)`,on(c,'circ')===!!ci&&on(c,'src')===!!sr&&on(c,'run')===!!ru,hc(c));});
+c=wp([mk('sensor.p',2600,W)],{entity_power:'sensor.p',threshold:25,compressor_threshold:800}); ok('water heat pump without source_threshold: source loop follows the compressor',on(c,'src')&&on(c,'run'),hc(c));
+c=wp([mk('sensor.p',36,W),mk('binary_sensor.comp','off'),mk('binary_sensor.well','on')],{entity_power:'sensor.p',threshold:25,entity_compressor:'binary_sensor.comp',entity_source_pump:'binary_sensor.well'}); ok('water heat pump relay entities: source pump on, compressor off',on(c,'src')&&!on(c,'run'),hc(c));
+c=wp([mk('sensor.p',2600,W),mk('sensor.comp_hz',58),mk('switch.well','on')],{entity_power:'sensor.p',threshold:25,entity_compressor:'sensor.comp_hz',entity_source_pump:'switch.well'}); ok('water heat pump relay entities: numeric compressor sensor > 0 -> running',on(c,'src')&&on(c,'run'),hc(c));
+}
+{ // buffer tank: the heat pump charges the tank, the circulation pump feeds the emitters from the tank
+const BT={entity_power:'sensor.p',threshold:25,compressor_threshold:800,buffer_tank:true}, on=(c,k)=>new RegExp(`\\b${k}\\b`).test(hc(c));
+c=wp([mk('sensor.p',36,W)],BT); ok('water heat pump buffer: compressor off, emitters fed from the tank',on(c,'buffer')&&on(c,'circ')&&!on(c,'chg')&&!on(c,'run'),hc(c));
+c=wp([mk('sensor.p',2600,W)],BT); ok('water heat pump buffer: compressor on, tank charging',on(c,'chg')&&on(c,'run')&&on(c,'circ'),hc(c));
+c=wp([mk('sensor.p',2600,W),mk('sensor.rate',0,{unit_of_measurement:'m³/h'})],{...BT,entity_flow_rate:'sensor.rate'}); ok('water heat pump buffer: charging follows the heat pump flow rate',!on(c,'chg')&&on(c,'circ'),hc(c));
+c=wp([mk('sensor.p',36,W),mk('sensor.buf',42.5,T)],{...BT,entity_buffer_temp:'sensor.buf'}); ok('water heat pump buffer temperature tile',shown(c,'buffer')&&tv(c,'buffer')==='42,5°C'&&c.el.shadowRoot.querySelector('ha-card').style.getPropertyValue('--wp-tankc').includes('color-mix'),tv(c,'buffer'));
+c=wp([mk('sensor.p',36,W)],{entity_power:'sensor.p',threshold:25}); ok('water heat pump without buffer_tank: direct circuit, no buffer tile',!on(c,'buffer')&&!shown(c,'buffer'),hc(c));
+}
+{ // energy counters always in kWh (Wh / MWh converted)
+const tvn=(c,k)=>tv(c,k).replace(/[\s ]/g,''), E={entity_power:'sensor.p',entity_energy:'sensor.e',entity_heat_energy:'sensor.q'};
+c=wp([mk('sensor.p',0,W),mk('sensor.e',4693267,{unit_of_measurement:'Wh',device_class:'energy'}),mk('sensor.q',16.154,{unit_of_measurement:'MWh',device_class:'energy'})],E);
+ok('water heat pump energy Wh and MWh shown in kWh',tvn(c,'energy')==='4693kWh'&&tvn(c,'heat_energy')==='16154kWh',tvn(c,'energy')+' '+tvn(c,'heat_energy'));
+c=wp([mk('sensor.p',0,W),mk('sensor.e',12.34,{unit_of_measurement:'kWh',device_class:'energy'}),mk('sensor.q','unavailable',{unit_of_measurement:'Wh'})],E);
+ok('water heat pump energy kWh kept (1 decimal under 1000), unavailable shows --',tvn(c,'energy')==='12,3kWh'&&tvn(c,'heat_energy')==='--kWh',tvn(c,'energy')+' '+tvn(c,'heat_energy'));
+}
+c=wp([mk('sensor.p',900,W)],{entity_power:'sensor.p',heating_delay:60}); ok('water heat pump heating_delay: short spike stays standby',/\bstandby\b/.test(hc(c))&&!/\brun\b/.test(hc(c)),hc(c));
+c.el._since-=61000; c.el.hass=c.h; ok('water heat pump heating_delay: sustained power -> heating',/\bheating\b/.test(hc(c))&&/\brun\b/.test(hc(c)),hc(c));
+c.el.hass=hassOf([mk('sensor.p',0.4,W)]); c.el.hass=hassOf([mk('sensor.p',900,W)]); ok('water heat pump heating_delay: restarts after dropping below',/\bstandby\b/.test(hc(c)),hc(c));
+c=wp([{...mk('sensor.p',900,W),last_changed:new Date(Date.now()-120000).toISOString()}],{entity_power:'sensor.p',heating_delay:60}); ok('water heat pump heating_delay: power steady for 2 min at load -> heating',/\bheating\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',1500,W),mk('sensor.h',5.25,KW)],P); ok('water heat pump COP computed (heat / electric)',tv(c,'cop')==='3,5'&&tv(c,'heat')==='5,25kW',tv(c,'cop')+' '+tv(c,'heat'));
+c=wp([mk('sensor.p',1500,W),mk('sensor.h',5.25,KW),mk('sensor.cop',4.2)],{...P,entity_cop:'sensor.cop'}); ok('water heat pump COP sensor wins',tv(c,'cop')==='4,2',tv(c,'cop'));
+c=wp([mk('sensor.p',1500,W)],{entity_power:'sensor.p'}); ok('water heat pump: no COP tile without heat power',!shown(c,'cop')&&!shown(c,'src_in')&&shown(c,'power'));
+c=wp([mk('climate.pac','heat',{hvac_action:'idle'}),mk('sensor.p',40,W)],{entity_status:'climate.pac',entity_power:'sensor.p'}); ok('water heat pump climate idle -> standby',/\bstandby\b/.test(hc(c)),hc(c));
+c=wp([mk('climate.pac','cool',{hvac_action:'cooling'}),mk('sensor.p',900,W)],{entity_status:'climate.pac',entity_power:'sensor.p',language:'en'}); ok('water heat pump cooling (en)',/\bcooling\b/.test(hc(c))&&badge(c)==='Cooling',hc(c)+' '+badge(c));
+c=wp([mk('water_heater.pac','heat_pump'),mk('sensor.p',900,W)],{entity_status:'water_heater.pac',entity_power:'sensor.p'}); ok('water heat pump water_heater -> hot water',/\bdhw\b/.test(hc(c)),hc(c));
+c=wp([mk('sensor.p',900,W),mk('sensor.f',35,T),mk('sensor.r',30,T),mk('sensor.q',0,{unit_of_measurement:'m³/h'})],{entity_power:'sensor.p',entity_flow_temp:'sensor.f',entity_return_temp:'sensor.r',entity_flow_rate:'sensor.q'});
+ok('water heat pump ΔT and no circulation at zero flow',tv(c,'delta')==='5K'&&!/\bcirc\b/.test(hc(c))&&c.sr.getElementById('dsp').textContent==='35°',tv(c,'delta')+' '+hc(c));
+c.el.hass=hassOf([mk('sensor.p',900,W),mk('sensor.f',35,T),mk('sensor.r',30,T),mk('sensor.q',1.2,{unit_of_measurement:'m³/h'})]); ok('water heat pump circulation when flow > 0',/\bcirc\b/.test(hc(c))&&tv(c,'rate')==='1,2m³/h',hc(c)+' '+tv(c,'rate'));
+const we=document.createElement('appliance-water-heat-pump-card'); we.setConfig({}); const wf=[], walk=(s)=>s.forEach((i)=>i.schema?walk(i.schema):(i.selector?.boolean&&we._c[i.name]===true&&i.default!==true&&wf.push(i.name)));
+walk(customElements.get('appliance-water-heat-pump-card').getConfigForm().schema); ok('water heat pump editor switches shown on by default',wf.length===0,wf.join(', '));
+document.querySelectorAll('appliance-water-heat-pump-card').forEach((e)=>e.remove()); // keep the SVG id check about the core cards
+}
 
 // unique SVG ids (no clashes between cards)
 const ids=[...document.querySelectorAll('*')].filter(e=>e.shadowRoot).flatMap(e=>[...e.shadowRoot.querySelectorAll('[id]')].filter(x=>x.closest('svg')).map(x=>x.id));
@@ -344,6 +539,26 @@ const s1=customElements.get('appliance-washer-card').getStubConfig(gh); ok('stub
 const s2=customElements.get('appliance-fridge-card').getStubConfig(gh); ok('stub fridge',s2.temperature==='sensor.fridge_temperature'&&s2.power==='sensor.fridge_power',JSON.stringify(s2));
 const s3=customElements.get('appliance-oven-card').getStubConfig(hassOf([])); ok('stub with nothing still valid',Object.keys(s3).length>0,JSON.stringify(s3));
 ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions().columns>0);
+// visual editor: a switch that is on by default must show as on (schema default: true)
+['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler'].forEach((t)=>{
+  const C=customElements.get(`appliance-${t}-card`), e=document.createElement(`appliance-${t}-card`); e.setConfig({entity:"vacuum.test"}); // robots require an entity
+  const cfg=e._config||e._c, off=[], walk=(s)=>s.forEach((i)=>i.schema?walk(i.schema):(i.selector?.boolean&&cfg[i.name]===true&&i.default!==true&&off.push(i.name)));
+  walk(C.getConfigForm().schema); ok(`editor defaults ${t}`,off.length===0,`shown off but on: ${off.join(', ')}`);
+});
+// XSS: config strings and entity data must never be rendered as HTML (self-contained cards)
+{const X='"><b class="xss">x</b><b class="xss" ', U={unit_of_measurement:X};
+ const xs=[
+  ['aquarium',{name:X,entity_power:'sensor.p'},[mk('sensor.p',5,U)]],
+  ['linky',{name:X,entity_power:'sensor.p'},[mk('sensor.p',500,U)]],
+  ['battery',{name:X,entity_soc:'sensor.s',entity_power:'sensor.p'},[mk('sensor.s',50,U),mk('sensor.p',100,U)]],
+  ['ev-charger',{name:X,car_color:X,entity_power:'sensor.p'},[mk('sensor.p',100,U)]],
+  ['pellet-boiler',{name:X,entity_power:'sensor.p'},[mk('sensor.p',100,U)]],
+  ['robot-vacuum-solo',{name:X,entity:'vacuum.v'},[mk('vacuum.v','cleaning',{fan_speed:X,battery_level:50})]],
+  ['robot-mower-solo',{name:X,entity:'lawn_mower.m',entity_next_start:'sensor.n'},[mk('lawn_mower.m','mowing',{}),mk('sensor.n',X)]],
+  ['gas-boiler',{name:X,entity_power:'sensor.p',entity_gas:'sensor.g',entity_energy:'sensor.e',price_per_unit:1,currency:X},[mk('sensor.p',100,U),mk('sensor.g',2,U),mk('sensor.e',3,U)]],
+  ['water-heat-pump',{name:X,entity_power:'sensor.p',entity_flow_temp:'sensor.f',entity_flow_rate:'sensor.q',entity_energy:'sensor.e'},[mk('sensor.p',900,U),mk('sensor.f',35,U),mk('sensor.q',1.2,U),mk('sensor.e',3,U)]],
+ ];
+ xs.forEach(([t,cfg,st])=>{const c=card(t,cfg,st); ok(`no HTML injection ${t}`,!c.sr.querySelector('.xss'),c.sr.querySelectorAll('.xss').length+' injected'); c.el.remove();});}
 ok('no page errors',__errors.length===0,__errors.join('; '));
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;

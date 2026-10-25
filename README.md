@@ -1,10 +1,11 @@
-# Appliance Cards for Home Assistant
+# Appliance Électroménager Cards for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
 [![Validate](https://github.com/skyrotter/ha-appliance-electromenager-cards/actions/workflows/validate.yml/badge.svg)](https://github.com/skyrotter/ha-appliance-electromenager-cards/actions/workflows/validate.yml)
 
-Thirty-five Lovelace cards for household appliances, with **realistic animated illustrations** (tumbling drum, water and foam, spin with vibration, rotating spray arms, glowing oven element, turntable, opening fridge door, flickering pellet-stove flames, water flowing through a pool pump, a 3D printer building its part layer by layer, a chest freezer lid lifting, freezer drawers sliding out, a sun powering solar panels on their frame, a bathroom extractor fan drawing in steam, cooktop zones glowing under a steaming pot, an electric radiator sending heat waves, a dual-basket air fryer blowing hot air over fries, a coffee maker filling the carafe or the cup, a flat TV switching on like a real screen, a range hood sucking up the steam, an air-conditioning split and its outdoor heat pump, a heated towel rail glowing with warm towels, a homelab server rack with blinking LEDs and spinning fans, a desktop PC with RGB fans, a laptop with a live screen, a wine cooler with cold air flowing between the bottles, an aquarium with swimming fish, a Linky electricity meter, a home battery bank, an EV wallbox charging a car, a robot vacuum, a robot mower a pellet boiler feeding its burner through an auger and a gas boiler with its blue flames…), live status, power, energy and cost.
+Forty-one Lovelace cards for household appliances, with **realistic animated illustrations** (tumbling drum, water and foam, spin with vibration, rotating spray arms, glowing oven element, turntable, opening fridge door, flickering pellet-stove flames, water flowing through a pool pump, a 3D printer building its part layer by layer, a chest freezer lid lifting, freezer drawers sliding out, a sun powering solar panels on their frame, a bathroom extractor fan drawing in steam, cooktop zones glowing under a steaming pot, an electric radiator sending heat waves, a dual-basket air fryer blowing hot air over fries, a coffee maker filling the carafe or the cup, a flat TV switching on like a real screen, a range hood sucking up the steam, an air-conditioning split and its outdoor heat pump, a heated towel rail glowing with warm towels, a homelab server rack with blinking LEDs and spinning fans, a desktop PC with RGB fans, a laptop with a live screen, a wine cooler with cold air flowing between the bottles, an aquarium with swimming fish, a Linky electricity meter, a home battery bank, an EV wallbox charging a car, a robot vacuum, a robot mower a pellet boiler feeding its burner through an auger a gas boiler with its blue flames, a beer tap pouring a pint a home cinema amplifier with its dancing equalizer and an oscillating fan, a ceiling fan turning above its light, a tool battery charger lighting up its charge LEDs…), live status, power, energy and cost.
 They follow your Home Assistant theme (light/dark) and switch between **Italian**, **French** and **English** automatically.
+
 
 **▶ [Try it online / Essayer en ligne](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html)** · [Automated tests](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html)
 
@@ -41,6 +42,12 @@ They follow your Home Assistant theme (light/dark) and switch between **Italian*
 | Desktop PC | `custom:appliance-desktop-pc-card` |
 | Laptop | `custom:appliance-laptop-card` |
 | Wine cooler | `custom:appliance-wine-cooler-card` |
+| Beer tap | `custom:appliance-beer-tap-card` |
+| Home cinema amplifier (AV receiver) | `custom:appliance-av-receiver-card` |
+| Fan | `custom:appliance-fan-card` |
+| Ceiling fan | `custom:appliance-ceiling-fan-card` |
+| Tool battery charger | `custom:appliance-tool-charger-card` |
+| Generic appliance (your own image) | `custom:appliance-generic-card` |
 | Aquarium | `custom:appliance-aquarium-card` |
 | Linky electricity meter | `custom:appliance-linky-card` |
 | Home battery (solar storage) | `custom:appliance-battery-card` |
@@ -49,6 +56,7 @@ They follow your Home Assistant theme (light/dark) and switch between **Italian*
 | Robot mower | `custom:appliance-robot-mower-solo-card` |
 | Pellet boiler | `custom:appliance-pellet-boiler-card` |
 | Gas boiler | `custom:appliance-gas-boiler-card` |
+| Water-to-water / ground source heat pump | `custom:appliance-water-heat-pump-card` |
 
 Works with a simple smart plug (power sensor only) as well as with connected appliances (program, remaining time, progress, door…).
 
@@ -56,8 +64,10 @@ Works with a simple smart plug (power sensor only) as well as with connected app
 
 ### HACS (recommended)
 
-1. HACS → ⋮ → **Custom repositories** → add `https://github.com/skyrotter/ha-appliance-electromenager-cards`, category **Dashboard**.
-2. Search for **Appliance Cards**, install, then reload your browser (Ctrl+F5).
+1. In HACS, search for **Appliance Cards** and install it.
+2. Reload your browser (Ctrl+F5).
+
+If it doesn't show up in the search yet (it is waiting to be listed in the default HACS store), add it once as a custom repository: HACS → ⋮ → **Custom repositories** → `https://github.com/skyrotter/ha-appliance-electromenager-cards`, category **Dashboard**.
 
 ### Manual
 
@@ -74,13 +84,14 @@ All cards have a visual editor. When added from the card picker, entities are de
 |---|---|
 | `entity` | Status entity: `switch`, `input_boolean`, `binary_sensor`, `sensor`, `input_select`, `water_heater`… |
 | `power` | Power sensor (W or kW) |
-| `energy` | Energy sensor (kWh) — e.g. today's consumption |
+| `energy` | Energy sensor (Wh, kWh or MWh, shown in kWh) — e.g. today's consumption |
 | `cost` | Cost sensor (any currency) |
 | `switch` | Switch controlled by the power button (button hidden if unset) |
 | `threshold` | Power above which the appliance is considered running (W). Defaults: 10 (washer/dryer/dishwasher), 20 (fridge), 50 (others) |
 | `name` | Custom name |
 | `color` | Accent color (any CSS color) |
 | `show_toggle` | `false` to hide the power button |
+| `show_power` | `false` to hide the power chip (e.g. when `power` is an estimated sensor used only to detect the running state) |
 | `animations` | `false` to disable animations |
 | `confirm_off` | Washer, dryer, dishwasher: `false` to turn off the safety confirmation (default `true`, see below) |
 
@@ -96,13 +107,15 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `freezer_temperature`, `freezer_door` | fridge |
 | `power_level` (1–5), `pellet_level` (%), `ignition_threshold` (default 250 W), `pellet_alert` (default 15 %) | pellet stove |
 | `temperature` (water), `runtime` (filtration time today), `speed` (rpm or %), `max_power` | pool pump |
-| `progress`, `remaining`, `program` (job name), `temperature` (nozzle), `bed_temperature`, `filament_color` | 3D printer |
+| `progress`, `remaining`, `program` (job name), `temperature` (nozzle), `nozzle_temperatures` (list of 2–4 nozzle sensors, shown as T0, T1…), `bed_temperature`, `filament_color` | 3D printer |
 | `temperature`, `door`, `freezer_max_temperature` (default −12 °C) | chest freezer, drawer freezer |
 | `power` (production), `energy` (today), `cost` (savings), `max_power` (peak Wp, default 3000), `sun_entity` (default `sun.sun`) | solar panels |
 | `speed` (select/sensor: text, level or %), `humidity`, `high_threshold` (default 35 W), `humidity_max` (default 70 %) | extractor fan (VMC) |
 | `zone_1`…`zone_4` (level 0–9, W or %), `zone_power` (default 1500 W), `residual_minutes` (default 10) | cooktop |
 | `mode` (pilot wire / select: comfort, eco, frost, off), `window`, `temperature`, `target_temperature`, `max_power` (default 1500 W) | electric radiator |
 | `max_temperature` (default 8), `freezer_max_temperature` (default −12) | fridge alerts |
+| `style`: `top` (default), `bottom`, `french`, `american` | fridge layout |
+| `zone2_temperature`, `max_temperature_2` (default = `max_temperature`) | dual-zone wine cooler |
 
 ### How the status is computed
 
@@ -241,6 +254,7 @@ An open-frame, bed-slinger style printer (Bambu Lab A1, Prusa MK, Ender…). The
 
 - **With a printer integration** (Bambu Lab, OctoPrint, Moonraker/Klipper, PrusaLink…): use its status entity as `entity`. States such as `prepare`, `running`, `pause`, `finish`, `failed`, `idle`, `offline` or `Printing` are recognised. Add `progress`, `remaining`, nozzle and bed temperatures and the job name (`program`).
 - **With a smart plug only**: above `threshold` (40 W) = Printing. The part then grows in a loop, since the real progress is unknown.
+- **Multi-nozzle printers** (e.g. Snapmaker U1): list one sensor per nozzle in `nozzle_temperatures`; the card shows one chip per nozzle (T0, T1, T2, T3) instead of the single nozzle chip, and the display uses the hottest one. `temperature` is still used for single-nozzle printers.
 - Set `filament_color` to match your spool (default orange).
 - If you set `switch:`, cutting power while printing or paused needs a second click.
 
@@ -254,6 +268,18 @@ bed_temperature: sensor.a1_bed_temperature
 program: sensor.a1_task_name
 power: sensor.printer_plug_power
 filament_color: "#ff8a1f"
+```
+
+Multi-nozzle printer:
+
+```yaml
+type: custom:appliance-printer-3d-card
+entity: sensor.u1_print_status
+nozzle_temperatures:
+  - sensor.u1_nozzle_0_temperature
+  - sensor.u1_nozzle_1_temperature
+  - sensor.u1_nozzle_2_temperature
+  - sensor.u1_nozzle_3_temperature
 ```
 
 ### Freezers (chest and upright with drawers)
@@ -316,6 +342,7 @@ A black glass cooktop with four zones, a saucepan on the front-left zone and a f
 - After cooking, an **H** (residual heat) stays on the zones that were used for `residual_minutes` (10 min).
 - **Per-zone data** (`zone_1` = front-left, `zone_2` = front-right, `zone_3` = back-left, `zone_4` = back-right), as a level, W or %, when your cooktop integration provides it (Home Connect, SmartThings…).
 - **Total power only**: the zones are lit from the power (about `zone_power`, 1500 W, per zone).
+- **State only** (no power sensor): an `entity` that is on / running (`binary_sensor`, `input_boolean`, or a state sensor such as Home Connect `run`) lights one zone at a medium level. Combine with `show_power: false` if `power` is only an estimate.
 
 ⚠️ A cooktop is wired on a dedicated 20–32 A circuit, **never on a smart plug**. Measure it with a DIN-rail energy meter or a CT clamp at the electrical panel.
 
@@ -469,6 +496,124 @@ temperature: sensor.cave_a_vin_temperature
 door: binary_sensor.cave_a_vin_door   # optional
 ```
 
+### Refrigerator layouts and dual-zone wine cooler
+
+<p align="center"><img src="docs/fridge-styles.gif" width="640" alt="Refrigerator layouts and dual-zone wine cooler"></p>
+
+The refrigerator card has four layouts, chosen with `style` (also in the visual editor):
+- `top` (default): freezer on top, fridge below.
+- `bottom`: fridge on top, two pull-out freezer drawers below (European combi).
+- `french`: two fridge doors on top, two freezer drawers below.
+- `american`: side-by-side, freezer on the left with an ice and water dispenser (it lights up and drips while cooling), fridge on the right.
+
+`door` opens the fridge door(s), `freezer_door` opens the freezer door or pulls out the top drawer. Temperatures, alerts and status work the same in every layout.
+
+The wine cooler becomes dual-zone (reds on top, whites below) when you add `zone2_temperature`: a second display, a divider shelf, a cooler lower zone, and an Upper zone / Lower zone chip each. `max_temperature_2` sets the lower zone alert (defaults to `max_temperature`).
+
+```yaml
+type: custom:appliance-fridge-card
+style: american            # top | bottom | french | american
+power: sensor.fridge_power
+temperature: sensor.fridge_temperature
+door: binary_sensor.fridge_door
+freezer_door: binary_sensor.freezer_door
+---
+type: custom:appliance-wine-cooler-card
+power: sensor.wine_cellar_power
+temperature: sensor.wine_cellar_red_temperature
+zone2_temperature: sensor.wine_cellar_white_temperature
+max_temperature: 18
+max_temperature_2: 12
+```
+
+### Several appliances of the same kind
+
+Each card is independent: it only reads the entities in its own configuration and keeps its own status, timers and drawing. Two washing machines, a washer and a washer-dryer or several fridges can sit side by side; just give each card its own entities (and a `name` to tell them apart).
+
+### Beer tap and home cinema amplifier
+
+<p align="center"><img src="docs/beer-tap-av-receiver.gif" width="560" alt="Beer tap and AV receiver cards"></p>
+
+**Beer tap** (`custom:appliance-beer-tap-card`): a home draught machine with its keg window, chrome tap and a pint glass.
+- **Cooling** (above `threshold`, 30 W): snowflake pulsing, cold mist, condensation on the glass. **Ready** (plug on, below the threshold): full pint with rising bubbles.
+- **Pouring** (optional `pouring` sensor on): the handle tilts, beer flows and the glass fills up with its head.
+- `temperature` is shown on the display, `keg_level` (%) fills the keg window and warns below `keg_alert` (10 %).
+
+```yaml
+type: custom:appliance-beer-tap-card
+power: sensor.beer_tap_power
+temperature: sensor.beer_tap_temperature   # optional
+keg_level: sensor.keg_level                # optional, %
+pouring: binary_sensor.beer_pouring        # optional
+```
+
+**Home cinema amplifier** (`custom:appliance-av-receiver-card`): an AV receiver with its display, big volume knob and equalizer.
+- **Playing**: the equalizer bars dance, the volume ring glows, sound waves and notes come out; the knob position and the bar height follow the volume (`media_player`) or the power drawn (vs `max_power`, 250 W).
+- The display shows the source (or the volume); **Muted** shows `MUTE`; **Standby**: red LED.
+- With a `media_player`: `on`/`playing` = playing, `paused`, `standby`, `off`, plus `volume_level`, `source`, `is_volume_muted`. With a plug: playing above 40 W, standby from 0.2 W.
+
+```yaml
+type: custom:appliance-av-receiver-card
+entity: media_player.living_room_avr   # or power: sensor.avr_power
+```
+
+### Fan
+
+<p align="center"><img src="docs/fan.gif" width="480" alt="Fan card"></p>
+
+`custom:appliance-fan-card`: a pedestal fan with its cage, five blades and a ribbon. Three speeds: the blades spin faster, airflow lines widen, the ribbon flutters and the base LEDs light up (1, 2 or 3). The head oscillates left and right (`oscillating: false` to stop it).
+- With a `fan` entity: `percentage` (≤ 34 % speed 1, ≤ 67 % speed 2, above speed 3) and `oscillating`; the percentage is shown in the status.
+- With a smart plug: speed 1 above `threshold` (5 W), speed 2 above `mid_threshold` (30 W), speed 3 above `high_threshold` (40 W).
+
+```yaml
+type: custom:appliance-fan-card
+entity: fan.bedroom_fan      # or power: sensor.fan_plug_power
+```
+
+### Ceiling fan
+
+<p align="center"><img src="docs/fans.gif" width="480" alt="Pedestal fan and ceiling fan cards"></p>
+
+`custom:appliance-ceiling-fan-card`: a ceiling fan with four wooden blades seen in perspective, the motor housing, a glass light and two pull chains. Three speeds like the pedestal fan (`fan` entity `percentage`, or power: `threshold` 5 W, `mid_threshold` 30 W, `high_threshold` 40 W): the blades turn faster, air flows down and the chains sway. With a `light` entity the glass glows and lights the room below, even when the blades are stopped (status "Lights only").
+
+```yaml
+type: custom:appliance-ceiling-fan-card
+entity: fan.living_room_ceiling   # or power: sensor.ceiling_fan_power
+light: light.living_room_ceiling  # optional
+```
+
+### Tool battery charger
+
+<p align="center"><img src="docs/tool-charger.gif" width="560" alt="Tool battery charger card: charging and charged"></p>
+
+`custom:appliance-tool-charger-card`: a cordless tool battery (drill, screwdriver…) sitting on its charger, with the power cord, the charger LEDs and the 4-LED charge gauge on the battery.
+- **Charging** (power above `threshold`, 10 W by default): the charger LED blinks green, energy flows along the cord, a green glow and a lightning bolt pulse, and the gauge fills up LED by LED.
+- **Charged** (power between `standby_threshold`, 1 W by default, and `threshold`, as most chargers draw a little to keep the battery topped up): the four LEDs stay lit.
+- **Standby** (below `standby_threshold`, empty charger) and **Off** (switch off).
+- Optional `battery_level` (%): the gauge shows the real level (25 % per LED, the next one blinks), a progress bar and a Battery chip are added, and the battery counts as charged from `full_level` (100 % by default).
+
+```yaml
+type: custom:appliance-tool-charger-card
+power: sensor.workshop_charger_power
+switch: switch.workshop_charger      # optional
+battery_level: sensor.drill_battery  # optional
+```
+
+### Generic card (your own image)
+
+`custom:appliance-generic-card`: for any device without a dedicated card (a speaker, a lamp, a pump…), put your own picture in `image`. The card keeps everything else: status (running / idle / off), power, energy and cost chips, and the power button. The picture is dimmed when the device is off and glows softly while it is running.
+
+- `image`: URL of the picture (`/local/my-device.png` for a file in `config/www/`, or any `https://` URL). A PNG or SVG with a transparent background looks best.
+- Running detection works like the other cards: `power` above `threshold` (5 W by default), or the state of `entity`.
+
+```yaml
+type: custom:appliance-generic-card
+name: Sonos living room
+image: /local/sonos.png
+power: sensor.tasmota_sonos_power
+switch: switch.tasmota_sonos
+```
+
 ### Modes (radiator and heated towel rail)
 
 With a `mode` entity (`select`, `input_select`, or a `climate` entity used as `entity`), the radiator and the heated towel rail show four buttons — **Comfort, Eco, Frost protection, Off** — to switch mode, and the active mode is highlighted. Options are matched by name (Confort, Eco/Nuit, Hors-gel, Arrêt/Off…); a button is only shown if a matching option exists. Hide them with `show_modes: false`.
@@ -493,7 +638,7 @@ energy_solar: sensor.routeur_solaire_energy
 
 ### Aquarium, Linky meter, home battery, EV charger, robots and pellet boiler
 
-These seven cards have their own options (prefixed `entity_…`) and a full visual editor. Every value tile can be hidden with its `show_…` option, and `language: fr|en` forces the language.
+These seven cards have their own options (prefixed `entity_…`) and a full visual editor. Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|nb|nl|ro` forces the language.
 
 <p align="center">
 <img src="docs/aquarium.gif" width="260" alt="Aquarium card"> <img src="docs/linky.gif" width="260" alt="Linky card"> <img src="docs/battery.gif" width="260" alt="Home battery card">
@@ -504,21 +649,34 @@ These seven cards have their own options (prefixed `entity_…`) and a full visu
 | Card | Options |
 |---|---|
 | Aquarium | `entity_power`, `entity_energy`, `entity_temperature`, `entity_light` (day/night), `entity_cost` or `price_per_kwh`, `temp_min` / `temp_max` (default 24–27 °C), `max_power` (default 200 W), `show_power`, `show_energy`, `show_temperature`, `show_cost` |
-| Linky | `entity_power` (W, VA or kW), `entity_hp`, `entity_hc` (indexes, kWh), `entity_tariff` (HP/HC) or `hc_ranges` (e.g. `01:00-07:00,12:30-14:30`), `entity_cost`, `subscribed_power` (kVA, default 9), `show_gauge`, `show_index`, `show_tariff`, `show_cost` |
+| Linky | `entity_power` (W, VA, kW or kVA), `entity_active_power` (W, optional), `entity_power_l1`, `entity_power_l2`, `entity_power_l3` (VA per phase, three-phase), `phase_gauge` (`needles` default, `cycle` or `max`), `entity_hp`, `entity_hc` (indexes, kWh, Wh or MWh), `indexes` (list of `entity` + `name`, replaces HP/HC: Tempo's 6 indexes, weekday/weekend…), `entity_injection` (export index), `entity_power_injection` (exported power, W or VA), `entity_tariff` (HP/HC) or `hc_ranges` (e.g. `01:00-07:00,12:30-14:30`), `entity_cost`, `subscribed_power` (kVA, default 9), `show_gauge`, `show_phases`, `show_index`, `show_injection`, `show_tariff`, `show_cost` |
 | Home battery | `entity_soc` (%), `entity_power` (positive = charging, `invert_power: true` if yours is reversed), `entity_energy`, `entity_temperature`, `capacity_kwh` (default 10), `max_power`, `low_threshold` (default 15 %), `show_power`, `show_energy`, `show_temperature`, `show_time` |
 | EV charger | `entity_power`, `entity_session_energy`, `entity_car_soc`, `entity_status` (charging / connected / complete…), `entity_cost` or `price_per_kwh`, `max_power` (default 7400 W), `car_color`, `show_power`, `show_energy`, `show_soc`, `show_status`, `show_duration`, `show_cost` |
 | Robot vacuum | `entity` (`vacuum.*`, required), `entity_battery`, `entity_area` (m²), `entity_time` (min), `entity_status`, `entity_filter`, `entity_brush` (%), `show_battery`, `show_area`, `show_time`, `show_fan`, `show_status`, `show_consumables`, `show_buttons` |
 | Robot mower | `entity` (`lawn_mower.*` or `vacuum.*`, required), `entity_battery`, `entity_area`, `entity_time`, `entity_next_start`, `entity_blade` (%), `entity_rain`, `entity_status`, `show_battery`, `show_area`, `show_time`, `show_next`, `show_status`, `show_blade`, `show_buttons` |
 | Pellet boiler | `entity_status` (ignition / heating / shutdown / alarm…), `entity_power`, `entity_energy`, `entity_cost` or `price_per_kwh`, `entity_flow_temp`, `entity_return_temp`, `entity_pellet_level` (%), `threshold` (default 30 W), `ignition_threshold` (default 300 W), `pellet_alert` (default 15 %), `flow_temp_max` (default 80 °C), `show_power`, `show_energy`, `show_cost`, `show_temps`, `show_pellets`, `show_status` |
-| Gas boiler | `entity_status` (climate or text: heating / dhw / standby / alarm…), `entity_flame` (binary_sensor), `entity_power`, `entity_energy`, `entity_gas` (m³ or kWh), `entity_cost` or `price_per_unit`, `entity_flow_temp`, `entity_return_temp`, `entity_pressure` (bar), `entity_modulation` (%), `threshold` (default 15 W), `pressure_min` / `pressure_max` (default 1–2.5 bar), `flow_temp_max` (default 80 °C), `show_power`, `show_energy`, `show_gas`, `show_cost`, `show_temps`, `show_pressure`, `show_modulation`, `show_status` |
+| Gas boiler | `entity_status` (climate or text: heating / dhw / standby / alarm…), `entity_flame` (binary_sensor), `entity_power`, `entity_energy`, `entity_gas` (m³ or kWh), `entity_cost` or `price_per_unit`, `entity_flow_temp`, `entity_return_temp`, `entity_pressure` (bar), `entity_modulation` (%), `threshold` (default 15 W), `off_threshold` (off below, standby above, default 0.5 W), `pressure_min` / `pressure_max` (default 1–2.5 bar), `flow_temp_max` (default 80 °C), `show_power`, `show_energy`, `show_gas`, `show_cost`, `show_temps`, `show_pressure`, `show_modulation`, `show_status` |
+| Water heat pump | `entity_status` (climate, water_heater or text: heating / hot water / cooling / off / fault…), `entity_power` (electric, W or kW), `entity_heat_power` (heat output, W or kW), `entity_cop` (otherwise computed: heat output / electric power while the compressor runs), `entity_flow_temp`, `entity_return_temp` (ΔT shown), `entity_source_in_temp`, `entity_source_out_temp` (ground loop / well, optional), `entity_flow_rate` (l/h or m³/h), `entity_energy`, `entity_heat_energy` (Wh, kWh or MWh, shown in kWh), `entity_scop`, `threshold` (compressor running above, default 100 W), `off_threshold` (off below, standby above, default 0.5 W), `source_threshold` (source loop animation above it: well / primary pumps start before the compressor and stop after it; default: with the compressor), `compressor_threshold` (compressor animation above it, default `threshold`: on/off heat pumps can heat with only the circulation pump running), `buffer_tank` (true: the heat pump charges a buffer tank and the circulation pump feeds the emitters from it, even when the compressor is off; the flow rate, if set, is the heat pump side), `entity_buffer_temp` (tank temperature), `entity_compressor` and `entity_source_pump` (optional relays: binary_sensor, switch or a numeric sensor, running above 0; they replace the power steps), `heating_delay` (s, power must stay above `threshold` this long before showing heating, default 0: ignores short pump runs during standby), `show_status`, `show_power`, `show_heat`, `show_cop`, `show_temps`, `show_source`, `show_flow_rate`, `show_energy`, `show_scop`, `animations` |
 
 - **Aquarium**: fish swim back and forth, bubbles and tails speed up with power, the water turns blue / turquoise / orange / red with temperature (alert badge outside `temp_min`–`temp_max`), the lamp follows `entity_light`.
-- **Linky**: lime-green meter with a scrolling LCD (power, HP/HC indexes, tariff, cost — the two buttons switch pages), a gauge against the subscribed power (overload alert above 95 %) and a consumption LED blinking faster as the load rises.
+- **Linky**: lime-green meter with a scrolling LCD (power, HP/HC indexes, current period, cost — the two buttons switch pages), a gauge against the subscribed power (overload alert above 95 %) and a consumption LED blinking faster as the load rises.
+  - **Several indexes**: with `indexes`, one LCD page per index instead of HP/HC, e.g. Tempo (`EASF01`…`06`) or weekday/weekend contracts. Indexes in Wh (as most TIC readers report them) or MWh are shown in kWh.
+    ```yaml
+    indexes:
+      - entity: sensor.linky_easf01
+        name: Bleu HC
+      - entity: sensor.linky_easf02
+        name: Bleu HP
+    ```
+  - **Export (solar)**: `entity_injection` (`EAIT`) and `entity_power_injection` (`SINSTI`) add their LCD pages and a "prod" LED, lit while power flows to the grid (`show_injection: false` hides them).
+  - **Three-phase**: the Linky cuts off phase by phase, at a third of the subscribed power (5 kVA per phase for 15 kVA). With `entity_power_l1`…`l3` (`SINSTS1`…`3`, in VA), each phase is compared to `subscribed_power / 3` and three bars show each phase (`show_phases: false` hides them). `phase_gauge` sets the gauge: `needles` (default) one coloured needle per phase, `cycle` L1 → L2 → L3 every 3 s, `max` the most loaded phase. In every mode, the overload alert follows the most loaded phase. Otherwise the gauge compares the total to the subscribed power.
+  - **Active power**: the Linky's TIC only gives apparent power (VA), which is what the cut-off limit uses, so the gauge stays in VA. For the actual consumption in W, set `entity_active_power`, e.g. a [Derivative](https://www.home-assistant.io/integrations/derivative/) helper (time unit: hours, so kWh gives kW; time window ~2 min) on a template sensor adding `entity_hp` + `entity_hc`. It is shown under the gauge and as an LCD page.
 - **Home battery**: three modules wired with orange cables, no background. The charge level rises in the modules (green → orange → red), energy flows along the cables in one direction when charging and the other when discharging, with time to full / empty.
 - **EV charger**: wall box with a status light (grey unplugged, blue plugged, pulsing green charging, steady green complete), energy flowing through the cable to the car and a battery gauge on the car door.
 - **Robot vacuum / robot mower**: the robot alone, no background. Vacuum: side brushes spin, dust is sucked in, lidar scans, a light ring shows the battery level. Mower: wheels and blade spin, grass clippings fly, rain when `entity_rain` is on. Both have **Start / Pause / Dock** buttons (`vacuum.start` / `pause` / `return_to_base`, `lawn_mower.start_mowing` / `pause` / `dock`).
 - **Pellet boiler**: boiler with its touchscreen and combustion window, pellet hopper with a level sight glass and an inclined auger, no background. Igniting: glowing igniter, small flame, fast auger. Heating: full flame, pellets travelling up the auger, water flowing in the copper flow/return pipes that turn red with temperature. Low-pellet alert below `pellet_alert`. Without a status entity, the state comes from power (above 300 W igniting, above 30 W heating).
 - **Gas boiler**: wall-mounted gas boiler, no background. Blue flames on the burner rail (sized by modulation), flue gas, pressure gauge, and flow/return copper pipes that turn from blue to red with temperature, with water flowing when the pump runs. Hot-water (DHW) and heating modes, low/high pressure and flow-too-hot alerts.
+- **Water heat pump** (water-to-water or ground source: borehole, ground loop, well): no fan and no air, unlike the outdoor unit of the *Heat pump* card. The compressor vibrates between the evaporator (source loop, going down into the ground on the left) and the condenser (heating loop to a radiator on the right). The flow/return pipes turn from blue (20 °C) to red (55 °C) and the water flows while the flow rate is above zero (or while the compressor runs, without `entity_flow_rate`). The COP comes from `entity_cop`, or is computed from a heat meter (`entity_heat_power`) and an electricity meter (`entity_power`). Without a status entity, the compressor runs above `threshold`.
 
 ```yaml
 type: custom:appliance-robot-vacuum-solo-card
@@ -572,13 +730,42 @@ appliance-ok-color: "#43a047"
 appliance-illustration-size: 116px
 ```
 
+## Development and translations
+
+`dist/ha-appliance-electromenager-cards.js` is generated: edit `src/` instead, then rebuild (Node.js, no dependencies):
+
+```sh
+node build.js           # writes dist/
+node build.js --check   # fails if dist/ is out of date (run by CI)
+```
+
+HACS installs a single file, so `build.js` concatenates the files of `src/` in the order it lists (like `<script>` tags in a page):
+
+```
+src/
+  header.js            licence banner
+  core/                the 28 core cards, sharing one scope (order matters)
+    version.js  i18n.js  illustrations.js  definitions.js  helpers.js
+    base.js  editor.js  style.js  register.js
+    svg/<kind>.js      one illustration per kind: SVG.washer = () => `…`
+    style/*.css        card styles, concatenated into STYLE (order listed in build.js)
+  cards/*.js           self-contained cards (aquarium, linky, battery, …), one IIFE each
+  i18n/<lang>.json     texts, one file per language
+```
+
+- New core card: add its `DEF` entry (`core/definitions.js`), `core/svg/<kind>.js` (picked up automatically), a CSS file listed in `CSS_FILES` and its strings. New self-contained card: add `cards/<name>.js` and list it in `CARD_FILES`. The build warns about any `src/` file it does not list.
+- Texts: one file per language in `src/i18n/` (`en.json`, `fr.json`, `de.json`, `nb.json`, `nl.json`, `ro.json`). Each file has a `common` section for the 28 core cards and one section per extra card (`aquarium`, `linky`, …). The build inlines them where the source says `/*@i18n <section>*/{}`.
+- English is the reference: a key missing in another language falls back to English, and the build prints a warning.
+- To add a language, copy `en.json` to e.g. `it.json`, translate it and rebuild: the cards follow the Home Assistant language, and the extra cards list it in their `language` option.
+- Commit `src/` and the rebuilt `dist/` together. On a merge conflict in `dist/`, resolve `src/` and re-run `node build.js`.
+
 ---
 
 ## 🇫🇷 En français
 
 Vingt-sept cartes Lovelace pour l'électroménager et l'énergie (lave-linge, sèche-linge, lave-vaisselle, ballon d'eau chaude, four, micro-ondes, réfrigérateur, poêle à granulés, pompe de piscine, imprimante 3D, congélateur coffre, congélateur à tiroirs, panneaux solaires, VMC, plaques de cuisson, radiateur électrique, airfryer, cafetière, téléviseur, hotte aspirante, climatiseur et pompe à chaleur) : illustration animée, état en direct, puissance, énergie et coût. Elles suivent le thème de Home Assistant et s'affichent en français si Home Assistant est en français.
 
-**Installation HACS** : HACS → ⋮ → *Dépôts personnalisés* → `https://github.com/skyrotter/ha-appliance-electromenager-cards`, catégorie **Dashboard** → installer → recharger le navigateur (Ctrl+F5).
+**Installation HACS** : dans HACS, cherche **Appliance Cards**, installe, puis recharge le navigateur (Ctrl+F5). Si la carte n'apparaît pas encore dans la recherche (en attente d'ajout au catalogue HACS par défaut) : HACS → ⋮ → *Dépôts personnalisés* → `https://github.com/skyrotter/ha-appliance-electromenager-cards`, catégorie **Dashboard**.
 
 **Configuration** : éditeur visuel disponible ; les entités sont détectées automatiquement à l'ajout (noms contenant `lave_linge`, `seche_linge`, `lave_vaisselle`, `ballon`, `four`, `micro_ondes`, `frigo`, `washer`, `dryer`, `fridge`…). Les options sont les mêmes que ci-dessus.
 
@@ -620,9 +807,31 @@ cost: sensor.lave_linge_cout_jour
 
 **Sécurité du bouton marche/arrêt** : sur le lave-linge, le sèche-linge, le lave-vaisselle et le poêle à granulés, couper la prise pendant un cycle (ou poêle allumé) demande deux clics (le bouton devient rouge et affiche « Cycle en cours – cliquer encore pour couper »). Option `confirm_off: false` pour désactiver. Conseil : sur un lave-linge, ne mets pas de `switch:` du tout.
 
+**Pompe à bière** (`custom:appliance-beer-tap-card`) : tireuse avec fenêtre du fût, robinet chromé et pinte. Au-dessus de 30 W : refroidissement (flocon, brume froide, buée sur le verre) ; prise allumée sous le seuil : prête (pinte pleine, bulles). Avec un capteur `pouring` : la manette bascule, la bière coule et le verre se remplit. `temperature` sur l'écran, `keg_level` (%) remplit la fenêtre du fût avec alerte « Fût presque vide ».
+
+**Ampli home cinéma** (`custom:appliance-av-receiver-card`) : ampli avec écran, gros bouton de volume et égaliseur. En lecture, les barres dansent, l'anneau du volume s'illumine, des ondes et des notes sortent ; l'amplitude suit le volume (`media_player`) ou la puissance. L'écran affiche la source, `MUTE` en sourdine ; veille : voyant rouge. Avec une prise : lecture au-dessus de 40 W.
+
+**Ventilateur** (`custom:appliance-fan-card`) : ventilateur sur pied avec grille, cinq pales et un petit ruban. Trois vitesses : les pales tournent plus vite, l'air souffle plus fort, le ruban s'agite et les voyants du socle s'allument (1, 2 ou 3) ; la tête oscille (`oscillating: false` pour l'arrêter). Avec une entité `fan` : le pourcentage et l'oscillation sont lus. Avec une prise : vitesse 1 au-dessus de 5 W, vitesse 2 au-dessus de 30 W (`mid_threshold`), vitesse 3 au-dessus de 40 W (`high_threshold`).
+
+**Ventilateur de plafond** (`custom:appliance-ceiling-fan-card`) : quatre pales en bois vues en perspective, bloc moteur, globe lumineux et chaînettes. Trois vitesses comme le ventilateur sur pied (`percentage` de l'entité `fan`, ou puissance : `threshold` 5 W, `mid_threshold` 30 W, `high_threshold` 40 W) : les pales tournent plus vite, l'air descend et les chaînettes se balancent. Avec une entité `light`, le globe s'allume et éclaire la pièce, même pales arrêtées (état « Éclairage »).
+
+**Chargeur de batterie d'outils** (`custom:appliance-tool-charger-card`) : batterie d'outil sans fil (perceuse, visseuse…) posée sur son chargeur, avec le cordon, les voyants du socle et la jauge 4 LED de la batterie. En charge (au-dessus de `threshold`, 10 W) : le voyant clignote en vert, l'énergie circule dans le cordon, un halo et un éclair pulsent et la jauge se remplit LED par LED. Chargée (entre `standby_threshold`, 1 W, et `threshold`, la plupart des chargeurs consomment un peu pour maintenir la batterie) : les quatre LED restent allumées. En dessous : veille (socle vide). `battery_level` (%) en option : la jauge affiche le vrai niveau (25 % par LED, la suivante clignote), avec barre de progression et pastille Batterie ; la batterie est considérée chargée à partir de `full_level` (100 %).
+
+**Réfrigérateur : quatre modèles** avec `style` (aussi dans l'éditeur visuel) : `top` (congélateur en haut, par défaut), `bottom` (combiné : frigo en haut, deux tiroirs de congélation en bas), `french` (deux portes en haut, deux tiroirs en bas), `american` (side-by-side : congélateur à gauche avec distributeur de glaçons et d'eau qui s'éclaire et goutte pendant le froid, frigo à droite). `door` ouvre la ou les portes du frigo, `freezer_door` ouvre la porte du congélateur ou sort le tiroir du haut.
+
+**Cave à vin bi-zone** : ajoute `zone2_temperature` (zone basse, vins blancs) pour avoir deux afficheurs, une séparation, une zone basse plus froide et deux pastilles Zone haute / Zone basse. `max_temperature_2` règle l'alerte de la zone basse (par défaut `max_temperature`).
+
+**Plusieurs appareils du même type** : chaque carte est indépendante (ses propres entités, son état, ses minuteries). Deux lave-linge ou plusieurs frigos peuvent cohabiter, il suffit de donner à chaque carte ses entités (et un `name`).
+
+**Carte générique** (`custom:appliance-generic-card`) : pour tout appareil sans carte dédiée (enceinte, lampe, pompe…), renseigne ta propre image dans `image` (`/local/mon-appareil.png` pour un fichier de `config/www/`, ou une URL `https://`). La carte garde le statut (en cours / inactif / éteint), la puissance, l'énergie, le coût et le bouton ; l'image est atténuée quand l'appareil est éteint et brille doucement en marche.
+
 **Sèche-serviettes, baie informatique, PC fixe, PC portable, cave à vin** : cinq cartes pilotées par une prise connectée (`power`). `custom:appliance-towel-dryer-card` : au-dessus de 50 W, les barres rougeoient, la chaleur monte, les serviettes se balancent et fument ; prise allumée sous le seuil : « Consigne atteinte ». `custom:appliance-server-rack-card` (homelab) : au-dessus de 30 W, les LED clignotent, les ventilateurs tournent, les baies de disques s'allument en bleu et les données circulent dans les câbles ; la vitesse suit la charge (`max_power`, 300 W par défaut) et l'onduleur affiche la puissance. `custom:appliance-desktop-pc-card` : au-dessus de 40 W, l'écran s'allume (code qui s'écrit, graphique, curseur) et les ventilateurs RGB tournent ; entre 0,5 W et le seuil : veille (voyant orange). `custom:appliance-laptop-card` : au-dessus de 15 W, l'écran affiche un tableau de bord animé et le clavier est rétroéclairé ; en dessous : veille. `custom:appliance-wine-cooler-card` : cave vitrée ; quand le compresseur tourne (au-dessus de 15 W), l'intérieur s'éclaire, l'air froid circule entre les bouteilles et la condensation coule ; la porte s'ouvre avec un capteur `door` ; alerte au-dessus de `max_temperature` (18 °C).
 
-**Aquarium, Linky, batterie, borne de recharge, robots, chaudière à granulés** : sept cartes avec leurs propres options (`entity_…`, voir le tableau en anglais) et l'éditeur visuel. Chaque tuile se masque avec son option `show_…`. `custom:appliance-aquarium-card` : poissons qui nagent, bulles et queues plus rapides selon la puissance, eau qui change de couleur selon la température (alerte hors plage), éclairage jour/nuit. `custom:appliance-linky-card` : compteur vert anis avec écran LCD qui défile (puissance, index HP/HC, tarif, coût — les boutons changent de page), jauge par rapport à la puissance souscrite (alerte au-delà de 95 %), voyant conso qui clignote plus vite quand ça consomme. `custom:appliance-battery-card` : trois modules reliés par des câbles orange, sans fond ; le niveau monte dans les modules, l'énergie circule dans un sens en charge et dans l'autre en décharge, avec le temps restant avant plein ou vide. `custom:appliance-ev-charger-card` : wallbox murale et voiture de profil ; voyant selon le statut, énergie qui circule dans le câble, jauge de batterie sur la portière, durée et coût de la session. `custom:appliance-robot-vacuum-solo-card` et `custom:appliance-robot-mower-solo-card` : le robot seul, sans fond ; brosses, lidar et anneau de batterie pour l'aspirateur, roues, lame, herbe projetée et pluie pour la tondeuse, avec les boutons **Démarrer / Pause / Base**. `custom:appliance-pellet-boiler-card` : chaudière à granulés sans fond, avec trémie, hublot de niveau et vis sans fin ; à l'allumage la résistance rougit, en chauffe la flamme danse, les granulés montent dans la vis et l'eau circule dans les tuyaux départ/retour qui rougissent avec la température ; alerte « Granulés bas » sous `pellet_alert` (15 %).
+**Aquarium, Linky, batterie, borne de recharge, robots, chaudière à granulés** : sept cartes avec leurs propres options (`entity_…`, voir le tableau en anglais) et l'éditeur visuel. Chaque tuile se masque avec son option `show_…`. `custom:appliance-aquarium-card` : poissons qui nagent, bulles et queues plus rapides selon la puissance, eau qui change de couleur selon la température (alerte hors plage), éclairage jour/nuit. `custom:appliance-linky-card` : compteur vert anis avec écran LCD qui défile (puissance, index HP/HC, période en cours, coût — les boutons changent de page), jauge par rapport à la puissance souscrite (alerte au-delà de 95 %), voyant conso qui clignote plus vite quand ça consomme ; en triphasé, avec `entity_power_l1`…`l3` (`SINSTS1`…`3`), chaque phase est comparée à 1/3 de la puissance souscrite, avec une barre par phase ; `phase_gauge` choisit la jauge : `needles` (par défaut) une aiguille de couleur par phase, `cycle` L1 → L2 → L3 toutes les 3 s, `max` la phase la plus chargée ; l'alerte suit toujours la phase la plus chargée ; `entity_active_power` (capteur en W, par ex. le helper « Dérivée » sur la somme des index) affiche la consommation réelle sous la jauge et sur l'écran ; `indexes` (liste d'`entity` + `name`) remplace HP/HC par autant de pages que d'index (les 6 index Tempo, semaine/week-end…), en kWh même si le capteur est en Wh ; `entity_injection` (`EAIT`) et `entity_power_injection` (`SINSTI`) ajoutent l'index et la puissance injectés, avec un voyant « prod » allumé pendant l'injection. `custom:appliance-battery-card` : trois modules reliés par des câbles orange, sans fond ; le niveau monte dans les modules, l'énergie circule dans un sens en charge et dans l'autre en décharge, avec le temps restant avant plein ou vide. `custom:appliance-ev-charger-card` : wallbox murale et voiture de profil ; voyant selon le statut, énergie qui circule dans le câble, jauge de batterie sur la portière, durée et coût de la session. `custom:appliance-robot-vacuum-solo-card` et `custom:appliance-robot-mower-solo-card` : le robot seul, sans fond ; brosses, lidar et anneau de batterie pour l'aspirateur, roues, lame, herbe projetée et pluie pour la tondeuse, avec les boutons **Démarrer / Pause / Base**. `custom:appliance-pellet-boiler-card` : chaudière à granulés sans fond, avec trémie, hublot de niveau et vis sans fin ; à l'allumage la résistance rougit, en chauffe la flamme danse, les granulés montent dans la vis et l'eau circule dans les tuyaux départ/retour qui rougissent avec la température ; alerte « Granulés bas » sous `pellet_alert` (15 %).
+
+**PAC eau/eau (géothermie, nappe)** : `custom:appliance-water-heat-pump-card`, sans ventilateur ni flux d'air, contrairement à l'unité extérieure de la carte *Pompe à chaleur*. Le compresseur vibre entre l'évaporateur (boucle de captage qui descend dans le sol, à gauche) et le condenseur (boucle de chauffage vers un radiateur, à droite). Le départ et le retour passent du bleu (20 °C) au rouge (55 °C), l'eau circule quand le débit est non nul. Le COP vient de `entity_cop`, ou est calculé avec un compteur de chaleur (`entity_heat_power`) et un compteur électrique (`entity_power`). Températures de captage facultatives. Options : voir le tableau en anglais.
+
+**Développement et traductions** : `dist/` est généré, on modifie `src/` puis on lance `node build.js` (sans dépendance). Le code est découpé en petits fichiers : `src/core/` pour les 28 cartes de base (un dessin par appareil dans `svg/`, un fichier CSS par appareil dans `style/`), `src/cards/` pour les cartes autonomes, et les textes dans un fichier par langue (`src/i18n/en.json`, `src/i18n/fr.json`, `src/i18n/de.json`, `src/i18n/nb.json`, `src/i18n/nl.json`, `src/i18n/ro.json`). Voir *Development and translations* plus haut.
 
 ## License
 
