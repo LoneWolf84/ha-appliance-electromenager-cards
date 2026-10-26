@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.23.0";
+const VERSION = "1.26.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -206,7 +206,10 @@ const STRINGS = {
     "fan_2": "Speed 2",
     "fan_3": "Speed 3",
     "f_oscillating": "Oscillation",
-    "f_mid_threshold": "Speed 2 above (W)"
+    "f_mid_threshold": "Speed 2 above (W)",
+    "ph_heat": "Heating",
+    "f_heating_power": "Heating phase threshold (W)",
+    "f_spin_power": "Spinning phase threshold (W)"
   },
   "de": {
     "washer": "Waschmaschine",
@@ -400,7 +403,10 @@ const STRINGS = {
     "fan_2": "Stufe 2",
     "fan_3": "Stufe 3",
     "f_oscillating": "Oszillation",
-    "f_mid_threshold": "Stufe 2 ab (W)"
+    "f_mid_threshold": "Stufe 2 ab (W)",
+    "ph_heat": "Aufheizen",
+    "f_heating_power": "Schwellenwert für Heizphase (W)",
+    "f_spin_power": "Schwellenwert für Schleuderphase (W)"
   },
 it: {
     washer: "Lavatrice", dryer: "Asciugatrice", dishwasher: "Lavastoviglie",
@@ -431,6 +437,794 @@ it: {
     f_max_temperature: "Avviso frigorifero sopra (°C)", f_freezer_max_temperature: "Avviso congelatore sopra (°C)",
     f_color: "Colore accento (CSS)", f_animations: "Animazioni", f_confirm_off: "Conferma prima di interrompere l'alimentazione durante un ciclo",
   },
+  "fr": {
+    "washer": "Lave-linge",
+    "dryer": "Sèche-linge",
+    "dishwasher": "Lave-vaisselle",
+    "water_heater": "Ballon d'eau chaude",
+    "oven": "Four",
+    "microwave": "Micro-ondes",
+    "air_fryer": "Airfryer",
+    "coffee_maker": "Cafetière",
+    "tv": "Téléviseur",
+    "range_hood": "Hotte aspirante",
+    "beer_tap": "Pompe à bière",
+    "av_receiver": "Ampli home cinéma",
+    "fan": "Ventilateur",
+    "ceiling_fan": "Ventilateur de plafond",
+    "generic": "Appareil générique (image perso)",
+    "towel_dryer": "Sèche-serviettes",
+    "server_rack": "Baie informatique (homelab)",
+    "desktop_pc": "PC fixe",
+    "laptop": "PC portable",
+    "tool_charger": "Chargeur de batterie d'outils",
+    "charging": "En charge",
+    "charged": "Chargée",
+    "battery": "Batterie",
+    "f_battery_level": "Capteur de niveau de batterie (%)",
+    "f_standby_threshold": "Chargée (maintien) au-dessus de (W)",
+    "online": "En ligne",
+    "f_max_power_rack": "Charge max (W)",
+    "f_power_solar": "Capteur de puissance surplus solaire (W)",
+    "f_energy_solar": "Capteur d'énergie surplus solaire (kWh)",
+    "solar_surplus": "Surplus solaire",
+    "mode_off": "Arrêt",
+    "wine_cooler": "Cave à vin",
+    "f_max_temperature_wine": "Alerte au-dessus de (°C)",
+    "f_fridge_style": "Type de réfrigérateur",
+    "zone_top": "Zone haute",
+    "zone_bottom": "Zone basse",
+    "f_zone2_temperature": "Capteur de température zone basse (bi-zone)",
+    "f_max_temperature_2": "Alerte zone basse au-dessus de (°C)",
+    "f_show_modes": "Afficher les boutons de mode",
+    "f_show_power": "Afficher la puissance",
+    "grid": "Réseau",
+    "energy_grid": "Énergie réseau",
+    "energy_solar": "Énergie solaire",
+    "ac_split": "Climatiseur (split)",
+    "heat_pump": "Pompe à chaleur (ext.)",
+    "ac_dry": "Déshumidification",
+    "ac_fan": "Ventilation",
+    "at_target": "Consigne atteinte",
+    "defrost": "Dégivrage",
+    "f_hvac": "Mode sans entité climate",
+    "screen_on": "Allumée",
+    "lights": "Éclairage",
+    "f_light": "Entité d'éclairage (optionnel)",
+    "brewing": "Préparation du café",
+    "keep_warm": "Maintien au chaud",
+    "f_style": "Type de cafetière",
+    "f_warm_threshold": "Maintien au chaud / prête au-dessus de (W)",
+    "fridge": "Réfrigérateur",
+    "pellet_stove": "Poêle à granulés",
+    "pool_pump": "Pompe de piscine",
+    "printer_3d": "Imprimante 3D",
+    "chest_freezer": "Congélateur coffre",
+    "drawer_freezer": "Congélateur à tiroirs",
+    "solar": "Panneaux solaires",
+    "vmc": "VMC",
+    "hob": "Plaques de cuisson",
+    "radiator": "Radiateur",
+    "comfort": "Confort",
+    "eco": "Éco",
+    "frost": "Hors-gel",
+    "window_open": "Fenêtre ouverte",
+    "f_mode": "Entité de mode (fil pilote, liste…)",
+    "f_window": "Capteur de fenêtre",
+    "f_max_power_rad": "Puissance du radiateur (W)",
+    "cooking": "Cuisson",
+    "residual": "Chaleur résiduelle",
+    "zones": "Foyers actifs",
+    "f_zone_power": "Puissance d'un foyer (W)",
+    "f_zone_1": "Foyer avant gauche (niveau ou W)",
+    "f_zone_2": "Foyer avant droit",
+    "f_zone_3": "Foyer arrière gauche",
+    "f_zone_4": "Foyer arrière droit",
+    "f_residual_minutes": "Affichage chaleur résiduelle (min)",
+    "speed1": "Petite vitesse",
+    "speed2": "Grande vitesse",
+    "humid": "Humidité élevée",
+    "humidity": "Humidité",
+    "f_humidity": "Capteur d'humidité (%)",
+    "f_high_threshold": "Grande vitesse au-dessus de (W)",
+    "f_humidity_max": "Alerte humidité au-dessus de (%)",
+    "producing": "Production",
+    "low": "Production faible",
+    "night": "Nuit",
+    "production": "Production",
+    "savings": "Économies",
+    "f_sun_entity": "Entité soleil",
+    "f_max_power_solar": "Puissance crête (Wc)",
+    "printing": "Impression",
+    "paused": "En pause",
+    "failed": "Échec",
+    "progress": "Progression",
+    "nozzle": "Buse",
+    "bed": "Plateau",
+    "f_bed_temperature": "Capteur de température du plateau",
+    "f_filament_color": "Couleur du filament (CSS)",
+    "f_image": "URL de l'image (ex. /local/mon-appareil.png)",
+    "f_nozzle_temperatures": "Capteurs de température des buses (T0, T1…)",
+    "filtering": "Filtration",
+    "water": "Eau",
+    "today": "Aujourd'hui",
+    "speed": "Vitesse",
+    "f_runtime": "Capteur de durée de filtration du jour",
+    "f_speed": "Capteur de vitesse (tr/min ou %)",
+    "f_max_power": "Puissance max à pleine vitesse (W)",
+    "ignition": "Allumage",
+    "extinguishing": "Extinction",
+    "alarm": "Alarme",
+    "pellets": "Granulés",
+    "pellets_low": "Granulés bas",
+    "level": "Niveau",
+    "f_power_level": "Capteur de puissance de chauffe (1-5)",
+    "f_pellet_level": "Capteur de niveau de granulés (%)",
+    "f_ignition_threshold": "Allumage au-dessus de (W)",
+    "f_pellet_alert": "Alerte granulés sous (%)",
+    "off": "Éteint",
+    "idle": "Inactif",
+    "standby": "Veille",
+    "running": "En cours",
+    "finished": "Terminé",
+    "heating": "En chauffe",
+    "ready": "Prêt",
+    "preheating": "Préchauffage",
+    "cooling": "Refroidit",
+    "door_open": "Porte ouverte",
+    "unavailable": "Indisponible",
+    "too_warm": "Trop chaud",
+    "ph_wash": "Lavage",
+    "ph_rinse": "Rinçage",
+    "ph_spin": "Essorage",
+    "ph_dry": "Séchage",
+    "ph_cool": "Refroidissement",
+    "power": "Puissance",
+    "energy": "Énergie",
+    "cost": "Coût",
+    "remaining": "Restant",
+    "program": "Programme",
+    "temperature": "Température",
+    "target": "Consigne",
+    "fridge_temp": "Frigo",
+    "freezer_temp": "Congélateur",
+    "ends_at": "Fin à",
+    "toggle": "Allumer/éteindre",
+    "confirm_off": "Cycle en cours – cliquer encore pour couper",
+    "f_name": "Nom",
+    "f_entity": "Entité d'état (switch, sensor, input_select…)",
+    "f_power": "Capteur de puissance (W)",
+    "f_energy": "Capteur d'énergie (kWh)",
+    "f_cost": "Capteur de coût",
+    "f_remaining": "Capteur de temps restant",
+    "f_progress": "Capteur de progression (%)",
+    "f_program": "Capteur de programme / phase",
+    "f_door": "Capteur de porte",
+    "f_switch": "Interrupteur à piloter (optionnel)",
+    "f_threshold": "Seuil de fonctionnement (W)",
+    "f_temperature": "Capteur de température",
+    "f_target_temperature": "Capteur de consigne",
+    "f_freezer_temperature": "Capteur température congélateur",
+    "f_freezer_door": "Capteur porte congélateur",
+    "f_max_temperature": "Alerte frigo au-dessus de (°C)",
+    "f_freezer_max_temperature": "Alerte congélateur au-dessus de (°C)",
+    "f_color": "Couleur d'accent (CSS)",
+    "f_animations": "Animations",
+    "f_confirm_off": "Confirmer avant de couper pendant un cycle",
+    "err_need_entity": "Indique au moins `entity`, `power`, `switch` ou `temperature`.",
+    "of_peak": "de la crête",
+    "lcd_night": "NUIT",
+    "lcd_ignition": "ALLUM",
+    "lcd_extinguishing": "EXTIN",
+    "lcd_brewing": "CAFE",
+    "lcd_ready": "PRET",
+    "pouring": "Service en cours",
+    "playing": "En lecture",
+    "muted": "Muet",
+    "keg": "Fût",
+    "keg_low": "Fût presque vide",
+    "f_keg_level": "Capteur de niveau du fût (%)",
+    "f_pouring": "Capteur de service (optionnel)",
+    "fan_1": "Vitesse 1",
+    "fan_2": "Vitesse 2",
+    "fan_3": "Vitesse 3",
+    "f_oscillating": "Oscillation",
+    "f_mid_threshold": "Vitesse 2 au-dessus de (W)",
+    "ph_heat": "Chauffe",
+    "f_heating_power": "Seuil de phase de chauffe (W)",
+    "f_spin_power": "Seuil de phase d'essorage (W)"
+  },
+  "nb": {
+    "washer": "Vaskemaskin",
+    "dryer": "Tørketrommel",
+    "dishwasher": "Oppvaskmaskin",
+    "water_heater": "Varmtvannsbereder",
+    "oven": "Stekeovn",
+    "microwave": "Mikrobølgeovn",
+    "air_fryer": "Airfryer",
+    "coffee_maker": "Kaffetrakter",
+    "tv": "TV",
+    "range_hood": "Kjøkkenvifte",
+    "beer_tap": "Øltapper",
+    "av_receiver": "Hjemmekino-forsterker",
+    "fan": "Vifte",
+    "ceiling_fan": "Takvifte",
+    "generic": "Generisk apparat (eget bilde)",
+    "towel_dryer": "Håndklevarmer",
+    "server_rack": "Serverrack (homelab)",
+    "desktop_pc": "Stasjonær PC",
+    "laptop": "Bærbar PC",
+    "tool_charger": "Batterilader for verktøy",
+    "charging": "Lader",
+    "charged": "Ladet",
+    "battery": "Batteri",
+    "f_battery_level": "Batterinivå-sensor (%)",
+    "f_standby_threshold": "Ladet (vedlikehold) over (W)",
+    "online": "Tilkoblet",
+    "f_max_power_rack": "Maks last (W)",
+    "f_power_solar": "Sensor for soloverskudd (W)",
+    "f_energy_solar": "Energisensor for soloverskudd (kWh)",
+    "solar_surplus": "Soloverskudd",
+    "mode_off": "Av",
+    "wine_cooler": "Vinkjøleskap",
+    "f_max_temperature_wine": "Varsel over (°C)",
+    "f_fridge_style": "Kjøleskapstype",
+    "zone_top": "Øvre sone",
+    "zone_bottom": "Nedre sone",
+    "f_zone2_temperature": "Temperatursensor nedre sone (to soner)",
+    "f_max_temperature_2": "Varsel nedre sone over (°C)",
+    "f_show_modes": "Vis modusknapper",
+    "f_show_power": "Vis effekt",
+    "grid": "Strømnett",
+    "energy_grid": "Energi fra nettet",
+    "energy_solar": "Solenergi",
+    "ac_split": "Klimaanlegg (innedel)",
+    "heat_pump": "Varmepumpe (utedel)",
+    "ac_dry": "Avfukting",
+    "ac_fan": "Bare vifte",
+    "at_target": "Ved måltemperatur",
+    "defrost": "Avriming",
+    "f_hvac": "Modus uten klima-entitet",
+    "screen_on": "På",
+    "lights": "Bare lys",
+    "f_light": "Lys-entitet (valgfri)",
+    "brewing": "Trakter",
+    "keep_warm": "Holder varm",
+    "f_style": "Type kaffetrakter",
+    "f_warm_threshold": "Holder varm / klar over (W)",
+    "fridge": "Kjøleskap",
+    "pellet_stove": "Pelletsovn",
+    "pool_pump": "Bassengpumpe",
+    "printer_3d": "3D-skriver",
+    "chest_freezer": "Fryseboks",
+    "drawer_freezer": "Fryseskap",
+    "solar": "Solcellepaneler",
+    "vmc": "Avtrekksvifte",
+    "hob": "Koketopp",
+    "radiator": "Panelovn",
+    "comfort": "Komfort",
+    "eco": "Øko",
+    "frost": "Frostsikring",
+    "window_open": "Vindu åpent",
+    "f_mode": "Modus-entitet (styretråd, select…)",
+    "f_window": "Vindussensor",
+    "f_max_power_rad": "Ovnens effekt (W)",
+    "cooking": "Koker",
+    "residual": "Restvarme",
+    "zones": "Aktive soner",
+    "f_zone_power": "Effekt for én sone (W)",
+    "f_zone_1": "Sone foran venstre (nivå eller W)",
+    "f_zone_2": "Sone foran høyre",
+    "f_zone_3": "Sone bak venstre",
+    "f_zone_4": "Sone bak høyre",
+    "f_residual_minutes": "Vis restvarme i (min)",
+    "speed1": "Lav hastighet",
+    "speed2": "Høy hastighet",
+    "humid": "Høy fukt",
+    "humidity": "Fuktighet",
+    "f_humidity": "Fuktsensor (%)",
+    "f_high_threshold": "Høy hastighet over (W)",
+    "f_humidity_max": "Fuktvarsel over (%)",
+    "producing": "Produserer",
+    "low": "Lav produksjon",
+    "night": "Natt",
+    "production": "Produksjon",
+    "savings": "Besparelse",
+    "f_sun_entity": "Sol-entitet",
+    "f_max_power_solar": "Toppeffekt (Wp)",
+    "printing": "Skriver ut",
+    "paused": "Pause",
+    "failed": "Feilet",
+    "progress": "Fremdrift",
+    "nozzle": "Dyse",
+    "bed": "Plate",
+    "f_bed_temperature": "Sensor for platetemperatur",
+    "f_filament_color": "Filamentfarge (CSS)",
+    "f_image": "Bilde-URL (f.eks. /local/min-enhet.png)",
+    "f_nozzle_temperatures": "Dysetemperatursensorer (T0, T1…)",
+    "filtering": "Filtrerer",
+    "water": "Vann",
+    "today": "I dag",
+    "speed": "Hastighet",
+    "f_runtime": "Sensor for filtreringstid i dag",
+    "f_speed": "Hastighetssensor (rpm eller %)",
+    "f_max_power": "Maks effekt ved full hastighet (W)",
+    "ignition": "Tenner",
+    "extinguishing": "Slukker",
+    "alarm": "Alarm",
+    "pellets": "Pellets",
+    "pellets_low": "Lite pellets",
+    "level": "Nivå",
+    "f_power_level": "Sensor for varmenivå (1-5)",
+    "f_pellet_level": "Sensor for pelletsnivå (%)",
+    "f_ignition_threshold": "Tenning over (W)",
+    "f_pellet_alert": "Varsel lite pellets under (%)",
+    "off": "Av",
+    "idle": "Inaktiv",
+    "standby": "Hvilemodus",
+    "running": "I gang",
+    "finished": "Ferdig",
+    "heating": "Varmer",
+    "ready": "Klar",
+    "preheating": "Forvarmer",
+    "cooling": "Kjøler",
+    "door_open": "Døren er åpen",
+    "unavailable": "Utilgjengelig",
+    "too_warm": "For varmt",
+    "ph_wash": "Vasker",
+    "ph_rinse": "Skyller",
+    "ph_spin": "Sentrifugerer",
+    "ph_dry": "Tørker",
+    "ph_cool": "Kjøler ned",
+    "power": "Effekt",
+    "energy": "Energi",
+    "cost": "Kostnad",
+    "remaining": "Gjenstår",
+    "program": "Program",
+    "temperature": "Temperatur",
+    "target": "Mål",
+    "fridge_temp": "Kjøleskap",
+    "freezer_temp": "Fryser",
+    "ends_at": "Ferdig kl.",
+    "toggle": "Slå på/av",
+    "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
+    "f_name": "Navn",
+    "f_entity": "Status-entitet (switch, sensor, input_select…)",
+    "f_power": "Effektsensor (W)",
+    "f_energy": "Energisensor (kWh)",
+    "f_cost": "Kostnadssensor",
+    "f_remaining": "Sensor for gjenstående tid",
+    "f_progress": "Fremdriftssensor (%)",
+    "f_program": "Sensor for program / fase",
+    "f_door": "Dørsensor",
+    "f_switch": "Bryter som slås av/på (valgfri)",
+    "f_threshold": "Terskel for «i gang» (W)",
+    "f_temperature": "Temperatursensor",
+    "f_target_temperature": "Sensor for måltemperatur",
+    "f_freezer_temperature": "Temperatursensor fryser",
+    "f_freezer_door": "Dørsensor fryser",
+    "f_max_temperature": "Varsel kjøleskap over (°C)",
+    "f_freezer_max_temperature": "Varsel fryser over (°C)",
+    "f_color": "Aksentfarge (CSS)",
+    "f_animations": "Animasjoner",
+    "f_confirm_off": "Bekreft før strømmen brytes under en syklus",
+    "err_need_entity": "Angi minst én av `entity`, `power`, `switch` eller `temperature`.",
+    "of_peak": "av topp",
+    "lcd_night": "NATT",
+    "lcd_ignition": "TENN",
+    "lcd_extinguishing": "KJØL",
+    "lcd_brewing": "TRAKT",
+    "lcd_ready": "KLAR",
+    "pouring": "Tapper",
+    "playing": "Spiller",
+    "muted": "Dempet",
+    "keg": "Fat",
+    "keg_low": "Fatet er nesten tomt",
+    "f_keg_level": "Fatnivå-sensor (%)",
+    "f_pouring": "Tappesensor (valgfri)",
+    "fan_1": "Hastighet 1",
+    "fan_2": "Hastighet 2",
+    "fan_3": "Hastighet 3",
+    "f_oscillating": "Svinging",
+    "f_mid_threshold": "Hastighet 2 over (W)",
+    "ph_heat": "Oppvarming",
+    "f_heating_power": "Effektterskel for oppvarming (W)",
+    "f_spin_power": "Effektterskel for sentrifugering (W)"
+  },
+  "nl": {
+    "washer": "Wasmachine",
+    "dryer": "Droogkast",
+    "dishwasher": "Vaatwasser",
+    "water_heater": "Boiler",
+    "oven": "Oven",
+    "microwave": "Microgolfoven",
+    "air_fryer": "Airfryer",
+    "coffee_maker": "Koffiezetapparaat",
+    "tv": "Tv",
+    "range_hood": "Dampkap",
+    "beer_tap": "Biertap",
+    "av_receiver": "Thuisbioscoopversterker",
+    "fan": "Ventilator",
+    "ceiling_fan": "Plafondventilator",
+    "generic": "Algemeen toestel (eigen afbeelding)",
+    "towel_dryer": "Handdoekradiator",
+    "server_rack": "Serverkast (homelab)",
+    "desktop_pc": "Desktop-pc",
+    "laptop": "Laptop",
+    "tool_charger": "Acculader voor gereedschap",
+    "charging": "Opladen",
+    "charged": "Opgeladen",
+    "battery": "Accu",
+    "f_battery_level": "Accuniveausensor (%)",
+    "f_standby_threshold": "Opgeladen (onderhoud) boven (W)",
+    "online": "Online",
+    "f_max_power_rack": "Maximale belasting (W)",
+    "f_power_solar": "Vermogenssensor zonne-overschot (W)",
+    "f_energy_solar": "Energiesensor zonne-overschot (kWh)",
+    "solar_surplus": "Zonne-overschot",
+    "mode_off": "Uit",
+    "wine_cooler": "Wijnkoelkast",
+    "f_max_temperature_wine": "Alarm boven (°C)",
+    "f_fridge_style": "Type koelkast",
+    "zone_top": "Bovenste zone",
+    "zone_bottom": "Onderste zone",
+    "f_zone2_temperature": "Temperatuursensor onderste zone (twee zones)",
+    "f_max_temperature_2": "Alarm onderste zone boven (°C)",
+    "f_show_modes": "Modusknoppen tonen",
+    "f_show_power": "Vermogen tonen",
+    "grid": "Net",
+    "energy_grid": "Energie van het net",
+    "energy_solar": "Zonne-energie",
+    "ac_split": "Airco (binnenunit)",
+    "heat_pump": "Warmtepomp (buitenunit)",
+    "ac_dry": "Ontvochtigen",
+    "ac_fan": "Enkel ventilatie",
+    "at_target": "Doeltemperatuur bereikt",
+    "defrost": "Ontdooien",
+    "f_hvac": "Modus zonder climate-entiteit",
+    "screen_on": "Aan",
+    "lights": "Enkel verlichting",
+    "f_light": "Lichtentiteit (optioneel)",
+    "brewing": "Koffie zetten",
+    "keep_warm": "Warmhouden",
+    "f_style": "Type koffiezetapparaat",
+    "f_warm_threshold": "Warmhouden / klaar boven (W)",
+    "fridge": "Koelkast",
+    "pellet_stove": "Pelletkachel",
+    "pool_pump": "Zwembadpomp",
+    "printer_3d": "3D-printer",
+    "chest_freezer": "Diepvrieskist",
+    "drawer_freezer": "Diepvriezer met lades",
+    "solar": "Zonnepanelen",
+    "vmc": "Badkamerventilator",
+    "hob": "Kookplaat",
+    "radiator": "Elektrische radiator",
+    "comfort": "Comfort",
+    "eco": "Eco",
+    "frost": "Vorstbeveiliging",
+    "window_open": "Raam open",
+    "f_mode": "Modusentiteit (stuurdraad, select…)",
+    "f_window": "Raamsensor",
+    "f_max_power_rad": "Vermogen radiator (W)",
+    "cooking": "Koken",
+    "residual": "Restwarmte",
+    "zones": "Actieve zones",
+    "f_zone_power": "Vermogen van één zone (W)",
+    "f_zone_1": "Zone linksvoor (stand of W)",
+    "f_zone_2": "Zone rechtsvoor",
+    "f_zone_3": "Zone linksachter",
+    "f_zone_4": "Zone rechtsachter",
+    "f_residual_minutes": "Restwarmte tonen (min)",
+    "speed1": "Lage stand",
+    "speed2": "Hoge stand",
+    "humid": "Hoge vochtigheid",
+    "humidity": "Vochtigheid",
+    "f_humidity": "Vochtigheidssensor (%)",
+    "f_high_threshold": "Hoge stand boven (W)",
+    "f_humidity_max": "Vochtigheidsalarm boven (%)",
+    "producing": "Produceert",
+    "low": "Lage productie",
+    "night": "Nacht",
+    "production": "Productie",
+    "savings": "Besparing",
+    "f_sun_entity": "Zon-entiteit",
+    "f_max_power_solar": "Piekvermogen (Wp)",
+    "printing": "Aan het printen",
+    "paused": "Gepauzeerd",
+    "failed": "Mislukt",
+    "progress": "Voortgang",
+    "nozzle": "Spuitmond",
+    "bed": "Bed",
+    "f_bed_temperature": "Sensor bedtemperatuur",
+    "f_filament_color": "Filamentkleur (CSS)",
+    "f_image": "Afbeeldings-URL (bv. /local/mijn-toestel.png)",
+    "f_nozzle_temperatures": "Sensoren spuitmondtemperatuur (T0, T1…)",
+    "filtering": "Filteren",
+    "water": "Water",
+    "today": "Vandaag",
+    "speed": "Snelheid",
+    "f_runtime": "Sensor filtertijd vandaag",
+    "f_speed": "Snelheidssensor (tpm of %)",
+    "f_max_power": "Maximaal vermogen op volle snelheid (W)",
+    "ignition": "Aansteken",
+    "extinguishing": "Uitdoven",
+    "alarm": "Alarm",
+    "pellets": "Pellets",
+    "pellets_low": "Pellets bijna op",
+    "level": "Stand",
+    "f_power_level": "Sensor verwarmingsstand (1-5)",
+    "f_pellet_level": "Sensor pelletniveau (%)",
+    "f_ignition_threshold": "Aansteken boven (W)",
+    "f_pellet_alert": "Alarm pellets bijna op onder (%)",
+    "off": "Uit",
+    "idle": "Inactief",
+    "standby": "Stand-by",
+    "running": "Bezig",
+    "finished": "Klaar",
+    "heating": "Verwarmen",
+    "ready": "Klaar voor gebruik",
+    "preheating": "Voorverwarmen",
+    "cooling": "Koelen",
+    "door_open": "Deur open",
+    "unavailable": "Niet beschikbaar",
+    "too_warm": "Te warm",
+    "ph_wash": "Wassen",
+    "ph_rinse": "Spoelen",
+    "ph_spin": "Centrifugeren",
+    "ph_dry": "Drogen",
+    "ph_cool": "Afkoelen",
+    "power": "Vermogen",
+    "energy": "Energie",
+    "cost": "Kost",
+    "remaining": "Resterend",
+    "program": "Programma",
+    "temperature": "Temperatuur",
+    "target": "Doel",
+    "fridge_temp": "Koelkast",
+    "freezer_temp": "Diepvries",
+    "ends_at": "Klaar om",
+    "toggle": "Aan/uit",
+    "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
+    "f_name": "Naam",
+    "f_entity": "Statusentiteit (switch, sensor, input_select…)",
+    "f_power": "Vermogenssensor (W)",
+    "f_energy": "Energiesensor (kWh)",
+    "f_cost": "Kostsensor",
+    "f_remaining": "Sensor resterende tijd",
+    "f_progress": "Voortgangssensor (%)",
+    "f_program": "Programma- / fasesensor",
+    "f_door": "Deursensor",
+    "f_switch": "Schakelaar om te bedienen (optioneel)",
+    "f_threshold": "Drempel voor 'bezig' (W)",
+    "f_temperature": "Temperatuursensor",
+    "f_target_temperature": "Sensor doeltemperatuur",
+    "f_freezer_temperature": "Temperatuursensor diepvries",
+    "f_freezer_door": "Deursensor diepvries",
+    "f_max_temperature": "Alarm koelkast boven (°C)",
+    "f_freezer_max_temperature": "Alarm diepvries boven (°C)",
+    "f_color": "Accentkleur (CSS)",
+    "f_animations": "Animaties",
+    "f_confirm_off": "Bevestigen voor de stroom tijdens een cyclus wordt onderbroken",
+    "err_need_entity": "Stel minstens één van `entity`, `power`, `switch` of `temperature` in.",
+    "of_peak": "van piek",
+    "lcd_night": "NACHT",
+    "lcd_ignition": "START",
+    "lcd_extinguishing": "KOEL",
+    "lcd_brewing": "ZET",
+    "lcd_ready": "KLAAR",
+    "pouring": "Tappen",
+    "playing": "Speelt af",
+    "muted": "Gedempt",
+    "keg": "Vat",
+    "keg_low": "Vat bijna leeg",
+    "f_keg_level": "Sensor vatniveau (%)",
+    "f_pouring": "Tapsensor (optioneel)",
+    "fan_1": "Stand 1",
+    "fan_2": "Stand 2",
+    "fan_3": "Stand 3",
+    "f_oscillating": "Zwenken",
+    "f_mid_threshold": "Stand 2 boven (W)",
+    "ph_heat": "Verwarmen",
+    "f_heating_power": "Drempelwaarde verwarmingsfase (W)",
+    "f_spin_power": "Drempelwaarde centrifugeerfase (W)"
+  },
+  "ro": {
+    "washer": "Mașină de spălat rufe",
+    "dryer": "Uscător de rufe",
+    "dishwasher": "Mașină de spălat vase",
+    "water_heater": "Boiler",
+    "oven": "Cuptor",
+    "microwave": "Cuptor cu microunde",
+    "air_fryer": "Friteuză cu aer cald",
+    "coffee_maker": "Aparat de cafea",
+    "tv": "Televizor",
+    "range_hood": "Hotă",
+    "beer_tap": "Dozator de bere",
+    "av_receiver": "Amplificator home cinema",
+    "fan": "Ventilator",
+    "ceiling_fan": "Ventilator de tavan",
+    "generic": "Aparat generic (imagine personalizată)",
+    "towel_dryer": "Radiator port-prosop",
+    "server_rack": "Rack de servere (homelab)",
+    "desktop_pc": "PC desktop",
+    "laptop": "Laptop",
+    "tool_charger": "Încărcător baterii scule",
+    "charging": "Se încarcă",
+    "charged": "Încărcată",
+    "battery": "Baterie",
+    "f_battery_level": "Senzor nivel baterie (%)",
+    "f_standby_threshold": "Încărcată (întreținere) peste (W)",
+    "online": "Online",
+    "f_max_power_rack": "Sarcină maximă (W)",
+    "f_power_solar": "Senzor putere surplus solar (W)",
+    "f_energy_solar": "Senzor energie surplus solar (kWh)",
+    "solar_surplus": "Surplus solar",
+    "mode_off": "Oprit",
+    "wine_cooler": "Vinotecă",
+    "f_max_temperature_wine": "Alertă peste (°C)",
+    "f_fridge_style": "Tip frigider",
+    "zone_top": "Zona de sus",
+    "zone_bottom": "Zona de jos",
+    "f_zone2_temperature": "Senzor temperatură zona de jos (două zone)",
+    "f_max_temperature_2": "Alertă zona de jos peste (°C)",
+    "f_show_modes": "Afișează butoanele de mod",
+    "f_show_power": "Afișează puterea",
+    "grid": "Rețea",
+    "energy_grid": "Energie din rețea",
+    "energy_solar": "Energie solară",
+    "ac_split": "Aer condiționat (unitate interioară)",
+    "heat_pump": "Pompă de căldură (unitate exterioară)",
+    "ac_dry": "Dezumidificare",
+    "ac_fan": "Doar ventilator",
+    "at_target": "Temperatură atinsă",
+    "defrost": "Dezghețare",
+    "f_hvac": "Mod fără entitate climate",
+    "screen_on": "Pornit",
+    "lights": "Doar iluminat",
+    "f_light": "Entitate lumină (opțional)",
+    "brewing": "Se prepară",
+    "keep_warm": "Menținere la cald",
+    "f_style": "Tip de aparat de cafea",
+    "f_warm_threshold": "Menținere la cald / gata peste (W)",
+    "fridge": "Frigider",
+    "pellet_stove": "Sobă pe peleți",
+    "pool_pump": "Pompă de piscină",
+    "printer_3d": "Imprimantă 3D",
+    "chest_freezer": "Congelator orizontal",
+    "drawer_freezer": "Congelator vertical",
+    "solar": "Panouri solare",
+    "vmc": "Ventilator de extracție",
+    "hob": "Plită",
+    "radiator": "Radiator electric",
+    "comfort": "Confort",
+    "eco": "Eco",
+    "frost": "Protecție la îngheț",
+    "window_open": "Fereastră deschisă",
+    "f_mode": "Entitate de mod (fir pilot, select…)",
+    "f_window": "Senzor de fereastră",
+    "f_max_power_rad": "Puterea radiatorului (W)",
+    "cooking": "Se gătește",
+    "residual": "Căldură reziduală",
+    "zones": "Zone active",
+    "f_zone_power": "Puterea unei zone (W)",
+    "f_zone_1": "Zonă față-stânga (nivel sau W)",
+    "f_zone_2": "Zonă față-dreapta",
+    "f_zone_3": "Zonă spate-stânga",
+    "f_zone_4": "Zonă spate-dreapta",
+    "f_residual_minutes": "Afișare căldură reziduală (min)",
+    "speed1": "Viteză mică",
+    "speed2": "Viteză mare",
+    "humid": "Umiditate ridicată",
+    "humidity": "Umiditate",
+    "f_humidity": "Senzor de umiditate (%)",
+    "f_high_threshold": "Viteză mare peste (W)",
+    "f_humidity_max": "Alertă umiditate peste (%)",
+    "producing": "Produce",
+    "low": "Producție redusă",
+    "night": "Noapte",
+    "production": "Producție",
+    "savings": "Economii",
+    "f_sun_entity": "Entitate soare",
+    "f_max_power_solar": "Putere de vârf (Wp)",
+    "printing": "Se printează",
+    "paused": "În pauză",
+    "failed": "Eșuat",
+    "progress": "Progres",
+    "nozzle": "Duză",
+    "bed": "Platformă",
+    "f_bed_temperature": "Senzor temperatură platformă",
+    "f_filament_color": "Culoare filament (CSS)",
+    "f_image": "URL imagine (ex. /local/aparatul-meu.png)",
+    "f_nozzle_temperatures": "Senzori temperatură duze (T0, T1…)",
+    "filtering": "Filtrare",
+    "water": "Apă",
+    "today": "Azi",
+    "speed": "Viteză",
+    "f_runtime": "Senzor durată filtrare azi",
+    "f_speed": "Senzor de viteză (rpm sau %)",
+    "f_max_power": "Putere maximă la viteză maximă (W)",
+    "ignition": "Aprindere",
+    "extinguishing": "Oprire",
+    "alarm": "Alarmă",
+    "pellets": "Peleți",
+    "pellets_low": "Peleți puțini",
+    "level": "Nivel",
+    "f_power_level": "Senzor nivel de încălzire (1-5)",
+    "f_pellet_level": "Senzor nivel peleți (%)",
+    "f_ignition_threshold": "Aprindere peste (W)",
+    "f_pellet_alert": "Alertă peleți sub (%)",
+    "off": "Oprit",
+    "idle": "Inactiv",
+    "standby": "Standby",
+    "running": "Funcționează",
+    "finished": "Terminat",
+    "heating": "Se încălzește",
+    "ready": "Gata",
+    "preheating": "Preîncălzire",
+    "cooling": "Se răcește",
+    "door_open": "Ușă deschisă",
+    "unavailable": "Indisponibil",
+    "too_warm": "Prea cald",
+    "ph_wash": "Spălare",
+    "ph_rinse": "Clătire",
+    "ph_spin": "Centrifugare",
+    "ph_dry": "Uscare",
+    "ph_cool": "Răcire",
+    "power": "Putere",
+    "energy": "Energie",
+    "cost": "Cost",
+    "remaining": "Rămas",
+    "program": "Program",
+    "temperature": "Temperatură",
+    "target": "Țintă",
+    "fridge_temp": "Frigider",
+    "freezer_temp": "Congelator",
+    "ends_at": "Se termină la",
+    "toggle": "Pornește/oprește",
+    "confirm_off": "Ciclu în desfășurare – apasă din nou pentru a tăia alimentarea",
+    "f_name": "Nume",
+    "f_entity": "Entitate de stare (switch, sensor, input_select…)",
+    "f_power": "Senzor de putere (W)",
+    "f_energy": "Senzor de energie (kWh)",
+    "f_cost": "Senzor de cost",
+    "f_remaining": "Senzor timp rămas",
+    "f_progress": "Senzor de progres (%)",
+    "f_program": "Senzor program / fază",
+    "f_door": "Senzor de ușă",
+    "f_switch": "Comutator de controlat (opțional)",
+    "f_threshold": "Prag de funcționare (W)",
+    "f_temperature": "Senzor de temperatură",
+    "f_target_temperature": "Senzor temperatură țintă",
+    "f_freezer_temperature": "Senzor temperatură congelator",
+    "f_freezer_door": "Senzor ușă congelator",
+    "f_max_temperature": "Alertă frigider peste (°C)",
+    "f_freezer_max_temperature": "Alertă congelator peste (°C)",
+    "f_color": "Culoare de accent (CSS)",
+    "f_animations": "Animații",
+    "f_confirm_off": "Confirmă înainte de a tăia alimentarea în timpul unui ciclu",
+    "err_need_entity": "Setează cel puțin una dintre `entity`, `power`, `switch` sau `temperature`.",
+    "of_peak": "din vârf",
+    "lcd_night": "NOAPTE",
+    "lcd_ignition": "APRIND",
+    "lcd_extinguishing": "STING",
+    "lcd_brewing": "CAFEA",
+    "lcd_ready": "GATA",
+    "pouring": "Se toarnă",
+    "playing": "Se redă",
+    "muted": "Mut",
+    "keg": "Butoi",
+    "keg_low": "Butoi aproape gol",
+    "f_keg_level": "Senzor nivel butoi (%)",
+    "f_pouring": "Senzor de turnare (opțional)",
+    "fan_1": "Viteză 1",
+    "fan_2": "Viteză 2",
+    "fan_3": "Viteză 3",
+    "f_oscillating": "Oscilație",
+    "f_mid_threshold": "Viteză 2 peste (W)",
+    "ph_heat": "Încălzire",
+    "f_heating_power": "Prag de putere pentru încălzire (W)",
+    "f_spin_power": "Prag de putere pentru centrifugare (W)"
+  }
 };
 const lang = (hass) => {
   const l = (hass && (hass.locale?.language || hass.language)) || document.documentElement.lang || "en";
@@ -992,8 +1786,8 @@ SVG.fan = () => `
   <g class="fn-ribbon"><path d="M93 44q8 2 12 -2q-4 6 -12 6z" fill="#ff7a59"/></g>
 </g>`;
 
-/* style de réfrigérateur : congélateur en haut (défaut), en bas, French door, américain */
-const fridgeStyle = (c) => ({ top: "top", haut: "top", bottom: "bottom", bas: "bottom", combi: "bottom", french: "french", french_door: "french", american: "american", americain: "american", side_by_side: "american", us: "american" }[String(c?.style || "top").toLowerCase()] || "top");
+/* style de réfrigérateur : congélateur en haut (défaut), en bas (tiroirs ou porte), French door, 4 portes, américain */
+const fridgeStyle = (c) => ({ top: "top", haut: "top", bottom: "bottom", bas: "bottom", combi: "bottom", french: "french", french_door: "french", bottom_door: "bottom_door", "bottom-door": "bottom_door", combi_door: "bottom_door", combi_porte: "bottom_door", four_door: "four_door", "4_door": "four_door", "4-door": "four_door", cross_door: "four_door", american: "american", americain: "american", side_by_side: "american", us: "american" }[String(c?.style || "top").toLowerCase()] || "top");
 
 // contenu du compartiment frigo (bouteilles, pots, fruits, bac à légumes), dessiné dans la zone x, y, w, h
 const fridgeFood = (x, y, w, h) => {
@@ -1012,6 +1806,12 @@ const fzDrawer = (x, y, w, h, cls) => `
   <rect x="${x + w * 0.25}" y="${y + 3.5}" width="${w * 0.5}" height="3.2" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
   <path d="M${x + 4} ${y + h - 2}h${w - 8}" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>
 </g>`;
+// intérieur de congélateur à porte battante : clayettes givrées et bacs, dessiné dans la zone x, y, w, h
+const fzInside = (x, y, w, h) => `
+<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="url(#ID-frost)"/>
+<path d="M${x + 2} ${y + h * 0.36}h${w - 4}M${x + 2} ${y + h * 0.68}h${w - 4}" stroke="#a9cbe2" stroke-width="1"/>
+<rect x="${x + 5}" y="${y + h * 0.36 - 9}" width="${w * 0.4}" height="9" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/><rect x="${x + w * 0.55}" y="${y + h * 0.36 - 7}" width="${w * 0.33}" height="7" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>
+<rect x="${x + 5}" y="${y + h * 0.68 - 9}" width="${w * 0.5}" height="9" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>`;
 // afficheur température + flocon
 const fridgeLcd = (x, y) => `
 <rect x="${x}" y="${y}" width="24" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
@@ -1067,6 +1867,56 @@ ${fzDrawer(26, 85, 68, 22, "fzd fzd-pull")}
   <rect x="84" y="40" width="3.4" height="38" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
   ${fridgeLcd(35, 12)}
   <path d="M30 8v71" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>`,
+
+  // combiné classique : porte de frigo en haut, porte battante de congélateur en bas
+  bottom_door: () => `
+<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="29" y="7" width="62" height="74" rx="3" fill="url(#ID-in)"/>
+${fridgeFood(29, 7, 62, 74)}
+<rect class="flight" x="29" y="7" width="62" height="74" fill="#fffbe6" opacity="0"/>
+${fzInside(29, 86, 62, 41)}
+<g class="fz-door">
+  <rect x="26" y="84" width="68" height="46" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="90" width="3.4" height="26" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M30 88v38" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>
+<g class="fr-door">
+  <rect x="26" y="4" width="68" height="79" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="40" width="3.4" height="38" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${fridgeLcd(35, 12)}
+  <path d="M30 8v71" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>`,
+
+  // 4 portes (cross door) : deux portes battantes en haut, deux portes battantes de congélateur en bas
+  four_door: () => `
+<ellipse cx="60" cy="134" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
+<rect x="16" y="4" width="88" height="126" rx="6" fill="#9aa2ab"/>
+<rect x="19" y="7" width="82" height="70" rx="3" fill="url(#ID-in)"/>
+${fridgeFood(19, 7, 82, 70)}
+<rect class="flight" x="19" y="7" width="82" height="70" fill="#fffbe6" opacity="0"/>
+${fzInside(19, 82, 40, 45)}${fzInside(61, 82, 40, 45)}
+<g class="fz-door fz-l" style="transform-origin: 16px 0">
+  <rect x="16" y="80" width="43.6" height="50" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="53" y="88" width="3.2" height="30" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M20 84v42" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>
+<g class="fz-door fz-r" style="transform-origin: 104px 0">
+  <rect x="60.4" y="80" width="43.6" height="50" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="63.8" y="88" width="3.2" height="30" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M71 84v42" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
+</g>
+<g class="fr-door fr-l">
+  <rect x="16" y="4" width="43.6" height="75" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="53" y="16" width="3.2" height="46" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${fridgeLcd(22, 12)}
+  <path d="M20 8v67" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>
+<g class="fr-door fr-r" style="transform-origin: 104px 0">
+  <rect x="60.4" y="4" width="43.6" height="75" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="63.8" y="16" width="3.2" height="46" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  <path d="M71 8v67" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
 </g>`,
 
   // French door : deux portes battantes en haut, deux tiroirs de congélation en bas
@@ -1962,11 +2812,11 @@ ${dual ? `
 /* ------------------------------------------------------------------ */
 const CYCLE_FIELDS = ["entity", "power", "energy", "cost", "remaining", "progress", "program", "door", "switch"];
 const DEF = {
-  washer: { accent: "active", threshold: 10, fields: CYCLE_FIELDS,
+  washer: { accent: "active", threshold: 10, heating_power: 1000, spin_power: 200, fields: CYCLE_FIELDS,
     keys: ["lave_linge", "lavelinge", "washing_machine", "washer", "machine_a_laver"] },
   dryer: { accent: "active", threshold: 10, fields: CYCLE_FIELDS,
     keys: ["seche_linge", "sechelinge", "tumble_dryer", "dryer"] },
-  dishwasher: { accent: "active", threshold: 10, fields: CYCLE_FIELDS,
+  dishwasher: { accent: "active", threshold: 10, heating_power: 1000, fields: CYCLE_FIELDS,
     keys: ["lave_vaisselle", "lavevaisselle", "dishwasher"] },
   water_heater: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "switch"],
@@ -2307,6 +3157,8 @@ class ApplianceCardBase extends HTMLElement {
       // input_boolean / binary_sensor "on", or a descriptive sensor state, means running
       else base = "running";
     }
+    /* un état explicite (binary_sensor / input_boolean) prime sur la puissance : la prise peut être coupée alors que l'appareil tourne */
+    const explicitState = !!main && ["input_boolean", "binary_sensor"].includes(domainOf(c.entity)) && !BAD.includes(String(main.state).toLowerCase());
     if (base === null && !pw && !pwS && ref) base = "unavailable";
     const powered = watts !== null && watts > threshold;
     if (base === "on" || base === null) {
@@ -2516,6 +3368,7 @@ class ApplianceCardBase extends HTMLElement {
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
     } else if (kind === "desktop_pc" || kind === "laptop") {
       if (base === "off" || base === "unavailable") m.status = base;
+      else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
       else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
     } else if (kind === "tool_charger") {
@@ -2548,7 +3401,23 @@ class ApplianceCardBase extends HTMLElement {
       m.status = base;
     }
 
-    // phase detection (washer / dryer / dishwasher) from status or program text
+    // For dishwashers on smart plugs: track recent cycle activity to detect the low-power drying phase
+    if (kind === "dishwasher") {
+      if (watts !== null && watts > threshold) {
+        this._dwLastActive = Date.now();
+      }
+      const dryingTimeout = 20 * 60 * 1000; // 20 minutes
+      const recentlyActive = this._dwLastActive && (Date.now() - this._dwLastActive < dryingTimeout);
+      if (base === "running" && watts !== null && watts <= threshold) {
+        m.status = "running";
+        m.phase = "dry";
+      } else if (base !== "running" && !explicitState && recentlyActive && (watts === null || watts <= threshold)) {
+        m.status = "running";
+        m.phase = "dry";
+      }
+    }
+
+    // phase detection (washer / dryer / dishwasher) from status or program text, with smart-plug power inference fallback
     if (m.status === "running" && ["washer", "dryer", "dishwasher"].includes(kind)) {
       const txt = `${main ? main.state : ""} ${m.program ? m.program.state : ""}`.toLowerCase();
       if (/rin[cç]|rinse/.test(txt)) m.phase = "rinse";
@@ -2556,7 +3425,23 @@ class ApplianceCardBase extends HTMLElement {
       else if (/refroid|cool|anti.?froiss|wrinkle/.test(txt)) m.phase = "cool";
       // en début de mot : les clés Home Connect « laundry_care_washer_program_… » contiennent « dry »
       else if (/(^|[^a-zà-ÿ])(s[eé]ch|dry)/.test(txt)) m.phase = "dry";
-      else m.phase = kind === "dryer" ? "dry" : "wash";
+      else if (/(^|[^a-zà-ÿ])(heat|chauff)/.test(txt)) m.phase = "heat";
+      else if (kind === "dryer") {
+        m.phase = "dry";
+      } else if (watts !== null && ["washer", "dishwasher"].includes(kind)) {
+        // Fallback: infer phase from power draw on smart plugs when text entity gives no phase
+        const heatThreshold = c.heating_power ?? this._def.heating_power ?? 1000;
+        const spinThreshold = c.spin_power ?? this._def.spin_power ?? 200;
+        if (heatThreshold > 0 && watts >= heatThreshold) {
+          m.phase = "heat";
+        } else if (kind === "washer" && spinThreshold > 0 && watts >= spinThreshold) {
+          m.phase = "spin";
+        } else if (!m.phase) {
+          m.phase = "wash";
+        }
+      } else if (!m.phase) {
+        m.phase = "wash";
+      }
     }
     if (isOn(m.door) || isOn(m.fdoor)) m.alerts.unshift("door_open");
     m.alerts = [...new Set(m.alerts)];
@@ -2678,7 +3563,7 @@ class ApplianceCardBase extends HTMLElement {
     if (m.status === "finished") return "END";
     if (!active) return "OFF";
     if (m.remaining != null && m.remaining > 0) return lcdDuration(m.remaining);
-    return { wash: "WASH", rinse: "RINSE", spin: "SPIN", dry: "DRY", cool: "COOL" }[m.phase] || "RUN";
+    return { wash: "WASH", rinse: "RINSE", spin: "SPIN", dry: "DRY", cool: "COOL", heat: "HEAT" }[m.phase] || "RUN";
   }
 
   _render(m) {
@@ -2999,6 +3884,12 @@ function buildForm(kind) {
       {
         type: "expandable", name: "", title: "Options", flatten: true, schema: [
           { name: "threshold", selector: { number: { min: 0, max: 3000, step: 1, mode: "box", unit_of_measurement: "W" } } },
+          ...(["washer", "dishwasher"].includes(kind) ? [
+            { name: "heating_power", selector: { number: { min: 100, max: 4000, step: 50, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "washer" ? [
+            { name: "spin_power", selector: { number: { min: 50, max: 2000, step: 25, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(["chest_freezer", "drawer_freezer"].includes(kind) ? [
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
           ] : []),
@@ -3009,7 +3900,8 @@ function buildForm(kind) {
           ...(kind === "fridge" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "top", label: "Congélateur en haut / Top freezer" }, { value: "bottom", label: "Congélateur en bas / Bottom freezer" },
-              { value: "french", label: "French door" }, { value: "american", label: "Américain / Side-by-side" }] } } },
+              { value: "bottom_door", label: "Combiné, porte en bas / Bottom freezer door" },
+              { value: "french", label: "French door" }, { value: "four_door", label: "4 portes / 4-door" }, { value: "american", label: "Américain / Side-by-side" }] } } },
             { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
           ] : []),
@@ -3153,6 +4045,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .status span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--disabled-text-color, #9e9e9e); }
 .active .dot { background: var(--c); box-shadow: 0 0 0 3px rgba(127,127,127,.2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent); }
+.ph-heat .dot { background: var(--ac-heat, #ff8a3d); }
 .active .status { color: var(--primary-text-color); }
 .st-finished .dot { background: var(--ac-ok); }
 .alert-line { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ac-alert); }
@@ -3342,7 +4235,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-oven .lcd, .k-microwave .lcd { fill: #6fd8ff; }
 .warm .fr-temp { fill: var(--ac-alert); }
 .led { fill: #5a636d; transition: fill .3s; }
-.ph-wash .l1, .ph-dry .l1, .k-dishwasher.active .l1, .k-oven.active .l1,
+.ph-wash .l1, .ph-heat .l1, .ph-dry .l1, .k-dishwasher.active .l1, .k-oven.active .l1,
 .ph-rinse .l2, .ph-cool .l2, .ph-spin .l3 { fill: var(--ac-lcd); }
 .st-finished .l4 { fill: #3ddc84; }
 .knob, .drum, .clothes, .bowl, .arm, .needle, .fz-door, .fr-door, .flake { transform-box: view-box; }
@@ -3360,16 +4253,16 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .water { opacity: 0; transition: opacity .8s; }
 .water path { fill: #3f9fe0; opacity: .5; }
 .ph-rinse .water path { fill: #8fd4ff; opacity: .45; }
-.ph-wash .water, .ph-rinse .water { opacity: 1; }
+.ph-wash .water, .ph-rinse .water, .ph-heat .water { opacity: 1; }
 .wave { animation: ac-wave 2.4s linear infinite; animation-play-state: paused; }
-.ph-wash .wave, .ph-rinse .wave { animation-play-state: running; }
+.ph-wash .wave, .ph-rinse .wave, .ph-heat .wave { animation-play-state: running; }
 .ph-rinse .wave { animation-duration: 3.2s; }
 .foam circle { fill: #fff; opacity: 0; }
-.ph-wash .foam circle { animation: ac-bubble 2.6s ease-in infinite; }
-.ph-wash .foam circle:nth-child(2) { animation-delay: .5s; } .ph-wash .foam circle:nth-child(3) { animation-delay: 1s; }
-.ph-wash .foam circle:nth-child(4) { animation-delay: 1.5s; } .ph-wash .foam circle:nth-child(5) { animation-delay: .8s; }
-.ph-wash .foam circle:nth-child(6) { animation-delay: 1.9s; }
-.ph-wash .drum { animation: ac-tumble 3.4s ease-in-out infinite; }
+.ph-wash .foam circle, .ph-heat .foam circle { animation: ac-bubble 2.6s ease-in infinite; }
+.ph-wash .foam circle:nth-child(2), .ph-heat .foam circle:nth-child(2) { animation-delay: .5s; } .ph-wash .foam circle:nth-child(3), .ph-heat .foam circle:nth-child(3) { animation-delay: 1s; }
+.ph-wash .foam circle:nth-child(4), .ph-heat .foam circle:nth-child(4) { animation-delay: 1.5s; } .ph-wash .foam circle:nth-child(5), .ph-heat .foam circle:nth-child(5) { animation-delay: .8s; }
+.ph-wash .foam circle:nth-child(6), .ph-heat .foam circle:nth-child(6) { animation-delay: 1.9s; }
+.ph-wash .drum, .ph-heat .drum { animation: ac-tumble 3.4s ease-in-out infinite; }
 .ph-rinse .drum { animation: ac-tumble 4.6s ease-in-out infinite; }
 .ph-spin .drum { animation: ac-rot .32s linear infinite; }
 .ph-spin .clothes { opacity: .85; }
@@ -3385,12 +4278,14 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .wash-light { opacity: 0; transition: opacity .6s; }
 .k-dishwasher.active .wash-light { opacity: 1; }
 .arm { transform-origin: 60px 0; transform-box: fill-box; }
-.k-dishwasher.ph-wash .arm, .k-dishwasher.ph-rinse .arm { animation: ac-arm 1.2s linear infinite; }
+.k-dishwasher.ph-heat .wash-light rect { fill: #ff5722; opacity: .28; }
+.k-dishwasher.ph-heat .steam-in path { animation: ac-steam 2s ease-out infinite; }
+.k-dishwasher.ph-wash .arm, .k-dishwasher.ph-rinse .arm, .k-dishwasher.ph-heat .arm { animation: ac-arm 1.2s linear infinite; }
 .k-dishwasher .arm-top { animation-delay: -.4s !important; }
 .jets path { stroke: #bfe8ff; stroke-width: 1; stroke-dasharray: 2 4; opacity: 0; fill: none; }
-.k-dishwasher.ph-wash .jets path, .k-dishwasher.ph-rinse .jets path { opacity: .85; animation: ac-jet .5s linear infinite; }
+.k-dishwasher.ph-wash .jets path, .k-dishwasher.ph-rinse .jets path, .k-dishwasher.ph-heat .jets path { opacity: .85; animation: ac-jet .5s linear infinite; }
 .drops circle { fill: #bfe8ff; opacity: 0; }
-.k-dishwasher.ph-wash .drops circle, .k-dishwasher.ph-rinse .drops circle { animation: ac-fall 1.1s ease-in infinite; }
+.k-dishwasher.ph-wash .drops circle, .k-dishwasher.ph-rinse .drops circle, .k-dishwasher.ph-heat .drops circle { animation: ac-fall 1.1s ease-in infinite; }
 .drops circle:nth-child(2) { animation-delay: .3s !important; } .drops circle:nth-child(3) { animation-delay: .6s !important; }
 .drops circle:nth-child(4) { animation-delay: .85s !important; }
 .steam-in path { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
@@ -3624,6 +4519,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-fridge .fz-l { transform-origin: 12px 0; }
 .k-fridge .fr-r { transform-origin: 108px 0; }
 .door-open .fr-r { transform: scaleX(.16) skewY(6deg); }
+.fz-open .fz-r { transform: scaleX(.16) skewY(6deg); }
 .fzd { transform-box: view-box; transform-origin: 60px 96px; transition: transform .6s ease, filter .6s; }
 .fz-open .fzd-pull { transform: translateY(5px) scale(1.06); filter: drop-shadow(0 3px 3px rgba(0,0,0,.25)); }
 /* distributeur glaçons / eau du modèle américain */
@@ -4703,6 +5599,8 @@ class ApplianceBatteryCard extends HTMLElement {
           { name: 'show_temperature', selector: { boolean: {} }, default: true },
           { name: 'show_time', selector: { boolean: {} }, default: true },
         ] },
+        { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'split'] } } },
+        { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['auto', 'inside', 'below'] } } },
         { name: 'language', selector: { select: { options: Object.keys(I18N_BAT) } } },
       ],
     };
@@ -4711,7 +5609,7 @@ class ApplianceBatteryCard extends HTMLElement {
   setConfig(config) {
     // Convention : puissance > 0 = charge (inverser avec invert_power si ton capteur est l'inverse)
     this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true,
-      capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, ...config };
+      capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, status_position: 'auto', layout: 'default', ...config };
     this._built = false; this._build();
   }
   set hass(h) {
@@ -4756,7 +5654,7 @@ _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language
     this.shadowRoot.innerHTML = `
     <style>
       :host { display:block; }
-      ha-card { padding:12px; overflow:hidden; }
+      ha-card { padding:12px; overflow:hidden; container-type:inline-size; }
       .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; }
       .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
       .low .badge { display:inline-block; }
@@ -4771,6 +5669,19 @@ _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language
       .discharging .flow { stroke:#b3f5ff; opacity:1; animation:dash var(--fs,1s) linear infinite; }
       .soc { fill:#1d2733; font:800 26px system-ui,sans-serif; text-anchor:middle; }
       .state { fill:#4b5563; font:700 7.5px system-ui,sans-serif; text-anchor:middle; letter-spacing:.12em; }
+      .status-line { display:none; text-align:center; font-weight:700; font-size:max(11px, .75em); letter-spacing:.08em; text-transform:uppercase; color:var(--secondary-text-color); margin:2px 0 4px; }
+      .sp-below .status-line { display:block; } .sp-below #state { display:none; }
+      @container (max-width:260px) { .sp-auto .status-line { display:block; } .sp-auto #state { display:none; } }
+      .layout-split { display:grid; grid-template-columns:minmax(0, .8fr) minmax(0, 1.2fr); grid-template-rows:auto auto 1fr; column-gap:8px; align-content:center; }
+      .layout-split svg { grid-column:1; grid-row:1 / 4; align-self:center; transform:none; }
+      .layout-split .title { grid-column:2; grid-row:1; flex-wrap:wrap; gap:4px; margin:0 0 2px; font-size:.95em; }
+      .layout-split .title span { min-width:0; overflow-wrap:anywhere; }
+      .layout-split .status-line { grid-column:2; grid-row:2; display:block; text-align:left; margin:0 0 4px; }
+      .layout-split #state { display:none; }
+      .layout-split .stats { grid-column:2; grid-row:3; grid-template-columns:minmax(0, 1fr); min-width:0; align-self:start; gap:4px; margin-top:0; }
+      .layout-split .stat { padding:4px 6px; text-align:left; }
+      .layout-split .stat { min-width:0; overflow-wrap:anywhere; }
+      .layout-split .stat .v { font-size:.95em; }
       .bolt { fill:#ffb300; opacity:0; } .charging .bolt { opacity:1; animation:blink 1.2s infinite; }
       .arrow { fill:#00acc1; opacity:0; } .discharging .arrow { opacity:1; animation:blink 1.2s infinite; }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:8px; margin-top:6px; }
@@ -4779,7 +5690,7 @@ _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language
       @keyframes dash { to { stroke-dashoffset:-11; } } @keyframes blink { 50% { opacity:.35; } }
       @keyframes wave { from { transform:translate(-12px, var(--wy,0px)); } to { transform:translate(8px, var(--wy,0px)); } }
     </style>
-    <ha-card id="card">
+    <ha-card id="card" class="sp-${['inside', 'below'].includes(this._config.status_position) ? this._config.status_position : 'auto'}${this._config.layout === 'split' ? ' layout-split' : ''}">
       <div class="title"><span>${esc(this._config.name || this._t('name'))}</span><span class="badge">${this._t('low')}</span></div>
       <svg viewBox="0 -6 320 176" id="svg">
         <defs>
@@ -4793,6 +5704,7 @@ _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language
         <path class="bolt" d="M${X[1] + 44} ${TOP + LID + 60} l-9 13 h6 l-3 11 l9 -13 h-6 z"/>
         <path class="arrow" d="M${X[1] + 40} ${TOP + LID + 84} l-7 -9 h4 v-9 h6 v9 h4 z"/>
       </svg>
+      <div class="status-line" id="statusline"></div>
       <div class="stats" id="stats"></div>
     </ha-card>`;
     this._built = true;
@@ -4822,7 +5734,7 @@ _t(k) { return (I18N_BAT[this._config.language || ((this._hass?.locale?.language
     const svg = r.getElementById('svg'); svg.style.setProperty('--lc', color);
     const mode = p === null || Math.abs(p) < 10 ? 'idle' : p > 0 ? 'charging' : 'discharging';
     svg.classList.remove('charging', 'discharging', 'idle'); svg.classList.add(mode);
-    r.getElementById('state').textContent = this._t(mode).toUpperCase();
+    r.getElementById('state').textContent = r.getElementById('statusline').textContent = this._t(mode).toUpperCase();
     const ratio = Math.min(Math.abs(p || 0) / c.max_power, 1);
     svg.style.setProperty('--fs', `${(1.4 - ratio * 1.1).toFixed(2)}s`);
     svg.style.setProperty('--bl', mode === 'idle' ? '3s' : '1s');
